@@ -343,6 +343,38 @@ svg {
   box-shadow: 0 4px 10px rgba(192, 161, 92, 0.2);
 }
 
+/* Info Alert */
+.info-alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #cfe2ff;
+  border: 1px solid #b6d4fe;
+  border-radius: 6px;
+  padding: 14px 16px;
+  color: #084298;
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+.info-alert-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: #084298;
+}
+
+[data-theme="dark"] .info-alert {
+  background-color: #031633;
+  border-color: #062c65;
+  color: #6ea8fe;
+}
+
+[data-theme="dark"] .info-alert-icon {
+  color: #6ea8fe;
+}
+
 /* Status Bar & badges */
 .status-bar {
   max-width: var(--max-width);
@@ -587,6 +619,11 @@ svg {
 /* ----------------------------------------------------
    4. Immersive Reader Modal & Viewport
    ---------------------------------------------------- */
+body.modal-open {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
 .reader-modal {
   position: fixed;
   top: 0;
@@ -742,6 +779,7 @@ svg {
 .reader-viewport {
   flex-grow: 1;
   overflow-y: auto;
+  overscroll-behavior-y: none;
   padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-xxl);
   display: flex;
   justify-content: center;
