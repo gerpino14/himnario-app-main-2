@@ -1,0 +1,24 @@
+{
+  "name": "Himnos de la Vida Cristiana",
+  "short_name": "Himnos de la Vida Cristiana",
+  "description": "Lector Digital del Himnario de la Vida Cristiana",
+  "start_url": "index.html",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FAF7F2",
+  "theme_color": "#0a3d54",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

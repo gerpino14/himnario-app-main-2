@@ -1,0 +1,390 @@
+PDF Analysis Report: C:\Users\Gerson Pino\Downloads\Himn-Vid-Crist (2).pdf
+Total pages: 259
+Total lines: 11466
+
+Page   9 | Line: 1 ¡Santo! ¡Santo! ¡Santo!                | Num: 1   | Title: ¡Santo! ¡Santo! ¡Santo!
+Page   9 | Line: 2 Padre En Los Cielos                    | Num: 2   | Title: Padre En Los Cielos
+Page  10 | Line: 3 Dad Al Padre Toda Gloria               | Num: 3   | Title: Dad Al Padre Toda Gloria
+Page  10 | Line: 4 Te Loamos, Oh Dios                     | Num: 4   | Title: Te Loamos, Oh Dios
+Page  11 | Line: 5 Ven, Oh Todopoderoso                   | Num: 5   | Title: Ven, Oh Todopoderoso
+Page  11 | Line: 6 Oh Padre, Eterno Dios                  | Num: 6   | Title: Oh Padre, Eterno Dios
+Page  12 | Line: 7 A Nuestro Padre Dios                   | Num: 7   | Title: A Nuestro Padre Dios
+Page  13 | Line: 8 Alabad Al Gran Rey                     | Num: 8   | Title: Alabad Al Gran Rey
+Page  13 | Line: 9 Con Cánticos, Señor                    | Num: 9   | Title: Con Cánticos, Señor
+Page  13 | Line: 10 Castillo Fuerte Es Nuestro Dios       | Num: 10  | Title: Castillo Fuerte Es Nuestro Dios
+Page  14 | Line: 11 Loor Te Ofrecemos                     | Num: 11  | Title: Loor Te Ofrecemos
+Page  14 | Line: 12 ¡Al Dios De Abraham Loor!             | Num: 12  | Title: ¡Al Dios De Abraham Loor!
+Page  15 | Line: 13 Cantad Alegres Al Señor               | Num: 13  | Title: Cantad Alegres Al Señor
+Page  15 | Line: 14 Nuestra Esperanza Y Protección        | Num: 14  | Title: Nuestra Esperanza Y Protección
+Page  16 | Line: 15 ¡Cuán Grande Es El!                   | Num: 15  | Title: ¡Cuán Grande Es El!
+Page  16 | Line: 16 Nunca, Dios Mío, Cesará Mi Labio      | Num: 16  | Title: Nunca, Dios Mío, Cesará Mi Labio
+Page  17 | Line: 17 ¡Santo, Santo, Grande, Eterno Dios!   | Num: 17  | Title: ¡Santo, Santo, Grande, Eterno Dios!
+Page  18 | Line: 18 Es Dulce El Nombre De Jesús           | Num: 18  | Title: Es Dulce El Nombre De Jesús
+Page  18 | Line: 19 Tesoro Incomparable                   | Num: 19  | Title: Tesoro Incomparable
+Page  19 | Line: 20 A Cristo Doy Mi Canto                 | Num: 20  | Title: A Cristo Doy Mi Canto
+Page  19 | Line: 21 Señor Jesús, Perdóname                | Num: 21  | Title: Señor Jesús, Perdóname
+Page  20 | Line: 22 Anhelo Amarte Más                     | Num: 22  | Title: Anhelo Amarte Más
+Page  20 | Line: 23 Sol De Mi Ser                         | Num: 23  | Title: Sol De Mi Ser
+Page  20 | Line: 24 Ebenezer                              | Num: 24  | Title: Ebenezer
+Page  21 | Line: 25 Tu Santo Nombre Alabaré               | Num: 25  | Title: Tu Santo Nombre Alabaré
+Page  22 | Line: 26 Por La Mañana Yo Dirijo Mi Alabanza   | Num: 26  | Title: Por La Mañana Yo Dirijo Mi Alabanza
+Page  22 | Line: 27 El Placer De Mi Alma                  | Num: 27  | Title: El Placer De Mi Alma
+Page  23 | Line: 28 Gloria A Dios En Las Alturas          | Num: 28  | Title: Gloria A Dios En Las Alturas
+Page  24 | Line: 29 Suenen Dulces Himnos                  | Num: 29  | Title: Suenen Dulces Himnos
+Page  24 | Line: 30 Un Arrullo Escuchad                   | Num: 30  | Title: Un Arrullo Escuchad
+Page  25 | Line: 31 ¡Oh, Santísimo, Felicísimo!           | Num: 31  | Title: ¡Oh, Santísimo, Felicísimo!
+Page  25 | Line: 32 Allá En El Pesebre                    | Num: 32  | Title: Allá En El Pesebre
+Page  26 | Line: 33 Oíd Un Son En Alta Esfera             | Num: 33  | Title: Oíd Un Son En Alta Esfera
+Page  26 | Line: 34 ¡Al Mundo Paz, Nació Jesús!           | Num: 34  | Title: ¡Al Mundo Paz, Nació Jesús!
+Page  27 | Line: 35 A Media Noche Allá En Belén           | Num: 35  | Title: A Media Noche Allá En Belén
+Page  28 | Line: 36 Oh, Aldehuela De Belén                | Num: 36  | Title: Oh, Aldehuela De Belén
+Page  28 | Line: 37 Astro, El Más Bello                   | Num: 37  | Title: Astro, El Más Bello
+Page  28 | Line: 38 Noche De Paz                          | Num: 38  | Title: Noche De Paz
+Page  29 | Line: 39 Pastores Cerca de Belén               | Num: 39  | Title: Pastores Cerca de Belén
+Page  30 | Line: 40 Tú Dejaste Tu Trono                   | Num: 40  | Title: Tú Dejaste Tu Trono
+Page  30 | Line: 41 Hubo Quien Por Mis Culpas             | Num: 41  | Title: Hubo Quien Por Mis Culpas
+Page  31 | Line: 42 En La Vergonzosa Cruz                 | Num: 42  | Title: En La Vergonzosa Cruz
+Page  31 | Line: 43 Cristo, Hazme Ver Tu Cruz             | Num: 43  | Title: Cristo, Hazme Ver Tu Cruz
+Page  32 | Line: 44 Mi Vida Di Por Ti                     | Num: 44  | Title: Mi Vida Di Por Ti
+Page  33 | Line: 45 Cabeza Ensangrentada                  | Num: 45  | Title: Cabeza Ensangrentada
+Page  33 | Line: 46 Un Monte Hay                          | Num: 46  | Title: Un Monte Hay
+Page  34 | Line: 47 Junto A La Cruz De Cristo             | Num: 47  | Title: Junto A La Cruz De Cristo
+Page  35 | Line: 48 La Cruz Excelsa Al Contemplar         | Num: 48  | Title: La Cruz Excelsa Al Contemplar
+Page  35 | Line: 49 ¿Es Cierto Que Jesús Murió?           | Num: 49  | Title: ¿Es Cierto Que Jesús Murió?
+Page  35 | Line: 50 Mirad Al Salvador Jesús               | Num: 50  | Title: Mirad Al Salvador Jesús
+Page  36 | Line: 51 Pies Divinos                          | Num: 51  | Title: Pies Divinos
+Page  37 | Line: 52 ¡Cuán Felices Fuimos!                 | Num: 52  | Title: ¡Cuán Felices Fuimos!
+Page  37 | Line: 53 Rostro Divino                         | Num: 53  | Title: Rostro Divino
+Page  38 | Line: 54 Levantado Fue Jesús                   | Num: 54  | Title: Levantado Fue Jesús
+Page  38 | Line: 55 Hay Un Precioso Manantial             | Num: 55  | Title: Hay Un Precioso Manantial
+Page  39 | Line: 56 Manos Cariñosas                       | Num: 56  | Title: Manos Cariñosas
+Page  39 | Line: 57 La Tumba Le Encerró                   | Num: 57  | Title: La Tumba Le Encerró
+Page  40 | Line: 58 El Señor Resucitó                     | Num: 58  | Title: El Señor Resucitó
+Page  40 | Line: 59 El Señor Resucitó, ¡Aleluya!          | Num: 59  | Title: El Señor Resucitó, ¡Aleluya!
+Page  41 | Line: 60 Hoy En Gloria Celestial               | Num: 60  | Title: Hoy En Gloria Celestial
+Page  41 | Line: 61 Corona A Nuestro Salvador             | Num: 61  | Title: Corona A Nuestro Salvador
+Page  42 | Line: 62 La Ruda Lucha Terminó                 | Num: 62  | Title: La Ruda Lucha Terminó
+Page  42 | Line: 63 Al Cristo Vivo Sirvo                  | Num: 63  | Title: Al Cristo Vivo Sirvo
+Page  43 | Line: 64 Unidos, Fieles Todos                  | Num: 64  | Title: Unidos, Fieles Todos
+Page  43 | Line: 65 Yo Sé Que Jesucristo Vive             | Num: 65  | Title: Yo Sé Que Jesucristo Vive
+Page  44 | Line: 66 El Nombre De Jesús Load               | Num: 66  | Title: El Nombre De Jesús Load
+Page  44 | Line: 67 Por Mil Arpas                         | Num: 67  | Title: Por Mil Arpas
+Page  45 | Line: 68 A Cristo Coronad                      | Num: 68  | Title: A Cristo Coronad
+Page  45 | Line: 69 Digno Es El Cordero                   | Num: 69  | Title: Digno Es El Cordero
+Page  46 | Line: 70 Ved Al Cristo, Rey De Gloria          | Num: 70  | Title: Ved Al Cristo, Rey De Gloria
+Page  46 | Line: 71 Alboreando La Mañana                  | Num: 71  | Title: Alboreando La Mañana
+Page  47 | Line: 72 Pudiera Bien Ser                      | Num: 72  | Title: Pudiera Bien Ser
+Page  47 | Line: 73 Cristo Viene                          | Num: 73  | Title: Cristo Viene
+Page  48 | Line: 74 Viene Otra Vez                        | Num: 74  | Title: Viene Otra Vez
+Page  49 | Line: 75 Muy Cercano Está El Día               | Num: 75  | Title: Muy Cercano Está El Día
+Page  50 | Line: 76 Yo Espero El Gran Día                 | Num: 76  | Title: Yo Espero El Gran Día
+Page  50 | Line: 77 Yo Solo Espero Ese Día                | Num: 77  | Title: Yo Solo Espero Ese Día
+Page  50 | Line: 78 Un Alba Hermosa                       | Num: 78  | Title: Un Alba Hermosa
+Page  51 | Line: 79 Cristo Ya Viene, Fieles Cristianos    | Num: 79  | Title: Cristo Ya Viene, Fieles Cristianos
+Page  52 | Line: 80 Un Día                                | Num: 80  | Title: Un Día
+Page  52 | Line: 81 Con Las Nubes Viene Cristo            | Num: 81  | Title: Con Las Nubes Viene Cristo
+Page  53 | Line: 82 Viene Otra Vez Nuestro Salvador       | Num: 82  | Title: Viene Otra Vez Nuestro Salvador
+Page  54 | Line: 83 Día De Victoria Y Gozo Celestial      | Num: 83  | Title: Día De Victoria Y Gozo Celestial
+Page  55 | Line: 84 Ven, Santo Espíritu                   | Num: 84  | Title: Ven, Santo Espíritu
+Page  55 | Line: 85 De Tu Espíritu Divino                 | Num: 85  | Title: De Tu Espíritu Divino
+Page  55 | Line: 86 En Mi Alma Mora, Santo Espíritu       | Num: 86  | Title: En Mi Alma Mora, Santo Espíritu
+Page  56 | Line: 87 El Consolador Ha Venido               | Num: 87  | Title: El Consolador Ha Venido
+Page  57 | Line: 88 Oh, Santo Paracleto                   | Num: 88  | Title: Oh, Santo Paracleto
+Page  57 | Line: 89 Santo Espíritu De Dios                | Num: 89  | Title: Santo Espíritu De Dios
+Page  58 | Line: 90 En Un Aposento Alto                   | Num: 90  | Title: En Un Aposento Alto
+Page  58 | Line: 91 Tu Santo Espíritu, Señor              | Num: 91  | Title: Tu Santo Espíritu, Señor
+Page  59 | Line: 92 Fuego Divino, Clamamos A Ti           | Num: 92  | Title: Fuego Divino, Clamamos A Ti
+Page  59 | Line: 93 Santo Espíritu, Desciende             | Num: 93  | Title: Santo Espíritu, Desciende
+Page  61 | Line: 94 Yo Escucho, Buen Jesús                | Num: 94  | Title: Yo Escucho, Buen Jesús
+Page  61 | Line: 95 Cristo, Mi Cruz He Tomado             | Num: 95  | Title: Cristo, Mi Cruz He Tomado
+Page  62 | Line: 96 Piedad                                | Num: 96  | Title: Piedad
+Page  62 | Line: 97 Oh, Señor, Recíbeme Cual Soy          | Num: 97  | Title: Oh, Señor, Recíbeme Cual Soy
+Page  63 | Line: 98 ¡Oh Señor! Procuro En Vano            | Num: 98  | Title: ¡Oh Señor! Procuro En Vano
+Page  63 | Line: 99 Yo Quiero Ser Limpio                  | Num: 99  | Title: Yo Quiero Ser Limpio
+Page  64 | Line: 100 Te Necesito Ya                       | Num: 100 | Title: Te Necesito Ya
+Page  64 | Line: 101 Mi Fe Espera En Ti                   | Num: 101 | Title: Mi Fe Espera En Ti
+Page  65 | Line: 102 El Señor Así Me Habló                | Num: 102 | Title: El Señor Así Me Habló
+Page  65 | Line: 103 Oí La Voz Del Salvador               | Num: 103 | Title: Oí La Voz Del Salvador
+Page  66 | Line: 104 Paz Con Dios                         | Num: 104 | Title: Paz Con Dios
+Page  66 | Line: 105 ¡Poz, Paz, Dulce Paz!                | Num: 105 | Title: ¡Poz, Paz, Dulce Paz!
+Page  67 | Line: 106 En El Seno De Mi Alma                | Num: 106 | Title: En El Seno De Mi Alma
+Page  68 | Line: 107 Oh, Cristo En Ti                     | Num: 107 | Title: Oh, Cristo En Ti
+Page  68 | Line: 108 Cual La Mar Hermosa                  | Num: 108 | Title: Cual La Mar Hermosa
+Page  69 | Line: 109 Salvo En Los Tiernos Brazos          | Num: 109 | Title: Salvo En Los Tiernos Brazos
+Page  69 | Line: 110 Estoy Bien Con Mi Dios               | Num: 110 | Title: Estoy Bien Con Mi Dios
+Page  70 | Line: 111 Gozo Da Servir A Cristo              | Num: 111 | Title: Gozo Da Servir A Cristo
+Page  70 | Line: 112 Cristo Es Mi Dulce Salvador          | Num: 112 | Title: Cristo Es Mi Dulce Salvador
+Page  71 | Line: 113 Oh Cristo, Yo Te Amo                 | Num: 113 | Title: Oh Cristo, Yo Te Amo
+Page  72 | Line: 114 ¡Tengo Un Amigo!                     | Num: 114 | Title: ¡Tengo Un Amigo!
+Page  72 | Line: 115 Del Santo Amor De Cristo             | Num: 115 | Title: Del Santo Amor De Cristo
+Page  73 | Line: 116 Nada Hay Que Me Pueda Apartar        | Num: 116 | Title: Nada Hay Que Me Pueda Apartar
+Page  73 | Line: 117 Es Jesús El Mejor Amigo              | Num: 117 | Title: Es Jesús El Mejor Amigo
+Page  74 | Line: 118 Quiero De Cristo Más Saber           | Num: 118 | Title: Quiero De Cristo Más Saber
+Page  74 | Line: 119 Le Canto A Mi Señor                  | Num: 119 | Title: Le Canto A Mi Señor
+Page  75 | Line: 120 Dulce Oración                        | Num: 120 | Title: Dulce Oración
+Page  75 | Line: 121 ¡Oh, Qué Amigo Nos Es Cristo!        | Num: 121 | Title: ¡Oh, Qué Amigo Nos Es Cristo!
+Page  76 | Line: 122 Rasgóse El Velo                      | Num: 122 | Title: Rasgóse El Velo
+Page  77 | Line: 123 En El Lugar De Oración               | Num: 123 | Title: En El Lugar De Oración
+Page  77 | Line: 124 A Solas Con Jesús                    | Num: 124 | Title: A Solas Con Jesús
+Page  78 | Line: 125 Diré A Cristo                        | Num: 125 | Title: Diré A Cristo
+Page  78 | Line: 126 ¿Has Oído, Señor, Mis Oraciones?     | Num: 126 | Title: ¿Has Oído, Señor, Mis Oraciones?
+Page  79 | Line: 127 ¿Te Acordaste Al Levantarte?         | Num: 127 | Title: ¿Te Acordaste Al Levantarte?
+Page  79 | Line: 128 Siempre Orad                         | Num: 128 | Title: Siempre Orad
+Page  80 | Line: 129 Sed Puros Y Santos                   | Num: 129 | Title: Sed Puros Y Santos
+Page  80 | Line: 130 Esta Es Mi Gloriosa Historia         | Num: 130 | Title: Esta Es Mi Gloriosa Historia
+Page  81 | Line: 131 Cristo, No Yo                        | Num: 131 | Title: Cristo, No Yo
+Page  82 | Line: 132 Te Ruego, Oh Dios                    | Num: 132 | Title: Te Ruego, Oh Dios
+Page  82 | Line: 133 Haz Lo Que Quieras                   | Num: 133 | Title: Haz Lo Que Quieras
+Page  83 | Line: 134 Un Sacrificio Vivo                   | Num: 134 | Title: Un Sacrificio Vivo
+Page  83 | Line: 135 Que Mi Vida Entera Esté              | Num: 135 | Title: Que Mi Vida Entera Esté
+Page  84 | Line: 136 Morir Con Cristo                     | Num: 136 | Title: Morir Con Cristo
+Page  85 | Line: 137 Todo Rendido                         | Num: 137 | Title: Todo Rendido
+Page  85 | Line: 138 Salvador Mío                         | Num: 138 | Title: Salvador Mío
+Page  86 | Line: 139 ¿Qué Te Daré, Maestro?               | Num: 139 | Title: ¿Qué Te Daré, Maestro?
+Page  86 | Line: 140 Cristo, Fiel Te Quiero Ser           | Num: 140 | Title: Cristo, Fiel Te Quiero Ser
+Page  87 | Line: 141 Abre Mis Ojos A La Luz               | Num: 141 | Title: Abre Mis Ojos A La Luz
+Page  88 | Line: 142 Más Como Cristo                      | Num: 142 | Title: Más Como Cristo
+Page  88 | Line: 143 Más Santidad Dame                    | Num: 143 | Title: Más Santidad Dame
+Page  88 | Line: 144 La Voluntad De Dios                  | Num: 144 | Title: La Voluntad De Dios
+Page  89 | Line: 145 A Los Pies De Jesucristo             | Num: 145 | Title: A Los Pies De Jesucristo
+Page  90 | Line: 146 Dejo El Mundo y Sigo a Cristo        | Num: 146 | Title: Dejo El Mundo y Sigo a Cristo
+Page  90 | Line: 147 Ved La Fuente Sanadora               | Num: 147 | Title: Ved La Fuente Sanadora
+Page  91 | Line: 148 ¿Deseas Salud?                       | Num: 148 | Title: ¿Deseas Salud?
+Page  91 | Line: 149 La Tierna Voz                        | Num: 149 | Title: La Tierna Voz
+Page  92 | Line: 150 ¡Oh, Glorioso Mensaje!               | Num: 150 | Title: ¡Oh, Glorioso Mensaje!
+Page  93 | Line: 151 Roca De La Eternidad                 | Num: 151 | Title: Roca De La Eternidad
+Page  93 | Line: 152 Día En Día                           | Num: 152 | Title: Día En Día
+Page  94 | Line: 153 Lugar Hay Donde Descansar            | Num: 153 | Title: Lugar Hay Donde Descansar
+Page  95 | Line: 154 El Que Habita Al Abrigo De Dios      | Num: 154 | Title: El Que Habita Al Abrigo De Dios
+Page  95 | Line: 155 Segura Mi Esperanza Está             | Num: 155 | Title: Segura Mi Esperanza Está
+Page  95 | Line: 156 Todas Las Promesas Del Señor Jesús   | Num: 156 | Title: Todas Las Promesas Del Señor Jesús
+Page  96 | Line: 157 Cristo, Acércame A La Cruz           | Num: 157 | Title: Cristo, Acércame A La Cruz
+Page  96 | Line: 158 En Mis Angustias                     | Num: 158 | Title: En Mis Angustias
+Page  97 | Line: 159 Cuando Combatido Por La Adversidad   | Num: 159 | Title: Cuando Combatido Por La Adversidad
+Page  97 | Line: 160 Si Estoy Desalentado                 | Num: 160 | Title: Si Estoy Desalentado
+Page  98 | Line: 161 Dulce Comunión                       | Num: 161 | Title: Dulce Comunión
+Page  98 | Line: 162 Cuando Estés Cansado y Abatido       | Num: 162 | Title: Cuando Estés Cansado y Abatido
+Page  99 | Line: 163 Ya Pertenezco A Cristo               | Num: 163 | Title: Ya Pertenezco A Cristo
+Page 100 | Line: 164 Vivo Por Cristo                      | Num: 164 | Title: Vivo Por Cristo
+Page 100 | Line: 165 Cerca, Más Cerca                     | Num: 165 | Title: Cerca, Más Cerca
+Page 101 | Line: 166 ¡Oh, Cristo Mío!                     | Num: 166 | Title: ¡Oh, Cristo Mío!
+Page 101 | Line: 167 Salvador, Mi Bien Eterno             | Num: 167 | Title: Salvador, Mi Bien Eterno
+Page 102 | Line: 168 Todo Va Bien                         | Num: 168 | Title: Todo Va Bien
+Page 102 | Line: 169 ¡Oh, Cuán Dulce!                     | Num: 169 | Title: ¡Oh, Cuán Dulce!
+Page 103 | Line: 170 En Jesucristo, Fuente De Paz         | Num: 170 | Title: En Jesucristo, Fuente De Paz
+Page 103 | Line: 171 Mi Redentor, El Rey De Gloria        | Num: 171 | Title: Mi Redentor, El Rey De Gloria
+Page 104 | Line: 172 ¿Quieres Sobre El Mundo Ser Un Vencedor? | Num: 172 | Title: ¿Quieres Sobre El Mundo Ser Un Vencedor?
+Page 105 | Line: 173 Oh, Yo Quiero Andar Con Cristo       | Num: 173 | Title: Oh, Yo Quiero Andar Con Cristo
+Page 105 | Line: 174 El Mundo No Es Mi Hogar              | Num: 174 | Title: El Mundo No Es Mi Hogar
+Page 106 | Line: 175 Peregrinos En Desierto               | Num: 175 | Title: Peregrinos En Desierto
+Page 106 | Line: 176 Al Cansado Peregrino                 | Num: 176 | Title: Al Cansado Peregrino
+Page 107 | Line: 177 A Cualquiera Parte                   | Num: 177 | Title: A Cualquiera Parte
+Page 108 | Line: 178 ¡Cuán Dulce Es Andar Con Cristo!     | Num: 178 | Title: ¡Cuán Dulce Es Andar Con Cristo!
+Page 109 | Line: 179 Oh, Cristo, Nuestra Roca Aquí        | Num: 179 | Title: Oh, Cristo, Nuestra Roca Aquí
+Page 109 | Line: 180 Nada Puede Ya Faltarme               | Num: 180 | Title: Nada Puede Ya Faltarme
+Page 110 | Line: 181 Jehová Mi Pastor Es                  | Num: 181 | Title: Jehová Mi Pastor Es
+Page 110 | Line: 182 Hay Quien Vele Mis Pisadas           | Num: 182 | Title: Hay Quien Vele Mis Pisadas
+Page 111 | Line: 183 Me Guía El, Con Cuánto Amor          | Num: 183 | Title: Me Guía El, Con Cuánto Amor
+Page 112 | Line: 184 Un Gran Salvador Es Jesús El Señor   | Num: 184 | Title: Un Gran Salvador Es Jesús El Señor
+Page 112 | Line: 185 Donde Me Guíe, Seguiré               | Num: 185 | Title: Donde Me Guíe, Seguiré
+Page 113 | Line: 186 Cristo, Cual Pastor                  | Num: 186 | Title: Cristo, Cual Pastor
+Page 114 | Line: 187 Dulces Promesas Son Las Del Señor    | Num: 187 | Title: Dulces Promesas Son Las Del Señor
+Page 114 | Line: 188 Guíame, Oh Salvador                  | Num: 188 | Title: Guíame, Oh Salvador
+Page 114 | Line: 189 Cristo Es Guía De Mi Vida            | Num: 189 | Title: Cristo Es Guía De Mi Vida
+Page 115 | Line: 190 Jehová Es Mi Pastor                  | Num: 190 | Title: Jehová Es Mi Pastor
+Page 116 | Line: 191 ¡Ven Tú, Oh Rey Eterno!              | Num: 191 | Title: ¡Ven Tú, Oh Rey Eterno!
+Page 116 | Line: 192 Ruge Lo Batalla                      | Num: 192 | Title: Ruge Lo Batalla
+Page 117 | Line: 193 Jesús Está Buscando Voluntarios      | Num: 193 | Title: Jesús Está Buscando Voluntarios
+Page 117 | Line: 194 Despliegue El Cristiano              | Num: 194 | Title: Despliegue El Cristiano
+Page 118 | Line: 195 Cristo, Al Ser Tentado               | Num: 195 | Title: Cristo, Al Ser Tentado
+Page 119 | Line: 196 Tentado, No Cedas                    | Num: 196 | Title: Tentado, No Cedas
+Page 119 | Line: 197 Siervos de Jesús                     | Num: 197 | Title: Siervos de Jesús
+Page 120 | Line: 198 A La Batalla                         | Num: 198 | Title: A La Batalla
+Page 120 | Line: 199 Estad Por Cristo Firmes              | Num: 199 | Title: Estad Por Cristo Firmes
+Page 121 | Line: 200 ¡Firmes, Y Adelante!                 | Num: 200 | Title: ¡Firmes, Y Adelante!
+Page 121 | Line: 201 Sale A La Lucha El Salvador          | Num: 201 | Title: Sale A La Lucha El Salvador
+Page 122 | Line: 202 Dame La Fe De Mi Jesús               | Num: 202 | Title: Dame La Fe De Mi Jesús
+Page 123 | Line: 203 Cristo, Nuestro Jefe                 | Num: 203 | Title: Cristo, Nuestro Jefe
+Page 123 | Line: 204 ¡A Combatir! Resuena La Guerrera Voz | Num: 204 | Title: ¡A Combatir! Resuena La Guerrera Voz
+Page 124 | Line: 205 A La Victoria Jesús Nos Llama        | Num: 205 | Title: A La Victoria Jesús Nos Llama
+Page 124 | Line: 206 Cual Pendón Hermoso                  | Num: 206 | Title: Cual Pendón Hermoso
+Page 125 | Line: 207 Alguna Vez Ya No Estaré              | Num: 207 | Title: Alguna Vez Ya No Estaré
+Page 126 | Line: 208 Meditad En Que Hay Un Hogar          | Num: 208 | Title: Meditad En Que Hay Un Hogar
+Page 126 | Line: 209 Grande Amor, Sublime, Eterno         | Num: 209 | Title: Grande Amor, Sublime, Eterno
+Page 127 | Line: 210 Voy Al Cielo, Soy Peregrino          | Num: 210 | Title: Voy Al Cielo, Soy Peregrino
+Page 127 | Line: 211 Cuando De Afanes Ya Libre Yo Esté    | Num: 211 | Title: Cuando De Afanes Ya Libre Yo Esté
+Page 128 | Line: 212 En la Mansión De Cristo Está         | Num: 212 | Title: En la Mansión De Cristo Está
+Page 128 | Line: 213 No Habrá Sombras En El Valle De La Muerte | Num: 213 | Title: No Habrá Sombras En El Valle De La Muerte
+Page 129 | Line: 214 Cuando Anuncie El Arcángel           | Num: 214 | Title: Cuando Anuncie El Arcángel
+Page 129 | Line: 215 Señor Jesús, La Luz Del Día Se Fue   | Num: 215 | Title: Señor Jesús, La Luz Del Día Se Fue
+Page 130 | Line: 216 Hay En El Cielo Un Dulce Hogar       | Num: 216 | Title: Hay En El Cielo Un Dulce Hogar
+Page 130 | Line: 217 En Presencia Estar De Cristo         | Num: 217 | Title: En Presencia Estar De Cristo
+Page 131 | Line: 218 La Mañana Gloriosa                   | Num: 218 | Title: La Mañana Gloriosa
+Page 131 | Line: 219 Cerca De Ti, Señor                   | Num: 219 | Title: Cerca De Ti, Señor
+Page 133 | Line: 220 Es Cristo De Su Iglesia              | Num: 220 | Title: Es Cristo De Su Iglesia
+Page 133 | Line: 221 Iglesia De Cristo                    | Num: 221 | Title: Iglesia De Cristo
+Page 134 | Line: 222 Cristo Solo                          | Num: 222 | Title: Cristo Solo
+Page 134 | Line: 223 Glorias Mil De Ti Se Cuentan         | Num: 223 | Title: Glorias Mil De Ti Se Cuentan
+Page 135 | Line: 224 Tu Pueblo Jubiloso                   | Num: 224 | Title: Tu Pueblo Jubiloso
+Page 135 | Line: 225 Tu Reino Amo, Oh Dios                | Num: 225 | Title: Tu Reino Amo, Oh Dios
+Page 136 | Line: 226 Lámpara Fiel                         | Num: 226 | Title: Lámpara Fiel
+Page 136 | Line: 227 Santa Biblia                         | Num: 227 | Title: Santa Biblia
+Page 137 | Line: 228 ¡Cuán Firme Cimiento!                | Num: 228 | Title: ¡Cuán Firme Cimiento!
+Page 137 | Line: 229 Oh, Cantádmelas Otra Vez             | Num: 229 | Title: Oh, Cantádmelas Otra Vez
+Page 138 | Line: 230 Dicha Grande Es La Del Hombre        | Num: 230 | Title: Dicha Grande Es La Del Hombre
+Page 139 | Line: 231 Hoy Es Día De Reposo                 | Num: 231 | Title: Hoy Es Día De Reposo
+Page 139 | Line: 232 Oh, Día De Reposo                    | Num: 232 | Title: Oh, Día De Reposo
+Page 140 | Line: 233 La Semana Ya Pasó                    | Num: 233 | Title: La Semana Ya Pasó
+Page 140 | Line: 234 Los Que Somos Bautizados             | Num: 234 | Title: Los Que Somos Bautizados
+Page 141 | Line: 235 Yo Vivía En El Pecado                | Num: 235 | Title: Yo Vivía En El Pecado
+Page 141 | Line: 236 Salvador, A Ti Me Rindo              | Num: 236 | Title: Salvador, A Ti Me Rindo
+Page 142 | Line: 237 Día Feliz                            | Num: 237 | Title: Día Feliz
+Page 142 | Line: 238 Jesús, Yo He Prometido               | Num: 238 | Title: Jesús, Yo He Prometido
+Page 143 | Line: 239 En Tu Cena Nos Juntamos              | Num: 239 | Title: En Tu Cena Nos Juntamos
+Page 144 | Line: 240 Hoy Venimos, Cual Hermanos           | Num: 240 | Title: Hoy Venimos, Cual Hermanos
+Page 144 | Line: 241 Santa Cena, Para Mí                  | Num: 241 | Title: Santa Cena, Para Mí
+Page 144 | Line: 242 Según Tu Dicho Al Expirar            | Num: 242 | Title: Según Tu Dicho Al Expirar
+Page 145 | Line: 243 Si Jesús Va Conmigo Yo Iré           | Num: 243 | Title: Si Jesús Va Conmigo Yo Iré
+Page 146 | Line: 244 Oíd, Oíd Lo Que Nos Manda El Salvador | Num: 244 | Title: Oíd, Oíd Lo Que Nos Manda El Salvador
+Page 146 | Line: 245 Ved Los Millones                     | Num: 245 | Title: Ved Los Millones
+Page 147 | Line: 246 ¡A prisa, Sión!                      | Num: 246 | Title: ¡A prisa, Sión!
+Page 148 | Line: 247 Una Voz Resuena De Ansia             | Num: 247 | Title: Una Voz Resuena De Ansia
+Page 148 | Line: 248 A Lugares Obscuros                   | Num: 248 | Title: A Lugares Obscuros
+Page 149 | Line: 249 Cristo Está Buscando Obreros         | Num: 249 | Title: Cristo Está Buscando Obreros
+Page 149 | Line: 250 Señor Jesús, Me Entrego A Ti         | Num: 250 | Title: Señor Jesús, Me Entrego A Ti
+Page 150 | Line: 251 Una Historia Diremos Al Mundo        | Num: 251 | Title: Una Historia Diremos Al Mundo
+Page 150 | Line: 252 El Señor Jesús Está Llamando         | Num: 252 | Title: El Señor Jesús Está Llamando
+Page 151 | Line: 253 ¿Quién Seguirle Quiere?              | Num: 253 | Title: ¿Quién Seguirle Quiere?
+Page 151 | Line: 254 Oigo La Voz Del Buen Pastor          | Num: 254 | Title: Oigo La Voz Del Buen Pastor
+Page 152 | Line: 255 Hazme Una Fuente De Bendiciones      | Num: 255 | Title: Hazme Una Fuente De Bendiciones
+Page 153 | Line: 256 La Merced De Nuestro Padre           | Num: 256 | Title: La Merced De Nuestro Padre
+Page 153 | Line: 257 En La Montaña Podrá No Ser           | Num: 257 | Title: En La Montaña Podrá No Ser
+Page 154 | Line: 258 Ama A Tus Prójimos                   | Num: 258 | Title: Ama A Tus Prójimos
+Page 154 | Line: 259 Anhelo Trabajar Por El Señor         | Num: 259 | Title: Anhelo Trabajar Por El Señor
+Page 155 | Line: 260 Pronto La Noche Viene                | Num: 260 | Title: Pronto La Noche Viene
+Page 155 | Line: 261 Trabajad, Trabajad                   | Num: 261 | Title: Trabajad, Trabajad
+Page 156 | Line: 262 No Te Dé Temor Hablar Por Cristo     | Num: 262 | Title: No Te Dé Temor Hablar Por Cristo
+Page 157 | Line: 263 El Vino A Mi Corazón                 | Num: 263 | Title: El Vino A Mi Corazón
+Page 157 | Line: 264 Amigo Fiel En Cristo Hallé           | Num: 264 | Title: Amigo Fiel En Cristo Hallé
+Page 158 | Line: 265 En Su Profundo Amor                  | Num: 265 | Title: En Su Profundo Amor
+Page 158 | Line: 266 Jesús Es Mi Rey Soberano             | Num: 266 | Title: Jesús Es Mi Rey Soberano
+Page 159 | Line: 267 Cansado Y Triste Vine Al Salvador    | Num: 267 | Title: Cansado Y Triste Vine Al Salvador
+Page 160 | Line: 268 No Me Importan Riquezas              | Num: 268 | Title: No Me Importan Riquezas
+Page 160 | Line: 269 Perdonado, Ya Salvado Soy            | Num: 269 | Title: Perdonado, Ya Salvado Soy
+Page 161 | Line: 270 Hay Un Canto Nuevo En Mi Ser         | Num: 270 | Title: Hay Un Canto Nuevo En Mi Ser
+Page 161 | Line: 271 Hay Una Senda                        | Num: 271 | Title: Hay Una Senda
+Page 162 | Line: 272 Libres Estamos, Dios Nos Absuelve    | Num: 272 | Title: Libres Estamos, Dios Nos Absuelve
+Page 162 | Line: 273 Grande Gozo Hay En Mi Alma           | Num: 273 | Title: Grande Gozo Hay En Mi Alma
+Page 163 | Line: 274 Vagaba Yo En Obscuridad              | Num: 274 | Title: Vagaba Yo En Obscuridad
+Page 163 | Line: 275 He Encontrado Un Cielo Aquí          | Num: 275 | Title: He Encontrado Un Cielo Aquí
+Page 164 | Line: 276 Comprado Con Sangre Por Cristo       | Num: 276 | Title: Comprado Con Sangre Por Cristo
+Page 165 | Line: 277 Cantaré La Bella Historia            | Num: 277 | Title: Cantaré La Bella Historia
+Page 165 | Line: 278 Cantar De El Deseo Yo                | Num: 278 | Title: Cantar De El Deseo Yo
+Page 166 | Line: 279 El Oro Y La Plata No Me Han Redimido | Num: 279 | Title: El Oro Y La Plata No Me Han Redimido
+Page 166 | Line: 280 Años Mi Alma En Vanidad Vivió        | Num: 280 | Title: Años Mi Alma En Vanidad Vivió
+Page 167 | Line: 281 Hallé Un Buen Amigo                  | Num: 281 | Title: Hallé Un Buen Amigo
+Page 168 | Line: 282 Por Fe Contemplo Redención           | Num: 282 | Title: Por Fe Contemplo Redención
+Page 168 | Line: 283 Aleluya, Cristo Me Salvó             | Num: 283 | Title: Aleluya, Cristo Me Salvó
+Page 169 | Line: 284 Junto A La Cruz                      | Num: 284 | Title: Junto A La Cruz
+Page 169 | Line: 285 Por Fe En Jesús El Salvador          | Num: 285 | Title: Por Fe En Jesús El Salvador
+Page 170 | Line: 286 ¿Qué Me Puede Dar Perdón?            | Num: 286 | Title: ¿Qué Me Puede Dar Perdón?
+Page 170 | Line: 287 Dime La Historia De Cristo           | Num: 287 | Title: Dime La Historia De Cristo
+Page 171 | Line: 288 Tendrás Que Renacer                  | Num: 288 | Title: Tendrás Que Renacer
+Page 172 | Line: 289 Cristo Acoge Al Pecador              | Num: 289 | Title: Cristo Acoge Al Pecador
+Page 172 | Line: 290 ¿Quieres Ser Salvo?                  | Num: 290 | Title: ¿Quieres Ser Salvo?
+Page 173 | Line: 291 Cuando Andemos Con Dios              | Num: 291 | Title: Cuando Andemos Con Dios
+Page 173 | Line: 292 Mirad El Gran Amor                   | Num: 292 | Title: Mirad El Gran Amor
+Page 174 | Line: 293 ¿Quieres Siempre Por Jesús Vivir?    | Num: 293 | Title: ¿Quieres Siempre Por Jesús Vivir?
+Page 174 | Line: 294 Dime la Antigua Historia             | Num: 294 | Title: Dime la Antigua Historia
+Page 175 | Line: 295 Grato Es Decir La Historia           | Num: 295 | Title: Grato Es Decir La Historia
+Page 176 | Line: 296 Todo Aquel Que Oye                   | Num: 296 | Title: Todo Aquel Que Oye
+Page 176 | Line: 297 ¿Has Hallado En Cristo?              | Num: 297 | Title: ¿Has Hallado En Cristo?
+Page 177 | Line: 298 ¿Temes Que En La Lucha?              | Num: 298 | Title: ¿Temes Que En La Lucha?
+Page 177 | Line: 299 Me Hirió El Pecado                   | Num: 299 | Title: Me Hirió El Pecado
+Page 178 | Line: 300 Mira A Cristo Y Vivirás              | Num: 300 | Title: Mira A Cristo Y Vivirás
+Page 178 | Line: 301 El Mundo Perdido                     | Num: 301 | Title: El Mundo Perdido
+Page 179 | Line: 302 Alabanzas Dad A Cristo               | Num: 302 | Title: Alabanzas Dad A Cristo
+Page 179 | Line: 303 Alabado El Gran Manantial            | Num: 303 | Title: Alabado El Gran Manantial
+Page 180 | Line: 304 La Palabra Del Señor                 | Num: 304 | Title: La Palabra Del Señor
+Page 181 | Line: 305 Hermano, Dinos Hoy                   | Num: 305 | Title: Hermano, Dinos Hoy
+Page 181 | Line: 306 Cuando Sopla Airada La Tempestad     | Num: 306 | Title: Cuando Sopla Airada La Tempestad
+Page 182 | Line: 307 Dios Nos Ha Dado Promesa             | Num: 307 | Title: Dios Nos Ha Dado Promesa
+Page 183 | Line: 308 Avívanos, Señor                      | Num: 308 | Title: Avívanos, Señor
+Page 183 | Line: 309 Padre Amante                         | Num: 309 | Title: Padre Amante
+Page 183 | Line: 310 Un Himno De Avivamiento              | Num: 310 | Title: Un Himno De Avivamiento
+Page 184 | Line: 311 No Me Pases, No Me Olvides           | Num: 311 | Title: No Me Pases, No Me Olvides
+Page 184 | Line: 312 ¡Cuán Dulcemente Jesús Hoy Nos Llama! | Num: 312 | Title: ¡Cuán Dulcemente Jesús Hoy Nos Llama!
+Page 185 | Line: 313 Nuestra Vida Acabará                 | Num: 313 | Title: Nuestra Vida Acabará
+Page 186 | Line: 314 ¿Qué Vas A Hacer Con Cristo?         | Num: 314 | Title: ¿Qué Vas A Hacer Con Cristo?
+Page 186 | Line: 315 Mientras Que Cristo Te Hable         | Num: 315 | Title: Mientras Que Cristo Te Hable
+Page 186 | Line: 316 Vengo, Jesús A Ti                    | Num: 316 | Title: Vengo, Jesús A Ti
+Page 187 | Line: 317 Con Voz Benigna                      | Num: 317 | Title: Con Voz Benigna
+Page 188 | Line: 318 Pecador, Ven A Cristo Jesús          | Num: 318 | Title: Pecador, Ven A Cristo Jesús
+Page 188 | Line: 319 No Aguardes Más, Amigo               | Num: 319 | Title: No Aguardes Más, Amigo
+Page 189 | Line: 320 Escucha, Pobre Pecador               | Num: 320 | Title: Escucha, Pobre Pecador
+Page 189 | Line: 321 Ven A Cristo                         | Num: 321 | Title: Ven A Cristo
+Page 190 | Line: 322 ¿Te Sientes Casi Resuelto Ya?        | Num: 322 | Title: ¿Te Sientes Casi Resuelto Ya?
+Page 190 | Line: 323 A Jesucristo Ven Sin Tardar          | Num: 323 | Title: A Jesucristo Ven Sin Tardar
+Page 191 | Line: 324 Acepta El Perdón De Jesús            | Num: 324 | Title: Acepta El Perdón De Jesús
+Page 191 | Line: 325 Tal Como Soy                         | Num: 325 | Title: Tal Como Soy
+Page 192 | Line: 326 Cuando Leo En La Biblia              | Num: 326 | Title: Cuando Leo En La Biblia
+Page 192 | Line: 327 Del Trono Santo En Derredor          | Num: 327 | Title: Del Trono Santo En Derredor
+Page 193 | Line: 328 Cristo Me Ama                        | Num: 328 | Title: Cristo Me Ama
+Page 193 | Line: 329 Gozo La Santa Palabra Al Leer        | Num: 329 | Title: Gozo La Santa Palabra Al Leer
+Page 194 | Line: 330 La Puerta Abrid A Los Niños          | Num: 330 | Title: La Puerta Abrid A Los Niños
+Page 195 | Line: 331 ¿Quieres, Tú, Seguir A Cristo?       | Num: 331 | Title: ¿Quieres, Tú, Seguir A Cristo?
+Page 195 | Line: 332 Oh, Jóvenes, Venid                   | Num: 332 | Title: Oh, Jóvenes, Venid
+Page 196 | Line: 333 Da Lo Mejor Al Maestro               | Num: 333 | Title: Da Lo Mejor Al Maestro
+Page 196 | Line: 334 Soy Peregrino Aquí                   | Num: 334 | Title: Soy Peregrino Aquí
+Page 197 | Line: 335 Adelante, Juventud                   | Num: 335 | Title: Adelante, Juventud
+Page 198 | Line: 336 Con Gran Gozo Y Placer               | Num: 336 | Title: Con Gran Gozo Y Placer
+Page 198 | Line: 337 Jubilosas Nuestras Voces             | Num: 337 | Title: Jubilosas Nuestras Voces
+Page 199 | Line: 338 Dios Os Guarde                       | Num: 338 | Title: Dios Os Guarde
+Page 199 | Line: 339 Dios Cuidará De Ti                   | Num: 339 | Title: Dios Cuidará De Ti
+Page 200 | Line: 340 Las Mujeres Cristianas Trabajan      | Num: 340 | Title: Las Mujeres Cristianas Trabajan
+Page 200 | Line: 341 ¿Con Qué Pagaremos?                  | Num: 341 | Title: ¿Con Qué Pagaremos?
+Page 200 | Line: 342 Grande Es Tu Fidelidad               | Num: 342 | Title: Grande Es Tu Fidelidad
+Page 201 | Line: 343 Aramos Nuestros Campos               | Num: 343 | Title: Aramos Nuestros Campos
+Page 202 | Line: 344 El Diezmo                            | Num: 344 | Title: El Diezmo
+Page 202 | Line: 345 Perfecto Amor                        | Num: 345 | Title: Perfecto Amor
+Page 203 | Line: 346 Dios Bendiga Las Almas Unidas        | Num: 346 | Title: Dios Bendiga Las Almas Unidas
+Page 203 | Line: 347 ¡Cuán Bienaventurado Es!             | Num: 347 | Title: ¡Cuán Bienaventurado Es!
+Page 204 | Line: 348 A Mi Madre                           | Num: 348 | Title: A Mi Madre
+Page 205 | Line: 349 Jesucristo Ha Venido                 | Num: 349 | Title: Jesucristo Ha Venido
+Page 205 | Line: 350 Un Cargo Dísteme, Señor              | Num: 350 | Title: Un Cargo Dísteme, Señor
+Page 207 | Line: 351 ALABANZA                             | Num: 351 | Title: ALABANZA [CATEGORY?]
+Page 207 | Line: 352 TESTIMONIO                           | Num: 352 | Title: TESTIMONIO [CATEGORY?]
+Page 208 | Line: 353 BENEFICIOS                           | Num: 353 | Title: BENEFICIOS [CATEGORY?]
+Page 208 | Line: 354 GRATITUD                             | Num: 354 | Title: GRATITUD [CATEGORY?]
+Page 209 | Line: 355 ACCIONES DE GRACIAS                  | Num: 355 | Title: ACCIONES DE GRACIAS [CATEGORY?]
+Page 210 | Line: 356 LA GLORIA DE DIOS                    | Num: 356 | Title: LA GLORIA DE DIOS [CATEGORY?]
+Page 210 | Line: 357 MISERICORDIA                         | Num: 357 | Title: MISERICORDIA [CATEGORY?]
+Page 211 | Line: 358 CONFIANZA EN DIOS                    | Num: 358 | Title: CONFIANZA EN DIOS [CATEGORY?]
+Page 211 | Line: 359 EL ARREPENTIMIENTO                   | Num: 359 | Title: EL ARREPENTIMIENTO [CATEGORY?]
+Page 212 | Line: 360 CONSUELO                             | Num: 360 | Title: CONSUELO [CATEGORY?]
+Page 213 | Line: 2 Cor. 1:3-6.                            | Num: 2   | Title: Cor. 1:3-6. [BIBLE REF]
+Page 213 | Line: 361 LA FE                                | Num: 361 | Title: LA FE [CATEGORY?]
+Page 214 | Line: 362 LA ORACION                           | Num: 362 | Title: LA ORACION [CATEGORY?]
+Page 214 | Line: 363 LA PALABRA DE DIOS                   | Num: 363 | Title: LA PALABRA DE DIOS [CATEGORY?]
+Page 215 | Line: 2 Tim. 3:14-17.                          | Num: 2   | Title: Tim. 3:14-17.
+Page 215 | Line: 364 EL ESPIRITU SANTO                    | Num: 364 | Title: EL ESPIRITU SANTO [CATEGORY?]
+Page 216 | Line: 365 SERVICIO CRISTIANO                   | Num: 365 | Title: SERVICIO CRISTIANO [CATEGORY?]
+Page 216 | Line: 1 Cor. 15:58.                            | Num: 1   | Title: Cor. 15:58. [BIBLE REF]
+Page 216 | Line: 2 Cor. 5:9.                              | Num: 2   | Title: Cor. 5:9. [BIBLE REF]
+Page 216 | Line: 1 Tes. 1:3.                              | Num: 1   | Title: Tes. 1:3. [BIBLE REF]
+Page 216 | Line: 2 Cor. 5:14, 15, 20.                     | Num: 2   | Title: Cor. 5:14, 15, 20. [BIBLE REF]
+Page 216 | Line: 1 Cor. 3:8-15.                           | Num: 1   | Title: Cor. 3:8-15. [BIBLE REF]
+Page 216 | Line: 366 LA IGLESIA                           | Num: 366 | Title: LA IGLESIA [CATEGORY?]
+Page 217 | Line: 367 EL NUEVO NACIMIENTO                  | Num: 367 | Title: EL NUEVO NACIMIENTO [CATEGORY?]
+Page 218 | Line: 368 CONSAGRACION                         | Num: 368 | Title: CONSAGRACION [CATEGORY?]
+Page 218 | Line: 369 AVIVAMIENTO                          | Num: 369 | Title: AVIVAMIENTO [CATEGORY?]
+Page 219 | Line: 370 MISIONES                             | Num: 370 | Title: MISIONES [CATEGORY?]
+Page 220 | Line: 371 MAYORDOMIA                           | Num: 371 | Title: MAYORDOMIA [CATEGORY?]
+Page 220 | Line: 2 Cor. 8:9.                              | Num: 2   | Title: Cor. 8:9. [BIBLE REF]
+Page 220 | Line: 2 Cor. 9:6-8.                            | Num: 2   | Title: Cor. 9:6-8. [BIBLE REF]
+Page 220 | Line: 372 NIÑEZ                                | Num: 372 | Title: NIÑEZ [CATEGORY?]
+Page 221 | Line: 373 SANIDAD                              | Num: 373 | Title: SANIDAD [CATEGORY?]
+Page 222 | Line: 374 EL REGRESO DE CRISTO                 | Num: 374 | Title: EL REGRESO DE CRISTO [CATEGORY?]
+Page 222 | Line: 1 Tes. 4:15-18.                          | Num: 1   | Title: Tes. 4:15-18. [BIBLE REF]
+Page 223 | Line: 2 Pedro 3:11-14.                         | Num: 2   | Title: Pedro 3:11-14. [BIBLE REF]
+Page 223 | Line: 375 EL CIELO                             | Num: 375 | Title: EL CIELO [CATEGORY?]
