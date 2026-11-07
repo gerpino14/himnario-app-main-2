@@ -18,7 +18,7 @@ let isPresentationMode = false;
 let controlsTimeout = null;
 let audioVolume = 1.0;
 
-// PDF Viewer State
+// PDF Viewer State & Virtualization
 let pdfDoc = null;
 let pdfTotalPages = 0;
 let pdfCurrentScale = 1.0;
@@ -30,8 +30,13 @@ let pdfObserver = null;
 let pdfFloatingIndicator = null;
 let pdfScrollTimeout = null;
 let pdfLoaded = false;
+let pdfActiveRenderTasks = {};
+let pdfRenderQueue = [];
+let pdfActiveRenders = 0;
+let pdfCurrentVisiblePage = 1;
+let pdfScrollRaf = null;
 
-// Fullscreen PDF Viewer State
+// Fullscreen PDF Viewer State & Virtualization
 let pdfFsOpen = false;
 let pdfFsScale = 1.0;
 let pdfFsFitToWidth = true;
@@ -40,6 +45,15 @@ let pdfFsRenderingPages = new Set();
 let pdfFsObserver = null;
 let pdfFsScrollTimeout = null;
 let pdfFsFloatingIndicator = null;
+let pdfFsActiveRenderTasks = {};
+let pdfFsRenderQueue = [];
+let pdfFsActiveRenders = 0;
+let pdfFsCurrentVisiblePage = 1;
+let pdfFsScrollRaf = null;
+
+
+const MAX_CONCURRENT_PDF_RENDERS = 2;
+const PDF_BUFFER_PAGES = 2;
 
 // DOM Elements Cache
 let DOM = {};
@@ -71,6 +85,9 @@ function initDOM() {
     pdfFitWidth: document.getElementById('pdf-fit-width'),
     pdfGotoInput: document.getElementById('pdf-goto-input'),
     pdfPageTotal: document.getElementById('pdf-page-total'),
+    pdfGotoHymn: document.getElementById('pdf-goto-hymn'),
+    pdfHymnJumpBtn: document.getElementById('pdf-hymn-jump-btn'),
+    pdfIndexBtn: document.getElementById('pdf-index-btn'),
     pdfFullscreenBtn: document.getElementById('pdf-fullscreen-btn'),
     statusBar: document.querySelector('.status-bar'),
     
@@ -83,8 +100,19 @@ function initDOM() {
     pdfFsZoomOut: document.getElementById('pdf-fs-zoom-out'),
     pdfFsZoomDisplay: document.getElementById('pdf-fs-zoom-display'),
     pdfFsFitWidth: document.getElementById('pdf-fs-fit-width'),
+    pdfFsGotoHymn: document.getElementById('pdf-fs-goto-hymn'),
+    pdfFsHymnJumpBtn: document.getElementById('pdf-fs-hymn-jump-btn'),
+    pdfFsIndexBtn: document.getElementById('pdf-fs-index-btn'),
     pdfFsGotoInput: document.getElementById('pdf-fs-goto-input'),
     pdfFsPageTotal: document.getElementById('pdf-fs-page-total'),
+
+    // PDF Index Modal
+    pdfIndexModal: document.getElementById('pdf-index-modal'),
+    pdfIndexClose: document.getElementById('pdf-index-close'),
+    pdfIndexSearchInput: document.getElementById('pdf-index-search-input'),
+    pdfIndexClear: document.getElementById('pdf-index-clear'),
+    pdfIndexChips: document.querySelectorAll('.pdf-chip'),
+    pdfIndexList: document.getElementById('pdf-index-list'),
     
     // Reader Modal
     readerModal: document.getElementById('reader-modal'),
@@ -92,6 +120,7 @@ function initDOM() {
     readerBar: document.querySelector('.reader-bar'),
     readerFooter: document.querySelector('.reader-nav-footer'),
     presentationToggle: document.getElementById('presentation-toggle'),
+    readerSheetMusicBtn: document.getElementById('reader-sheet-music-btn'),
     closeReader: document.getElementById('close-reader'),
     readerFavBtn: document.getElementById('reader-fav-btn'),
     fontDecrease: document.getElementById('font-decrease'),
@@ -122,6 +151,8 @@ function initDOM() {
     playerDownloadLink: document.getElementById('player-download-link'),
     speedSlider: document.getElementById('speed-slider'),
     speedDisplay: document.getElementById('speed-display'),
+    speedDecreaseBtn: document.getElementById('speed-decrease-btn'),
+    speedIncreaseBtn: document.getElementById('speed-increase-btn'),
     speedPresets: document.querySelectorAll('.speed-preset-btn'),
     menuVolumeBtn: document.getElementById('menu-volume-btn'),
     menuIconVol: document.getElementById('menu-icon-vol'),
@@ -421,6 +452,37 @@ function renderErrorState() {
   `;
 }
 
+// Sincroniza y aplica la velocidad de reproducción en audio, slider, indicador, presets y botones +/-
+function applyPlaybackSpeed(speed) {
+  const clamped = Math.max(0.5, Math.min(2.0, Math.round(speed * 100) / 100));
+  if (DOM.readerAudio) {
+    DOM.readerAudio.playbackRate = clamped;
+  }
+  if (DOM.speedSlider) {
+    DOM.speedSlider.value = clamped;
+  }
+  if (DOM.speedDisplay) {
+    DOM.speedDisplay.textContent = `${clamped.toFixed(2)}x`;
+  }
+  if (DOM.speedPresets) {
+    DOM.speedPresets.forEach(btn => {
+      const btnSpeed = parseFloat(btn.getAttribute('data-speed'));
+      btn.classList.toggle('active', Math.abs(btnSpeed - clamped) < 0.01);
+    });
+  }
+  if (DOM.speedDecreaseBtn) {
+    const isMin = clamped <= 0.5 + 0.001;
+    DOM.speedDecreaseBtn.disabled = isMin;
+    DOM.speedDecreaseBtn.setAttribute('aria-disabled', isMin);
+  }
+  if (DOM.speedIncreaseBtn) {
+    const isMax = clamped >= 2.0 - 0.001;
+    DOM.speedIncreaseBtn.disabled = isMax;
+    DOM.speedIncreaseBtn.setAttribute('aria-disabled', isMax);
+  }
+  return clamped;
+}
+
 // ----------------------------------------------------
 // 5. Immersive Reader Actions
 // ----------------------------------------------------
@@ -483,19 +545,7 @@ function openReader(hymnNumber) {
       }
 
       // Reiniciar velocidad de reproducción a 1.0x
-      DOM.readerAudio.playbackRate = 1.0;
-      if (DOM.speedSlider) {
-        DOM.speedSlider.value = 1.0;
-      }
-      if (DOM.speedDisplay) {
-        DOM.speedDisplay.textContent = '1.00x';
-      }
-      if (DOM.speedPresets) {
-        DOM.speedPresets.forEach(btn => {
-          const speed = parseFloat(btn.getAttribute('data-speed'));
-          btn.classList.toggle('active', speed === 1.0);
-        });
-      }
+      applyPlaybackSpeed(1.0);
 
       // Inicializar volumen
       DOM.readerAudio.volume = audioVolume;
@@ -539,6 +589,21 @@ function openReader(hymnNumber) {
     } else {
       DOM.readerAudioContainer.classList.add('hidden');
       DOM.readerAudio.src = '';
+    }
+  }
+
+  // Configurar acceso directo a partitura PDF del himno
+  if (DOM.readerSheetMusicBtn) {
+    if (hymn.paginas_pdf && hymn.paginas_pdf.length > 0) {
+      const targetPdfPage = hymn.paginas_pdf[0];
+      DOM.readerSheetMusicBtn.classList.remove('hidden');
+      DOM.readerSheetMusicBtn.title = `Ver partitura en PDF (Pág. ${targetPdfPage})`;
+      DOM.readerSheetMusicBtn.onclick = () => {
+        closeReader();
+        openPdfFullscreen(targetPdfPage);
+      };
+    } else {
+      DOM.readerSheetMusicBtn.classList.add('hidden');
     }
   }
   
@@ -786,9 +851,17 @@ function registerEventListeners() {
   if (DOM.prevHymnBtn) DOM.prevHymnBtn.addEventListener('click', () => navigateReader(-1));
   if (DOM.nextHymnBtn) DOM.nextHymnBtn.addEventListener('click', () => navigateReader(1));
   
-  // Back key gestures (Escape closes reader / drawer / fullscreen PDF)
+  // Back key gestures (Escape closes modals / drawer)
   document.addEventListener('keydown', (e) => {
-    // Fullscreen PDF modal has highest priority
+    // PDF Index modal
+    if (DOM.pdfIndexModal && !DOM.pdfIndexModal.classList.contains('hidden')) {
+      if (e.key === 'Escape') {
+        closePdfIndexModal();
+      }
+      return;
+    }
+
+    // Fullscreen PDF modal
     if (pdfFsOpen && DOM.pdfFsModal && !DOM.pdfFsModal.classList.contains('hidden')) {
       if (e.key === 'Escape') {
         closePdfFullscreen();
@@ -911,22 +984,65 @@ function registerEventListeners() {
     });
   }
 
+  // Helper para botones con autorepetición al mantener presionado (+ y -)
+  function setupSpeedStepButton(btn, stepDelta) {
+    if (!btn) return;
+    let timer = null;
+    let interval = null;
+
+    const doStep = () => {
+      const current = DOM.readerAudio ? DOM.readerAudio.playbackRate : (parseFloat(DOM.speedSlider ? DOM.speedSlider.value : 1.0) || 1.0);
+      applyPlaybackSpeed(current + stepDelta);
+    };
+
+    const stop = () => {
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
+      if (interval) {
+        clearInterval(interval);
+        interval = null;
+      }
+    };
+
+    btn.addEventListener('pointerdown', (e) => {
+      if (e.button !== undefined && e.button !== 0) return;
+      if (btn.disabled) return;
+      doStep();
+      timer = setTimeout(() => {
+        interval = setInterval(() => {
+          if (btn.disabled) {
+            stop();
+          } else {
+            doStep();
+          }
+        }, 120);
+      }, 350);
+    });
+
+    btn.addEventListener('pointerup', stop);
+    btn.addEventListener('pointerleave', stop);
+    btn.addEventListener('pointercancel', stop);
+
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        doStep();
+      }
+    });
+  }
+
+  // Vincular eventos de disminución (-) y aumento (+) de velocidad
+  setupSpeedStepButton(DOM.speedDecreaseBtn, -0.05);
+  setupSpeedStepButton(DOM.speedIncreaseBtn, 0.05);
+
   // Playback Speed Slider Event
   if (DOM.speedSlider) {
     DOM.speedSlider.addEventListener('input', (e) => {
       const speed = parseFloat(e.target.value);
-      if (DOM.readerAudio && !isNaN(speed)) {
-        DOM.readerAudio.playbackRate = speed;
-        if (DOM.speedDisplay) {
-          DOM.speedDisplay.textContent = `${speed.toFixed(2)}x`;
-        }
-        // Sync presets highlighting
-        if (DOM.speedPresets) {
-          DOM.speedPresets.forEach(btn => {
-            const btnSpeed = parseFloat(btn.getAttribute('data-speed'));
-            btn.classList.toggle('active', Math.abs(btnSpeed - speed) < 0.01);
-          });
-        }
+      if (!isNaN(speed)) {
+        applyPlaybackSpeed(speed);
       }
     });
   }
@@ -936,20 +1052,8 @@ function registerEventListeners() {
     DOM.speedPresets.forEach(opt => {
       opt.addEventListener('click', () => {
         const speed = parseFloat(opt.getAttribute('data-speed'));
-        if (DOM.readerAudio && !isNaN(speed)) {
-          DOM.readerAudio.playbackRate = speed;
-          
-          if (DOM.speedSlider) {
-            DOM.speedSlider.value = speed;
-          }
-          if (DOM.speedDisplay) {
-            DOM.speedDisplay.textContent = `${speed.toFixed(2)}x`;
-          }
-          
-          DOM.speedPresets.forEach(btn => {
-            const btnSpeed = parseFloat(btn.getAttribute('data-speed'));
-            btn.classList.toggle('active', btnSpeed === speed);
-          });
+        if (!isNaN(speed)) {
+          applyPlaybackSpeed(speed);
           
           // Ocultar menú tras seleccionar preajuste
           if (DOM.playerOptionsMenu) {
@@ -1346,57 +1450,281 @@ function showPresentationControls() {
 }
 
 // ----------------------------------------------------
-// 11. PDF Viewer Module
+// 11. PDF Viewer Module (Continuous Scroll Virtualizado & Navegación Rápida)
 // ----------------------------------------------------
 
+let pdfIndexActiveRange = 'all';
+
 /**
- * Shows the PDF viewer section and hides the hymn grid.
- * Initializes PDF loading on first access.
+ * Retorna el himno correspondiente a una página del PDF.
+ */
+function getHymnForPdfPage(pageNum) {
+  if (!hymnsData || hymnsData.length === 0) return null;
+  // Coincidencia exacta con alguna de las páginas asignadas al himno
+  const exact = hymnsData.find(h => h.paginas_pdf && h.paginas_pdf.includes(pageNum));
+  if (exact) return exact;
+
+  // Si no coincide exactamente, buscar el himno inmediatamente anterior
+  let closest = null;
+  for (const h of hymnsData) {
+    if (h.paginas_pdf && h.paginas_pdf[0] <= pageNum) {
+      if (!closest || h.paginas_pdf[0] > closest.paginas_pdf[0]) {
+        closest = h;
+      }
+    }
+  }
+  return closest;
+}
+
+/**
+ * Salta instantáneamente a cualquier himno (1-350) por su número oficial.
+ */
+function jumpToHymn(hymnNum, isFs = false) {
+  hymnNum = parseInt(hymnNum);
+  if (isNaN(hymnNum) || hymnNum < 1 || hymnNum > 350) {
+    alert('Por favor ingresa un número de himno válido entre 1 y 350.');
+    return;
+  }
+
+  const hymn = hymnsData.find(h => h.numero === hymnNum);
+  if (!hymn || !hymn.paginas_pdf || hymn.paginas_pdf.length === 0) {
+    console.warn(`El himno ${hymnNum} no tiene páginas PDF asociadas.`);
+    return;
+  }
+
+  const targetPage = hymn.paginas_pdf[0];
+
+  if (isFs || pdfFsOpen) {
+    goToFsPage(targetPage);
+  } else {
+    if (activeFilter !== 'pdf') {
+      const pdfTab = document.querySelector('.filter-btn[data-filter="pdf"]');
+      if (pdfTab) pdfTab.click();
+    }
+    goToPdfPage(targetPage);
+  }
+
+  // Sincronizar inputs
+  if (DOM.pdfGotoHymn) DOM.pdfGotoHymn.value = hymnNum;
+  if (DOM.pdfFsGotoHymn) DOM.pdfFsGotoHymn.value = hymnNum;
+
+  // Indicador flotante informativo
+  const indicator = (isFs || pdfFsOpen) ? pdfFsFloatingIndicator : pdfFloatingIndicator;
+  if (indicator) {
+    indicator.textContent = `Himno ${hymn.numero}: ${hymn.titulo} (Pág. ${targetPage})`;
+    indicator.classList.add('is-visible');
+    clearTimeout(pdfScrollTimeout);
+    pdfScrollTimeout = setTimeout(() => {
+      indicator.classList.remove('is-visible');
+    }, 2800);
+  }
+}
+
+/**
+ * Abre el modal con el índice completo de partituras para buscar por título o número.
+ */
+function openPdfIndexModal() {
+  if (!DOM.pdfIndexModal) return;
+  DOM.pdfIndexModal.classList.remove('hidden');
+  DOM.pdfIndexModal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
+
+  if (DOM.pdfIndexSearchInput) {
+    DOM.pdfIndexSearchInput.value = '';
+    setTimeout(() => DOM.pdfIndexSearchInput.focus(), 60);
+  }
+  if (DOM.pdfIndexClear) DOM.pdfIndexClear.classList.add('hidden');
+
+  pdfIndexActiveRange = 'all';
+  if (DOM.pdfIndexChips) {
+    DOM.pdfIndexChips.forEach(chip => {
+      chip.classList.toggle('active', chip.getAttribute('data-range') === 'all');
+    });
+  }
+
+  renderPdfIndexList();
+}
+
+/**
+ * Cierra el modal del índice de partituras.
+ */
+function closePdfIndexModal() {
+  if (!DOM.pdfIndexModal) return;
+  DOM.pdfIndexModal.classList.add('hidden');
+  DOM.pdfIndexModal.setAttribute('aria-hidden', 'true');
+  if (!pdfFsOpen && (!DOM.readerModal || DOM.readerModal.classList.contains('hidden'))) {
+    document.body.classList.remove('modal-open');
+  }
+}
+
+/**
+ * Renderiza la lista filtrada de himnos dentro del modal de índice de partituras.
+ */
+function renderPdfIndexList() {
+  if (!DOM.pdfIndexList || !hymnsData) return;
+
+  const query = (DOM.pdfIndexSearchInput?.value || '').trim().toLowerCase();
+  const normalizedQuery = typeof removeAccents === 'function' ? removeAccents(query) : query;
+
+  let filtered = hymnsData.filter(h => h.paginas_pdf && h.paginas_pdf.length > 0);
+
+  // Filtro por rango
+  if (pdfIndexActiveRange !== 'all') {
+    const [min, max] = pdfIndexActiveRange.split('-').map(Number);
+    filtered = filtered.filter(h => h.numero >= min && h.numero <= max);
+  }
+
+  // Filtro por búsqueda
+  if (query) {
+    const queryNum = parseInt(query);
+    filtered = filtered.filter(h => {
+      if (!isNaN(queryNum) && h.numero.toString().includes(query)) return true;
+      const titleNorm = typeof removeAccents === 'function' ? removeAccents(h.titulo.toLowerCase()) : h.titulo.toLowerCase();
+      return titleNorm.includes(normalizedQuery);
+    });
+  }
+
+  if (filtered.length === 0) {
+    DOM.pdfIndexList.innerHTML = `
+      <div style="padding: 28px; text-align: center; color: var(--secondary-text);">
+        No se encontraron himnos con "${query}"
+      </div>
+    `;
+    return;
+  }
+
+  DOM.pdfIndexList.innerHTML = filtered.map(h => `
+    <button type="button" class="pdf-index-item" data-hymn-num="${h.numero}" data-page="${h.paginas_pdf[0]}">
+      <div class="pdf-index-item-main">
+        <span class="pdf-index-num">#${h.numero}</span>
+        <span class="pdf-index-item-title">${h.titulo}</span>
+      </div>
+      <span class="pdf-index-badge">Pág. ${h.paginas_pdf[0]}</span>
+    </button>
+  `).join('');
+
+  DOM.pdfIndexList.querySelectorAll('.pdf-index-item').forEach(btn => {
+    btn.onclick = () => {
+      const num = parseInt(btn.getAttribute('data-hymn-num'));
+      closePdfIndexModal();
+      jumpToHymn(num, pdfFsOpen);
+    };
+  });
+}
+
+/**
+ * Configura los event listeners del modal del índice de partituras.
+ */
+function initPdfIndexListeners() {
+  if (DOM.pdfIndexBtn) {
+    DOM.pdfIndexBtn.onclick = openPdfIndexModal;
+  }
+  if (DOM.pdfFsIndexBtn) {
+    DOM.pdfFsIndexBtn.onclick = openPdfIndexModal;
+  }
+  if (DOM.pdfIndexClose) {
+    DOM.pdfIndexClose.onclick = closePdfIndexModal;
+  }
+
+  if (DOM.pdfIndexModal) {
+    DOM.pdfIndexModal.onclick = (e) => {
+      if (e.target === DOM.pdfIndexModal) closePdfIndexModal();
+    };
+  }
+
+  if (DOM.pdfIndexSearchInput) {
+    DOM.pdfIndexSearchInput.oninput = () => {
+      const hasText = DOM.pdfIndexSearchInput.value.trim().length > 0;
+      if (DOM.pdfIndexClear) DOM.pdfIndexClear.classList.toggle('hidden', !hasText);
+      renderPdfIndexList();
+    };
+  }
+
+  if (DOM.pdfIndexClear) {
+    DOM.pdfIndexClear.onclick = () => {
+      if (DOM.pdfIndexSearchInput) {
+        DOM.pdfIndexSearchInput.value = '';
+        DOM.pdfIndexSearchInput.focus();
+      }
+      DOM.pdfIndexClear.classList.add('hidden');
+      renderPdfIndexList();
+    };
+  }
+
+  if (DOM.pdfIndexChips) {
+    DOM.pdfIndexChips.forEach(chip => {
+      chip.onclick = () => {
+        DOM.pdfIndexChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        pdfIndexActiveRange = chip.getAttribute('data-range') || 'all';
+        renderPdfIndexList();
+      };
+    });
+  }
+
+  // Inputs de salto directo por Himno #
+  const setupHymnInput = (input, goBtn, isFs) => {
+    if (goBtn) {
+      goBtn.onclick = () => {
+        if (input) jumpToHymn(input.value, isFs);
+      };
+    }
+    if (input) {
+      input.onkeydown = (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          jumpToHymn(input.value, isFs);
+          input.blur();
+        }
+      };
+    }
+  };
+
+  setupHymnInput(DOM.pdfGotoHymn, DOM.pdfHymnJumpBtn, false);
+  setupHymnInput(DOM.pdfFsGotoHymn, DOM.pdfFsHymnJumpBtn, true);
+}
+
+/**
+ * Muestra la sección del visor PDF continuo y oculta la cuadrícula de himnos.
  */
 function showPdfViewer() {
-  // Hide hymns content
   if (DOM.hymnsGrid) DOM.hymnsGrid.classList.add('hidden');
   if (DOM.statusBar) DOM.statusBar.classList.add('hidden');
 
-  // Show PDF section
   if (DOM.pdfSection) {
     DOM.pdfSection.classList.remove('hidden');
-    // Re-trigger entry animation
     DOM.pdfSection.style.animation = 'none';
     DOM.pdfSection.offsetHeight; // force reflow
     DOM.pdfSection.style.animation = '';
   }
 
-  // Load PDF on first access
   if (!pdfLoaded && !pdfDoc) {
     initPdfViewer();
   } else if (pdfDoc) {
-    // Re-observe pages if returning to the tab
     reobservePdfPages();
   }
 }
 
 /**
- * Hides the PDF viewer section and restores the hymn grid.
+ * Oculta la sección del visor PDF continuo.
  */
 function hidePdfViewer() {
   if (DOM.pdfSection) DOM.pdfSection.classList.add('hidden');
   if (DOM.hymnsGrid) DOM.hymnsGrid.classList.remove('hidden');
   if (DOM.statusBar) DOM.statusBar.classList.remove('hidden');
 
-  // Hide floating indicator
   if (pdfFloatingIndicator) {
     pdfFloatingIndicator.classList.remove('is-visible');
   }
 
-  // Disconnect observer to save resources while not viewing
+  cancelAllPdfRenders();
   if (pdfObserver) {
     pdfObserver.disconnect();
   }
 }
 
 /**
- * Initializes PDF.js and loads the document.
+ * Inicializa PDF.js y carga el documento en modo scroll continuo.
  */
 async function initPdfViewer() {
   if (typeof pdfjsLib === 'undefined') {
@@ -1405,10 +1733,8 @@ async function initPdfViewer() {
     return;
   }
 
-  // Set worker source
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-  // Show loading state
   if (DOM.pdfLoading) DOM.pdfLoading.classList.remove('hidden');
   if (DOM.pdfPagesContainer) DOM.pdfPagesContainer.innerHTML = '';
 
@@ -1419,7 +1745,6 @@ async function initPdfViewer() {
       cMapPacked: true,
     });
 
-    // Track loading progress
     loadingTask.onProgress = (progress) => {
       if (progress.total > 0 && DOM.pdfProgressFill) {
         const percent = Math.min(100, (progress.loaded / progress.total) * 100);
@@ -1431,29 +1756,20 @@ async function initPdfViewer() {
     pdfTotalPages = pdfDoc.numPages;
     pdfLoaded = true;
 
-    console.log(`PDF loaded: ${pdfTotalPages} pages`);
-
-    // Update UI
     if (DOM.pdfPageTotal) DOM.pdfPageTotal.textContent = `/ ${pdfTotalPages}`;
     if (DOM.pdfGotoInput) DOM.pdfGotoInput.max = pdfTotalPages;
+    if (DOM.pdfFsPageTotal) DOM.pdfFsPageTotal.textContent = `/ ${pdfTotalPages}`;
+    if (DOM.pdfFsGotoInput) DOM.pdfFsGotoInput.max = pdfTotalPages;
 
-    // Get page dimensions for all pages (for proper skeleton sizing)
     await fetchPageDimensions();
-
-    // Create page placeholders
     createPagePlaceholders();
 
-    // Hide loading
     if (DOM.pdfLoading) DOM.pdfLoading.classList.add('hidden');
 
-    // Create floating indicator
     createFloatingIndicator();
-
-    // Setup Intersection Observer for lazy rendering
     setupPdfObserver();
-
-    // Register PDF viewer event listeners
     registerPdfEventListeners();
+    initPdfIndexListeners();
 
   } catch (error) {
     console.error('Failed to load PDF:', error);
@@ -1462,15 +1778,13 @@ async function initPdfViewer() {
 }
 
 /**
- * Fetches the viewport dimensions for all pages.
+ * Obtiene las dimensiones base de las páginas.
  */
 async function fetchPageDimensions() {
   pdfPageDimensions = [];
-  // Fetch first page to get base dimensions (most PDFs have uniform pages)
   const firstPage = await pdfDoc.getPage(1);
   const baseViewport = firstPage.getViewport({ scale: 1.0 });
 
-  // Use first page dimensions for all pages as default
   for (let i = 0; i < pdfTotalPages; i++) {
     pdfPageDimensions.push({
       width: baseViewport.width,
@@ -1480,21 +1794,18 @@ async function fetchPageDimensions() {
 }
 
 /**
- * Creates placeholder elements for all pages.
+ * Crea todos los contenedores / placeholders de páginas para el scroll continuo.
  */
 function createPagePlaceholders() {
   if (!DOM.pdfPagesContainer) return;
   DOM.pdfPagesContainer.innerHTML = '';
 
-  // Calculate container width for fit-to-width scaling
-  const containerWidth = DOM.pdfPagesContainer.clientWidth - 2; // account for border
+  const containerWidth = DOM.pdfPagesContainer.clientWidth - 2;
 
   for (let i = 0; i < pdfTotalPages; i++) {
     const pageNum = i + 1;
     const dim = pdfPageDimensions[i];
-    const scale = pdfFitToWidth
-      ? containerWidth / dim.width
-      : pdfCurrentScale;
+    const scale = pdfFitToWidth ? (containerWidth / dim.width) : pdfCurrentScale;
     const displayWidth = dim.width * scale;
     const displayHeight = dim.height * scale;
 
@@ -1508,7 +1819,6 @@ function createPagePlaceholders() {
     DOM.pdfPagesContainer.appendChild(wrapper);
   }
 
-  // Update zoom display
   if (pdfFitToWidth && pdfPageDimensions.length > 0) {
     const scale = containerWidth / pdfPageDimensions[0].width;
     pdfCurrentScale = scale;
@@ -1517,7 +1827,7 @@ function createPagePlaceholders() {
 }
 
 /**
- * Sets up the Intersection Observer for virtualized page rendering.
+ * Configura el IntersectionObserver para lazy loading fluido en scroll vertical.
  */
 function setupPdfObserver() {
   if (pdfObserver) pdfObserver.disconnect();
@@ -1525,104 +1835,199 @@ function setupPdfObserver() {
   pdfObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       const pageNum = parseInt(entry.target.getAttribute('data-page'));
-
-      if (entry.isIntersecting) {
-        renderPdfPage(pageNum, entry.target);
-        // Also render buffer pages (1 above, 1 below)
-        renderBufferPages(pageNum);
+      if (entry.isIntersecting && !isNaN(pageNum)) {
+        queuePdfPageRender(pageNum);
       }
     });
   }, {
     root: null,
-    rootMargin: '200px 0px', // pre-render pages 200px before they enter viewport
+    rootMargin: '300px 0px',
     threshold: 0.01,
   });
 
-  // Observe all page placeholders/wrappers
   const pages = DOM.pdfPagesContainer.querySelectorAll('[data-page]');
   pages.forEach(page => pdfObserver.observe(page));
 
-  // Setup scroll listener for page indicator
-  window.addEventListener('scroll', handlePdfScroll, { passive: true });
+  window.removeEventListener('scroll', onPdfScroll);
+  window.addEventListener('scroll', onPdfScroll, { passive: true });
+}
+
+function onPdfScroll() {
+  if (!pdfScrollRaf) {
+    pdfScrollRaf = requestAnimationFrame(() => {
+      pdfScrollRaf = null;
+      handlePdfScroll();
+    });
+  }
 }
 
 /**
- * Renders buffer pages around the current visible page.
+ * Encola una página para renderizarla sin descartes de distancia.
  */
-function renderBufferPages(centerPage) {
-  const bufferSize = 2;
-  for (let offset = -bufferSize; offset <= bufferSize; offset++) {
-    const page = centerPage + offset;
-    if (page >= 1 && page <= pdfTotalPages && page !== centerPage) {
-      const el = DOM.pdfPagesContainer.querySelector(`[data-page="${page}"]`);
-      if (el) renderPdfPage(page, el);
+function queuePdfPageRender(pageNum, prioritize = false) {
+  if (pageNum < 1 || pageNum > pdfTotalPages) return;
+  if (pdfRenderedPages.has(pageNum) || pdfRenderingPages.has(pageNum)) return;
+  if (!pdfDoc) return;
+
+  if (prioritize) {
+    pdfRenderQueue = pdfRenderQueue.filter(p => p !== pageNum);
+    pdfRenderQueue.unshift(pageNum);
+  } else if (!pdfRenderQueue.includes(pageNum)) {
+    pdfRenderQueue.push(pageNum);
+  }
+  processPdfRenderQueue();
+}
+
+/**
+ * Procesa la cola de renderizado priorizando cercanía a la vista activa.
+ */
+function processPdfRenderQueue() {
+  if (!pdfDoc) return;
+
+  pdfRenderQueue.sort((a, b) => Math.abs(a - pdfCurrentVisiblePage) - Math.abs(b - pdfCurrentVisiblePage));
+
+  while (pdfActiveRenders < MAX_CONCURRENT_PDF_RENDERS && pdfRenderQueue.length > 0) {
+    const next = pdfRenderQueue.shift();
+    if (!pdfRenderedPages.has(next) && !pdfRenderingPages.has(next)) {
+      executePdfPageRender(next);
     }
   }
 }
 
 /**
- * Renders a single PDF page into a canvas element.
+ * Renderiza la página del PDF en un elemento canvas con aceleración por hardware.
  */
-async function renderPdfPage(pageNum, element) {
-  // Skip if already rendered or currently rendering
-  if (pdfRenderedPages.has(pageNum) || pdfRenderingPages.has(pageNum)) return;
-  if (!pdfDoc) return;
+async function executePdfPageRender(pageNum) {
+  const currentTarget = DOM.pdfPagesContainer?.querySelector(`[data-page="${pageNum}"]`);
+  if (!currentTarget || !pdfDoc) return;
 
   pdfRenderingPages.add(pageNum);
+  pdfActiveRenders++;
 
   try {
     const page = await pdfDoc.getPage(pageNum);
+    if (activeFilter !== 'pdf') {
+      pdfRenderingPages.delete(pageNum);
+      return;
+    }
+
     const viewport = page.getViewport({ scale: pdfCurrentScale });
+    const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
+    const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2.0);
 
-    // Create wrapper
-    const wrapper = document.createElement('div');
-    wrapper.className = 'pdf-page-wrapper';
-    wrapper.setAttribute('data-page', pageNum);
-    wrapper.style.width = `${viewport.width}px`;
-
-    // Create canvas
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-
-    // Use devicePixelRatio for sharp rendering on HiDPI screens
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = viewport.width * dpr;
-    canvas.height = viewport.height * dpr;
+    canvas.width = Math.floor(viewport.width * dpr);
+    canvas.height = Math.floor(viewport.height * dpr);
     canvas.style.width = `${viewport.width}px`;
     canvas.style.height = `${viewport.height}px`;
     ctx.scale(dpr, dpr);
 
-    // Page number badge
-    const badge = document.createElement('span');
-    badge.className = 'pdf-page-number';
-    badge.textContent = pageNum;
-
-    wrapper.appendChild(canvas);
-    wrapper.appendChild(badge);
-
-    // Replace the skeleton with the rendered wrapper
-    element.replaceWith(wrapper);
-
-    // Render the page
-    await page.render({
+    const renderTask = page.render({
       canvasContext: ctx,
       viewport: viewport,
-    }).promise;
+    });
+
+    pdfActiveRenderTasks[pageNum] = renderTask;
+    await renderTask.promise;
+    delete pdfActiveRenderTasks[pageNum];
+
+    const targetElement = DOM.pdfPagesContainer?.querySelector(`[data-page="${pageNum}"]`);
+    if (targetElement && activeFilter === 'pdf') {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'pdf-page-wrapper';
+      wrapper.setAttribute('data-page', pageNum);
+      wrapper.style.width = `${viewport.width}px`;
+      wrapper.style.height = `${viewport.height}px`;
+
+      const badge = document.createElement('span');
+      badge.className = 'pdf-page-number';
+      badge.textContent = pageNum;
+
+      wrapper.appendChild(canvas);
+      wrapper.appendChild(badge);
+
+      targetElement.replaceWith(wrapper);
+      if (pdfObserver) pdfObserver.observe(wrapper);
+    }
 
     pdfRenderedPages.add(pageNum);
     pdfRenderingPages.delete(pageNum);
 
-    // Re-observe the new wrapper for potential unloading in future
-    if (pdfObserver) pdfObserver.observe(wrapper);
+    evictOffscreenPdfPages(pdfCurrentVisiblePage);
 
   } catch (error) {
-    console.warn(`Error rendering page ${pageNum}:`, error);
+    delete pdfActiveRenderTasks[pageNum];
     pdfRenderingPages.delete(pageNum);
+    if (error && error.name !== 'RenderingCancelledException') {
+      console.warn(`Error renderizando página ${pageNum}:`, error);
+    }
+  } finally {
+    pdfActiveRenders--;
+    processPdfRenderQueue();
   }
 }
 
 /**
- * Re-observes all pages when returning to the PDF tab.
+ * Libera de memoria páginas fuera de vista lejanas (> 5 páginas) para evitar cierres en móvil.
+ */
+function evictOffscreenPdfPages(centerPage) {
+  if (!DOM.pdfPagesContainer) return;
+  const maxDistance = 5;
+
+  for (const renderedPage of Array.from(pdfRenderedPages)) {
+    if (Math.abs(renderedPage - centerPage) > maxDistance) {
+      const el = DOM.pdfPagesContainer.querySelector(`.pdf-page-wrapper[data-page="${renderedPage}"]`);
+      if (el) {
+        const canvas = el.querySelector('canvas');
+        if (canvas) {
+          canvas.width = 0;
+          canvas.height = 0;
+        }
+
+        const skeleton = document.createElement('div');
+        skeleton.className = 'pdf-page-skeleton';
+        skeleton.setAttribute('data-page', renderedPage);
+        skeleton.setAttribute('data-page-label', `Página ${renderedPage}`);
+        skeleton.style.width = el.style.width;
+        skeleton.style.height = el.style.height;
+
+        el.replaceWith(skeleton);
+        if (pdfObserver) pdfObserver.observe(skeleton);
+      }
+      pdfRenderedPages.delete(renderedPage);
+    }
+  }
+
+  for (const pageStr in pdfActiveRenderTasks) {
+    const p = parseInt(pageStr);
+    if (Math.abs(p - centerPage) > maxDistance + 3) {
+      try {
+        pdfActiveRenderTasks[p].cancel();
+      } catch (e) {}
+      delete pdfActiveRenderTasks[p];
+      pdfRenderingPages.delete(p);
+    }
+  }
+}
+
+/**
+ * Cancela renders pendientes inline.
+ */
+function cancelAllPdfRenders() {
+  for (const pageStr in pdfActiveRenderTasks) {
+    try {
+      pdfActiveRenderTasks[pageStr].cancel();
+    } catch (e) {}
+  }
+  pdfActiveRenderTasks = {};
+  pdfRenderQueue = [];
+  pdfRenderingPages.clear();
+  pdfActiveRenders = 0;
+}
+
+/**
+ * Re-observa las páginas al volver a la pestaña de PDF.
  */
 function reobservePdfPages() {
   if (!pdfObserver || !DOM.pdfPagesContainer) return;
@@ -1631,44 +2036,67 @@ function reobservePdfPages() {
 }
 
 /**
- * Handles scroll events to update the floating page indicator and go-to input.
+ * Maneja el evento de scroll en O(1) y sincroniza página e himno actual.
  */
 function handlePdfScroll() {
   if (activeFilter !== 'pdf' || !DOM.pdfPagesContainer) return;
 
-  // Find the currently visible page
-  const pages = DOM.pdfPagesContainer.querySelectorAll('[data-page]');
-  let currentPage = 1;
+  const containerRect = DOM.pdfPagesContainer.getBoundingClientRect();
+  const baseDim = pdfPageDimensions[0];
+  const pageHeight = (baseDim ? baseDim.height * pdfCurrentScale : 800) + 20;
+  const relativeY = (window.innerHeight * 0.4) - containerRect.top;
 
-  for (const page of pages) {
-    const rect = page.getBoundingClientRect();
-    if (rect.top <= window.innerHeight / 2 && rect.bottom > 0) {
-      currentPage = parseInt(page.getAttribute('data-page'));
+  let approxPage = Math.max(1, Math.min(pdfTotalPages, Math.floor(relativeY / pageHeight) + 1));
+
+  for (let p = Math.max(1, approxPage - 1); p <= Math.min(pdfTotalPages, approxPage + 1); p++) {
+    const el = DOM.pdfPagesContainer.querySelector(`[data-page="${p}"]`);
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= window.innerHeight * 0.5 && rect.bottom >= window.innerHeight * 0.1) {
+        approxPage = p;
+        break;
+      }
     }
   }
 
-  // Update go-to input
+  const currentPage = approxPage;
+  pdfCurrentVisiblePage = currentPage;
+
+  evictOffscreenPdfPages(currentPage);
+
+  queuePdfPageRender(currentPage);
+  if (currentPage > 1) queuePdfPageRender(currentPage - 1);
+  if (currentPage < pdfTotalPages) queuePdfPageRender(currentPage + 1);
+
   if (DOM.pdfGotoInput && document.activeElement !== DOM.pdfGotoInput) {
     DOM.pdfGotoInput.value = currentPage;
   }
 
-  // Show floating indicator
+  // Sincronizar himno actual visible
+  const hymn = getHymnForPdfPage(currentPage);
+  if (hymn && DOM.pdfGotoHymn && document.activeElement !== DOM.pdfGotoHymn) {
+    DOM.pdfGotoHymn.value = hymn.numero;
+  }
+
   if (pdfFloatingIndicator) {
-    pdfFloatingIndicator.textContent = `Página ${currentPage} de ${pdfTotalPages}`;
+    if (hymn) {
+      pdfFloatingIndicator.textContent = `Pág. ${currentPage} de ${pdfTotalPages} · Himno ${hymn.numero}: ${hymn.titulo}`;
+    } else {
+      pdfFloatingIndicator.textContent = `Página ${currentPage} de ${pdfTotalPages}`;
+    }
     pdfFloatingIndicator.classList.add('is-visible');
   }
 
-  // Hide floating indicator after delay
   clearTimeout(pdfScrollTimeout);
   pdfScrollTimeout = setTimeout(() => {
     if (pdfFloatingIndicator) {
       pdfFloatingIndicator.classList.remove('is-visible');
     }
-  }, 1500);
+  }, 1800);
 }
 
 /**
- * Creates the floating page indicator element.
+ * Crea el indicador flotante de página.
  */
 function createFloatingIndicator() {
   if (pdfFloatingIndicator) return;
@@ -1679,7 +2107,7 @@ function createFloatingIndicator() {
 }
 
 /**
- * Zoom in/out and re-render all visible pages.
+ * Zoom in/out en modo continuo.
  */
 function pdfZoom(direction) {
   pdfFitToWidth = false;
@@ -1696,14 +2124,14 @@ function pdfZoom(direction) {
 }
 
 /**
- * Fit pages to the container width.
+ * Ajusta al ancho en modo continuo.
  */
 function pdfFitToWidthMode() {
   pdfFitToWidth = true;
   if (DOM.pdfFitWidth) DOM.pdfFitWidth.classList.add('is-active');
 
-  const containerWidth = DOM.pdfPagesContainer.clientWidth - 2;
-  if (pdfPageDimensions.length > 0) {
+  const containerWidth = DOM.pdfPagesContainer.clientWidth - 4;
+  if (pdfPageDimensions.length > 0 && containerWidth > 0) {
     pdfCurrentScale = containerWidth / pdfPageDimensions[0].width;
   }
   updateZoomDisplay();
@@ -1711,7 +2139,7 @@ function pdfFitToWidthMode() {
 }
 
 /**
- * Updates the zoom percentage display.
+ * Actualiza el porcentaje del zoom.
  */
 function updateZoomDisplay() {
   if (DOM.pdfZoomDisplay) {
@@ -1720,14 +2148,12 @@ function updateZoomDisplay() {
 }
 
 /**
- * Rebuilds all page placeholders with new dimensions after zoom change.
- * Preserves scroll position relative to the current page.
+ * Reconstruye las páginas al cambiar zoom conservando la posición relativa.
  */
 function rebuildPdfPages() {
   if (!DOM.pdfPagesContainer || pdfPageDimensions.length === 0) return;
 
-  // Calculate relative scroll position before rebuilding
-  const currentPage = parseInt(DOM.pdfGotoInput?.value) || 1;
+  const currentPage = parseInt(DOM.pdfGotoInput?.value) || pdfCurrentVisiblePage || 1;
   const target = DOM.pdfPagesContainer.querySelector(`[data-page="${currentPage}"]`);
   let relativeOffset = 0;
   
@@ -1736,20 +2162,14 @@ function rebuildPdfPages() {
     relativeOffset = (window.scrollY - targetTop) / target.offsetHeight;
   }
 
-  // Clear rendered state
+  cancelAllPdfRenders();
   pdfRenderedPages.clear();
-  pdfRenderingPages.clear();
 
-  // Disconnect observer
   if (pdfObserver) pdfObserver.disconnect();
 
-  // Rebuild placeholders
   createPagePlaceholders();
-
-  // Re-setup observer
   setupPdfObserver();
 
-  // Restore exact scroll position
   if (target) {
     setTimeout(() => {
       const newTarget = DOM.pdfPagesContainer.querySelector(`[data-page="${currentPage}"]`);
@@ -1765,19 +2185,34 @@ function rebuildPdfPages() {
 }
 
 /**
- * Scrolls to a specific page.
+ * Navega de inmediato a una página específica en el scroll continuo.
  */
 function goToPdfPage(pageNum) {
   pageNum = Math.max(1, Math.min(pdfTotalPages, pageNum));
+  pdfCurrentVisiblePage = pageNum;
+
+  if (DOM.pdfGotoInput && document.activeElement !== DOM.pdfGotoInput) {
+    DOM.pdfGotoInput.value = pageNum;
+  }
+
+  const hymn = getHymnForPdfPage(pageNum);
+  if (hymn && DOM.pdfGotoHymn && document.activeElement !== DOM.pdfGotoHymn) {
+    DOM.pdfGotoHymn.value = hymn.numero;
+  }
+
+  // Priorizar la página requerida en la cola de renderizado
+  queuePdfPageRender(pageNum, true);
+  if (pageNum > 1) queuePdfPageRender(pageNum - 1);
+  if (pageNum < pdfTotalPages) queuePdfPageRender(pageNum + 1);
+
   const target = DOM.pdfPagesContainer?.querySelector(`[data-page="${pageNum}"]`);
   if (target) {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-  if (DOM.pdfGotoInput) DOM.pdfGotoInput.value = pageNum;
 }
 
 /**
- * Shows a PDF loading error message.
+ * Mensaje de error al cargar el PDF.
  */
 function showPdfError(message) {
   if (DOM.pdfLoading) DOM.pdfLoading.classList.add('hidden');
@@ -1797,35 +2232,31 @@ function showPdfError(message) {
 }
 
 /**
- * Registers event listeners for PDF viewer controls.
+ * Event listeners para controles del visor PDF inline.
  */
 function registerPdfEventListeners() {
-  // Zoom controls
   if (DOM.pdfZoomIn) {
-    DOM.pdfZoomIn.addEventListener('click', () => pdfZoom('in'));
+    DOM.pdfZoomIn.onclick = () => pdfZoom('in');
   }
   if (DOM.pdfZoomOut) {
-    DOM.pdfZoomOut.addEventListener('click', () => pdfZoom('out'));
+    DOM.pdfZoomOut.onclick = () => pdfZoom('out');
   }
   if (DOM.pdfFitWidth) {
-    DOM.pdfFitWidth.addEventListener('click', pdfFitToWidthMode);
+    DOM.pdfFitWidth.onclick = pdfFitToWidthMode;
   }
-
-  // Fullscreen button
   if (DOM.pdfFullscreenBtn) {
-    DOM.pdfFullscreenBtn.addEventListener('click', openPdfFullscreen);
+    DOM.pdfFullscreenBtn.onclick = () => openPdfFullscreen();
   }
 
-  // Go-to-page input
   if (DOM.pdfGotoInput) {
-    DOM.pdfGotoInput.addEventListener('change', () => {
+    DOM.pdfGotoInput.onchange = () => {
       const page = parseInt(DOM.pdfGotoInput.value);
       if (!isNaN(page) && page >= 1 && page <= pdfTotalPages) {
         goToPdfPage(page);
       }
-    });
+    };
 
-    DOM.pdfGotoInput.addEventListener('keydown', (e) => {
+    DOM.pdfGotoInput.onkeydown = (e) => {
       if (e.key === 'Enter') {
         e.preventDefault();
         const page = parseInt(DOM.pdfGotoInput.value);
@@ -1834,17 +2265,16 @@ function registerPdfEventListeners() {
           DOM.pdfGotoInput.blur();
         }
       }
-    });
+    };
   }
 
-  // Handle window resize for fit-to-width recalculation
   let resizeTimeout;
   window.addEventListener('resize', () => {
     if (activeFilter !== 'pdf' || !pdfFitToWidth || !pdfDoc) return;
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
-      const containerWidth = DOM.pdfPagesContainer.clientWidth - 2;
-      if (pdfPageDimensions.length > 0) {
+      const containerWidth = DOM.pdfPagesContainer.clientWidth - 4;
+      if (pdfPageDimensions.length > 0 && containerWidth > 0) {
         pdfCurrentScale = containerWidth / pdfPageDimensions[0].width;
         updateZoomDisplay();
         rebuildPdfPages();
@@ -1854,42 +2284,48 @@ function registerPdfEventListeners() {
 }
 
 // ----------------------------------------------------
-// 12. Fullscreen PDF Viewer Module
+// 12. Fullscreen PDF Viewer Module (Continuo & Rápido)
 // ----------------------------------------------------
 
 /**
- * Opens the fullscreen PDF viewer modal.
- * Renders pages into a dedicated full-viewport container.
+ * Abre el visor de partituras en pantalla completa con scroll continuo.
  */
-function openPdfFullscreen() {
-  if (!pdfDoc || !pdfLoaded) return;
+function openPdfFullscreen(initialPage) {
+  if (!pdfDoc || !pdfLoaded) {
+    initPdfViewer().then(() => {
+      openPdfFullscreen(initialPage);
+    });
+    return;
+  }
 
   pdfFsOpen = true;
 
-  // Show modal
   if (DOM.pdfFsModal) {
     DOM.pdfFsModal.classList.remove('hidden');
     DOM.pdfFsModal.setAttribute('aria-hidden', 'false');
   }
   document.body.classList.add('modal-open');
 
-  // Update page totals
   if (DOM.pdfFsPageTotal) DOM.pdfFsPageTotal.textContent = `/ ${pdfTotalPages}`;
   if (DOM.pdfFsGotoInput) DOM.pdfFsGotoInput.max = pdfTotalPages;
 
-  // Determine current page from inline viewer and start there
-  const currentPage = parseInt(DOM.pdfGotoInput?.value) || 1;
-  if (DOM.pdfFsGotoInput) DOM.pdfFsGotoInput.value = currentPage;
+  const targetPage = (typeof initialPage === 'number' && initialPage >= 1 && initialPage <= pdfTotalPages)
+    ? initialPage
+    : (parseInt(DOM.pdfGotoInput?.value) || pdfCurrentVisiblePage || 1);
 
-  // Calculate scale for the fullscreen viewport
+  pdfFsCurrentVisiblePage = targetPage;
+  if (DOM.pdfFsGotoInput) DOM.pdfFsGotoInput.value = targetPage;
+
+  const hymn = getHymnForPdfPage(targetPage);
+  if (hymn && DOM.pdfFsGotoHymn) DOM.pdfFsGotoHymn.value = hymn.numero;
+
   pdfFsFitToWidth = true;
   if (DOM.pdfFsFitWidth) DOM.pdfFsFitWidth.classList.add('is-active');
 
-  // Small delay to allow the modal to render and compute layout dimensions
   setTimeout(() => {
-    let containerWidth = DOM.pdfFsPagesContainer.clientWidth - 2;
+    let containerWidth = DOM.pdfFsPagesContainer.clientWidth - 4;
     if (containerWidth <= 0) {
-      containerWidth = window.innerWidth - 40; // Fallback to prevent 0 scale
+      containerWidth = window.innerWidth - 40;
     }
     
     if (pdfPageDimensions.length > 0) {
@@ -1899,70 +2335,58 @@ function openPdfFullscreen() {
     }
     updateFsZoomDisplay();
 
-    // Create page placeholders
     createFsPagePlaceholders();
-
-    // Setup observer
     setupFsObserver();
-
-    // Register fullscreen-specific event listeners
     registerFsEventListeners();
-
-    // Create floating indicator for fullscreen
     createFsFloatingIndicator();
 
-    // Scroll to the page the user was viewing
     setTimeout(() => {
-      goToFsPage(currentPage);
+      goToFsPage(targetPage);
     }, 50);
   }, 50);
 }
 
 /**
- * Closes the fullscreen PDF viewer modal.
+ * Cierra el visor de pantalla completa.
  */
 function closePdfFullscreen() {
   pdfFsOpen = false;
 
-  // Sync page position back to inline viewer
-  const currentPage = parseInt(DOM.pdfFsGotoInput?.value) || 1;
+  const currentPage = pdfFsCurrentVisiblePage || parseInt(DOM.pdfFsGotoInput?.value) || 1;
+  pdfCurrentVisiblePage = currentPage;
   if (DOM.pdfGotoInput) DOM.pdfGotoInput.value = currentPage;
 
-  // Hide modal
   if (DOM.pdfFsModal) {
     DOM.pdfFsModal.classList.add('hidden');
     DOM.pdfFsModal.setAttribute('aria-hidden', 'true');
   }
   document.body.classList.remove('modal-open');
 
-  // Cleanup
+  cancelAllFsRenders();
   if (pdfFsObserver) {
     pdfFsObserver.disconnect();
     pdfFsObserver = null;
   }
   pdfFsRenderedPages.clear();
-  pdfFsRenderingPages.clear();
   if (DOM.pdfFsPagesContainer) DOM.pdfFsPagesContainer.innerHTML = '';
 
-  // Remove floating indicator
   if (pdfFsFloatingIndicator) {
     pdfFsFloatingIndicator.remove();
     pdfFsFloatingIndicator = null;
   }
 
-  // Remove scroll listener
   if (DOM.pdfFsViewport) {
-    DOM.pdfFsViewport.onscroll = null;
+    DOM.pdfFsViewport.removeEventListener('scroll', onFsScroll);
   }
 
-  // Scroll inline viewer to synced page
-  setTimeout(() => {
+  if (activeFilter === 'pdf') {
+    if (pdfObserver) reobservePdfPages();
     goToPdfPage(currentPage);
-  }, 100);
+  }
 }
 
 /**
- * Creates page placeholders in the fullscreen container.
+ * Crea los placeholders de todas las páginas en el visor de pantalla completa.
  */
 function createFsPagePlaceholders() {
   if (!DOM.pdfFsPagesContainer) return;
@@ -1974,9 +2398,7 @@ function createFsPagePlaceholders() {
   for (let i = 0; i < pdfTotalPages; i++) {
     const pageNum = i + 1;
     const dim = pdfPageDimensions[i];
-    const scale = pdfFsFitToWidth
-      ? containerWidth / dim.width
-      : pdfFsScale;
+    const scale = pdfFsFitToWidth ? (containerWidth / dim.width) : pdfFsScale;
     const displayWidth = dim.width * scale;
     const displayHeight = dim.height * scale;
 
@@ -1990,7 +2412,6 @@ function createFsPagePlaceholders() {
     DOM.pdfFsPagesContainer.appendChild(wrapper);
   }
 
-  // Update scale if fit-to-width
   if (pdfFsFitToWidth && pdfPageDimensions.length > 0) {
     const scale = containerWidth / pdfPageDimensions[0].width;
     pdfFsScale = scale;
@@ -1999,7 +2420,7 @@ function createFsPagePlaceholders() {
 }
 
 /**
- * Sets up Intersection Observer for fullscreen pages.
+ * Observer para el visor de pantalla completa.
  */
 function setupFsObserver() {
   if (pdfFsObserver) pdfFsObserver.disconnect();
@@ -2007,9 +2428,8 @@ function setupFsObserver() {
   pdfFsObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       const pageNum = parseInt(entry.target.getAttribute('data-page'));
-      if (entry.isIntersecting) {
-        renderFsPage(pageNum, entry.target);
-        renderFsBufferPages(pageNum);
+      if (entry.isIntersecting && !isNaN(pageNum)) {
+        queueFsPageRender(pageNum);
       }
     });
   }, {
@@ -2020,100 +2440,236 @@ function setupFsObserver() {
 
   const pages = DOM.pdfFsPagesContainer.querySelectorAll('[data-page]');
   pages.forEach(page => pdfFsObserver.observe(page));
+
+  if (DOM.pdfFsViewport) {
+    DOM.pdfFsViewport.removeEventListener('scroll', onFsScroll);
+    DOM.pdfFsViewport.addEventListener('scroll', onFsScroll, { passive: true });
+  }
+}
+
+function onFsScroll() {
+  if (!pdfFsScrollRaf) {
+    pdfFsScrollRaf = requestAnimationFrame(() => {
+      pdfFsScrollRaf = null;
+      handleFsScroll();
+    });
+  }
 }
 
 /**
- * Renders buffer pages around a center page in fullscreen.
+ * Encola páginas de pantalla completa priorizándolas.
  */
-function renderFsBufferPages(centerPage) {
-  const bufferSize = 2;
-  for (let offset = -bufferSize; offset <= bufferSize; offset++) {
-    const page = centerPage + offset;
-    if (page >= 1 && page <= pdfTotalPages && page !== centerPage) {
-      const el = DOM.pdfFsPagesContainer.querySelector(`[data-page="${page}"]`);
-      if (el) renderFsPage(page, el);
+function queueFsPageRender(pageNum, prioritize = false) {
+  if (pageNum < 1 || pageNum > pdfTotalPages) return;
+  if (pdfFsRenderedPages.has(pageNum) || pdfFsRenderingPages.has(pageNum)) return;
+  if (!pdfDoc || !pdfFsOpen) return;
+
+  if (prioritize) {
+    pdfFsRenderQueue = pdfFsRenderQueue.filter(p => p !== pageNum);
+    pdfFsRenderQueue.unshift(pageNum);
+  } else if (!pdfFsRenderQueue.includes(pageNum)) {
+    pdfFsRenderQueue.push(pageNum);
+  }
+  processFsRenderQueue();
+}
+
+/**
+ * Procesa cola de pantalla completa sin descartar páginas solicitadas.
+ */
+function processFsRenderQueue() {
+  if (!pdfDoc || !pdfFsOpen) return;
+
+  pdfFsRenderQueue.sort((a, b) => Math.abs(a - pdfFsCurrentVisiblePage) - Math.abs(b - pdfFsCurrentVisiblePage));
+
+  while (pdfFsActiveRenders < MAX_CONCURRENT_PDF_RENDERS && pdfFsRenderQueue.length > 0) {
+    const next = pdfFsRenderQueue.shift();
+    if (!pdfFsRenderedPages.has(next) && !pdfFsRenderingPages.has(next)) {
+      executeFsPageRender(next);
     }
   }
 }
 
 /**
- * Renders a single PDF page in the fullscreen container.
+ * Renderiza página en pantalla completa sin abortos falsos.
  */
-async function renderFsPage(pageNum, element) {
-  if (pdfFsRenderedPages.has(pageNum) || pdfFsRenderingPages.has(pageNum)) return;
-  if (!pdfDoc) return;
+async function executeFsPageRender(pageNum) {
+  const currentTarget = DOM.pdfFsPagesContainer?.querySelector(`[data-page="${pageNum}"]`);
+  if (!currentTarget || !pdfDoc || !pdfFsOpen) return;
 
   pdfFsRenderingPages.add(pageNum);
+  pdfFsActiveRenders++;
 
   try {
     const page = await pdfDoc.getPage(pageNum);
-    const viewport = page.getViewport({ scale: pdfFsScale });
+    if (!pdfFsOpen) {
+      pdfFsRenderingPages.delete(pageNum);
+      return;
+    }
 
-    const wrapper = document.createElement('div');
-    wrapper.className = 'pdf-page-wrapper';
-    wrapper.setAttribute('data-page', pageNum);
-    wrapper.style.width = `${viewport.width}px`;
+    const viewport = page.getViewport({ scale: pdfFsScale });
+    const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
+    const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2.0);
 
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = viewport.width * dpr;
-    canvas.height = viewport.height * dpr;
+    canvas.width = Math.floor(viewport.width * dpr);
+    canvas.height = Math.floor(viewport.height * dpr);
     canvas.style.width = `${viewport.width}px`;
     canvas.style.height = `${viewport.height}px`;
     ctx.scale(dpr, dpr);
 
-    const badge = document.createElement('span');
-    badge.className = 'pdf-page-number';
-    badge.textContent = pageNum;
-
-    wrapper.appendChild(canvas);
-    wrapper.appendChild(badge);
-
-    element.replaceWith(wrapper);
-
-    await page.render({
+    const renderTask = page.render({
       canvasContext: ctx,
       viewport: viewport,
-    }).promise;
+    });
+
+    pdfFsActiveRenderTasks[pageNum] = renderTask;
+    await renderTask.promise;
+    delete pdfFsActiveRenderTasks[pageNum];
+
+    const targetElement = DOM.pdfFsPagesContainer?.querySelector(`[data-page="${pageNum}"]`);
+    if (targetElement && pdfFsOpen) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'pdf-page-wrapper';
+      wrapper.setAttribute('data-page', pageNum);
+      wrapper.style.width = `${viewport.width}px`;
+      wrapper.style.height = `${viewport.height}px`;
+
+      const badge = document.createElement('span');
+      badge.className = 'pdf-page-number';
+      badge.textContent = pageNum;
+
+      wrapper.appendChild(canvas);
+      wrapper.appendChild(badge);
+
+      targetElement.replaceWith(wrapper);
+      if (pdfFsObserver) pdfFsObserver.observe(wrapper);
+    }
 
     pdfFsRenderedPages.add(pageNum);
     pdfFsRenderingPages.delete(pageNum);
 
-    if (pdfFsObserver) pdfFsObserver.observe(wrapper);
+    evictOffscreenFsPages(pdfFsCurrentVisiblePage);
 
   } catch (error) {
-    console.warn(`Error rendering fullscreen page ${pageNum}:`, error);
+    delete pdfFsActiveRenderTasks[pageNum];
     pdfFsRenderingPages.delete(pageNum);
+    if (error && error.name !== 'RenderingCancelledException') {
+      console.warn(`Error renderizando fullscreen ${pageNum}:`, error);
+    }
+  } finally {
+    pdfFsActiveRenders--;
+    processFsRenderQueue();
   }
 }
 
 /**
- * Handles scroll in the fullscreen viewport to track current page.
+ * Libera memoria GPU de páginas en pantalla completa.
  */
-function handleFsScroll() {
-  if (!pdfFsOpen || !DOM.pdfFsPagesContainer) return;
+function evictOffscreenFsPages(centerPage) {
+  if (!DOM.pdfFsPagesContainer) return;
+  const maxDistance = 5;
 
-  const pages = DOM.pdfFsPagesContainer.querySelectorAll('[data-page]');
-  let currentPage = 1;
-  const viewportRect = DOM.pdfFsViewport.getBoundingClientRect();
-  const viewportMid = viewportRect.top + viewportRect.height / 2;
+  for (const renderedPage of Array.from(pdfFsRenderedPages)) {
+    if (Math.abs(renderedPage - centerPage) > maxDistance) {
+      const el = DOM.pdfFsPagesContainer.querySelector(`.pdf-page-wrapper[data-page="${renderedPage}"]`);
+      if (el) {
+        const canvas = el.querySelector('canvas');
+        if (canvas) {
+          canvas.width = 0;
+          canvas.height = 0;
+        }
 
-  for (const page of pages) {
-    const rect = page.getBoundingClientRect();
-    if (rect.top <= viewportMid && rect.bottom > viewportRect.top) {
-      currentPage = parseInt(page.getAttribute('data-page'));
+        const skeleton = document.createElement('div');
+        skeleton.className = 'pdf-page-skeleton';
+        skeleton.setAttribute('data-page', renderedPage);
+        skeleton.setAttribute('data-page-label', `Página ${renderedPage}`);
+        skeleton.style.width = el.style.width;
+        skeleton.style.height = el.style.height;
+
+        el.replaceWith(skeleton);
+        if (pdfFsObserver) pdfFsObserver.observe(skeleton);
+      }
+      pdfFsRenderedPages.delete(renderedPage);
     }
   }
+
+  for (const pageStr in pdfFsActiveRenderTasks) {
+    const p = parseInt(pageStr);
+    if (Math.abs(p - centerPage) > maxDistance + 3) {
+      try {
+        pdfFsActiveRenderTasks[p].cancel();
+      } catch (e) {}
+      delete pdfFsActiveRenderTasks[p];
+      pdfFsRenderingPages.delete(p);
+    }
+  }
+}
+
+/**
+ * Cancela renders activos en pantalla completa.
+ */
+function cancelAllFsRenders() {
+  for (const pageStr in pdfFsActiveRenderTasks) {
+    try {
+      pdfFsActiveRenderTasks[pageStr].cancel();
+    } catch (e) {}
+  }
+  pdfFsActiveRenderTasks = {};
+  pdfFsRenderQueue = [];
+  pdfFsRenderingPages.clear();
+  pdfFsActiveRenders = 0;
+}
+
+/**
+ * Manejo de scroll continuo en pantalla completa con detección O(1).
+ */
+function handleFsScroll() {
+  if (!pdfFsOpen || !DOM.pdfFsPagesContainer || !DOM.pdfFsViewport) return;
+
+  const viewportRect = DOM.pdfFsViewport.getBoundingClientRect();
+  const containerRect = DOM.pdfFsPagesContainer.getBoundingClientRect();
+  const baseDim = pdfPageDimensions[0];
+  const pageHeight = (baseDim ? baseDim.height * pdfFsScale : 800) + 24;
+  const relativeY = (viewportRect.height * 0.4) - (containerRect.top - viewportRect.top);
+
+  let approxPage = Math.max(1, Math.min(pdfTotalPages, Math.floor(relativeY / pageHeight) + 1));
+
+  for (let p = Math.max(1, approxPage - 1); p <= Math.min(pdfTotalPages, approxPage + 1); p++) {
+    const el = DOM.pdfFsPagesContainer.querySelector(`[data-page="${p}"]`);
+    if (el) {
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= viewportRect.top + viewportRect.height * 0.5 && rect.bottom >= viewportRect.top + viewportRect.height * 0.1) {
+        approxPage = p;
+        break;
+      }
+    }
+  }
+
+  const currentPage = approxPage;
+  pdfFsCurrentVisiblePage = currentPage;
+
+  evictOffscreenFsPages(currentPage);
+
+  queueFsPageRender(currentPage);
+  if (currentPage > 1) queueFsPageRender(currentPage - 1);
+  if (currentPage < pdfTotalPages) queueFsPageRender(currentPage + 1);
 
   if (DOM.pdfFsGotoInput && document.activeElement !== DOM.pdfFsGotoInput) {
     DOM.pdfFsGotoInput.value = currentPage;
   }
 
-  // Show floating indicator
+  const hymn = getHymnForPdfPage(currentPage);
+  if (hymn && DOM.pdfFsGotoHymn && document.activeElement !== DOM.pdfFsGotoHymn) {
+    DOM.pdfFsGotoHymn.value = hymn.numero;
+  }
+
   if (pdfFsFloatingIndicator) {
-    pdfFsFloatingIndicator.textContent = `Página ${currentPage} de ${pdfTotalPages}`;
+    if (hymn) {
+      pdfFsFloatingIndicator.textContent = `Pág. ${currentPage} de ${pdfTotalPages} · Himno ${hymn.numero}: ${hymn.titulo}`;
+    } else {
+      pdfFsFloatingIndicator.textContent = `Página ${currentPage} de ${pdfTotalPages}`;
+    }
     pdfFsFloatingIndicator.classList.add('is-visible');
   }
 
@@ -2122,11 +2678,11 @@ function handleFsScroll() {
     if (pdfFsFloatingIndicator) {
       pdfFsFloatingIndicator.classList.remove('is-visible');
     }
-  }, 1500);
+  }, 1800);
 }
 
 /**
- * Creates floating page indicator for fullscreen viewer.
+ * Crea indicador flotante en pantalla completa.
  */
 function createFsFloatingIndicator() {
   if (pdfFsFloatingIndicator) return;
@@ -2138,7 +2694,7 @@ function createFsFloatingIndicator() {
 }
 
 /**
- * Updates zoom display in fullscreen toolbar.
+ * Zoom display en pantalla completa.
  */
 function updateFsZoomDisplay() {
   if (DOM.pdfFsZoomDisplay) {
@@ -2147,7 +2703,7 @@ function updateFsZoomDisplay() {
 }
 
 /**
- * Zoom in/out for fullscreen viewer.
+ * Zoom in/out en pantalla completa.
  */
 function pdfFsZoom(direction) {
   pdfFsFitToWidth = false;
@@ -2164,14 +2720,14 @@ function pdfFsZoom(direction) {
 }
 
 /**
- * Fit to width for fullscreen viewer.
+ * Ajuste a ancho en pantalla completa.
  */
 function pdfFsFitToWidthMode() {
   pdfFsFitToWidth = true;
   if (DOM.pdfFsFitWidth) DOM.pdfFsFitWidth.classList.add('is-active');
 
-  const containerWidth = DOM.pdfFsPagesContainer.clientWidth - 2;
-  if (pdfPageDimensions.length > 0) {
+  const containerWidth = DOM.pdfFsPagesContainer.clientWidth - 4;
+  if (pdfPageDimensions.length > 0 && containerWidth > 0) {
     pdfFsScale = containerWidth / pdfPageDimensions[0].width;
   }
   updateFsZoomDisplay();
@@ -2179,13 +2735,12 @@ function pdfFsFitToWidthMode() {
 }
 
 /**
- * Rebuilds all fullscreen pages after zoom change.
+ * Reconstruye páginas al cambiar zoom en pantalla completa.
  */
 function rebuildFsPages() {
   if (!DOM.pdfFsPagesContainer || pdfPageDimensions.length === 0) return;
 
-  // Calculate relative scroll position before rebuilding
-  const currentPage = parseInt(DOM.pdfFsGotoInput?.value) || 1;
+  const currentPage = parseInt(DOM.pdfFsGotoInput?.value) || pdfFsCurrentVisiblePage || 1;
   const target = DOM.pdfFsPagesContainer.querySelector(`[data-page="${currentPage}"]`);
   let relativeOffset = 0;
 
@@ -2196,8 +2751,8 @@ function rebuildFsPages() {
     relativeOffset = (DOM.pdfFsViewport.scrollTop - targetTop) / target.offsetHeight;
   }
 
+  cancelAllFsRenders();
   pdfFsRenderedPages.clear();
-  pdfFsRenderingPages.clear();
 
   if (pdfFsObserver) pdfFsObserver.disconnect();
 
@@ -2221,27 +2776,38 @@ function rebuildFsPages() {
 }
 
 /**
- * Scrolls to a specific page in the fullscreen viewer.
+ * Salta instantáneamente a una página en el visor de pantalla completa.
  */
 function goToFsPage(pageNum) {
   pageNum = Math.max(1, Math.min(pdfTotalPages, pageNum));
+  pdfFsCurrentVisiblePage = pageNum;
+
+  if (DOM.pdfFsGotoInput && document.activeElement !== DOM.pdfFsGotoInput) {
+    DOM.pdfFsGotoInput.value = pageNum;
+  }
+
+  const hymn = getHymnForPdfPage(pageNum);
+  if (hymn && DOM.pdfFsGotoHymn && document.activeElement !== DOM.pdfFsGotoHymn) {
+    DOM.pdfFsGotoHymn.value = hymn.numero;
+  }
+
+  queueFsPageRender(pageNum, true);
+  if (pageNum > 1) queueFsPageRender(pageNum - 1);
+  if (pageNum < pdfTotalPages) queueFsPageRender(pageNum + 1);
+
   const target = DOM.pdfFsPagesContainer?.querySelector(`[data-page="${pageNum}"]`);
   if (target) {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-  if (DOM.pdfFsGotoInput) DOM.pdfFsGotoInput.value = pageNum;
 }
 
 /**
- * Registers event listeners specific to the fullscreen PDF viewer.
+ * Event listeners para el visor de pantalla completa.
  */
 function registerFsEventListeners() {
-  // Close button
   if (DOM.pdfFsClose) {
     DOM.pdfFsClose.onclick = closePdfFullscreen;
   }
-
-  // Zoom controls
   if (DOM.pdfFsZoomIn) {
     DOM.pdfFsZoomIn.onclick = () => pdfFsZoom('in');
   }
@@ -2252,7 +2818,6 @@ function registerFsEventListeners() {
     DOM.pdfFsFitWidth.onclick = pdfFsFitToWidthMode;
   }
 
-  // Go-to-page
   if (DOM.pdfFsGotoInput) {
     DOM.pdfFsGotoInput.onchange = () => {
       const page = parseInt(DOM.pdfFsGotoInput.value);
@@ -2270,10 +2835,5 @@ function registerFsEventListeners() {
         }
       }
     };
-  }
-
-  // Scroll handler
-  if (DOM.pdfFsViewport) {
-    DOM.pdfFsViewport.onscroll = handleFsScroll;
   }
 }

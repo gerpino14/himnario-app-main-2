@@ -1456,11 +1456,16 @@ body.modal-open {
 }
 
 /* Speed Slider & Presets styling */
-.speed-slider-container {
-  padding: 4px var(--spacing-md);
+.speed-header {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px var(--spacing-md) 2px;
+}
+
+.speed-header .menu-section-title {
+  padding: 0;
+  margin: 0;
 }
 
 #speed-display {
@@ -1468,20 +1473,74 @@ body.modal-open {
   font-size: 0.8rem;
   font-weight: 700;
   color: var(--accent-color);
-  align-self: flex-end;
   font-variant-numeric: tabular-nums;
+}
+
+.speed-slider-container {
+  padding: 2px var(--spacing-md) 6px;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.speed-step-btn {
+  background-color: var(--divider-color);
+  border: 1px solid transparent;
+  color: var(--primary-text);
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  transition: all var(--transition-fast);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.speed-step-btn:hover:not(:disabled) {
+  background-color: var(--accent-light);
+  color: var(--accent-color);
+  border-color: var(--border-color);
+}
+
+.speed-step-btn:active:not(:disabled) {
+  transform: scale(0.92);
+  background-color: var(--accent-color);
+  color: var(--surface-color);
+}
+
+.speed-step-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.speed-step-btn:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 1px;
+}
+
+.speed-step-icon {
+  width: 14px;
+  height: 14px;
+  display: block;
 }
 
 .speed-slider-container input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
+  flex: 1;
+  min-width: 60px;
   width: 100%;
   height: 4px;
   border-radius: 2px;
   background: var(--divider-color);
   outline: none;
   cursor: pointer;
-  margin: var(--spacing-xs) 0;
+  margin: 0;
 }
 
 .speed-slider-container input[type="range"]::-webkit-slider-thumb {
@@ -1791,10 +1850,304 @@ body.modal-open {
 .pdf-page-nav {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   font-family: var(--font-ui);
   font-size: 0.85rem;
   color: var(--secondary-text);
+}
+
+/* Direct Hymn Navigation Jump (1-350) */
+.pdf-hymn-jump {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--bg-color);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 2px 4px 2px 8px;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.pdf-hymn-jump:focus-within {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px var(--accent-light);
+}
+
+.pdf-hymn-label {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent-color);
+  user-select: none;
+}
+
+.pdf-hymn-input {
+  width: 48px;
+  height: 28px;
+  padding: 0 4px;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--primary-text);
+  background: transparent;
+  border: none;
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+.pdf-hymn-input::-webkit-outer-spin-button,
+.pdf-hymn-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.pdf-hymn-go-btn {
+  background-color: var(--accent-color);
+  color: var(--surface-color);
+  border: none;
+  border-radius: var(--radius-xs);
+  padding: 2px 8px;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+  height: 24px;
+}
+
+.pdf-hymn-go-btn:hover {
+  opacity: 0.9;
+}
+
+.pdf-hymn-go-btn:active {
+  transform: scale(0.92);
+}
+
+/* Button with Label (Índice) */
+.pdf-btn-with-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px !important;
+  width: auto !important;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--primary-text);
+}
+
+.pdf-btn-with-label:hover {
+  color: var(--accent-color);
+}
+
+.pdf-btn-text {
+  font-family: var(--font-ui);
+}
+
+@media (max-width: 480px) {
+  .pdf-btn-text {
+    display: none;
+  }
+  .pdf-btn-with-label {
+    padding: 0 !important;
+    width: 32px !important;
+  }
+}
+
+/* Sheet Music Hymn Index Modal */
+.pdf-index-container {
+  max-width: 560px;
+  width: 90%;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface-color);
+  box-shadow: 0 20px 40px var(--shadow-color);
+}
+
+.pdf-index-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.pdf-index-title-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.pdf-index-title {
+  font-family: var(--font-ui);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary-text);
+  margin: 0;
+}
+
+.pdf-index-search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.pdf-index-search-bar input {
+  width: 100%;
+  height: 40px;
+  padding: 0 36px 0 38px;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--primary-text);
+  background-color: var(--bg-color);
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.pdf-index-search-bar input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+.pdf-index-search-bar .search-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--secondary-text);
+  pointer-events: none;
+}
+
+.pdf-index-search-bar .clear-btn {
+  position: absolute;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--divider-color);
+  color: var(--primary-text);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.75rem;
+}
+
+.pdf-index-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: var(--spacing-xs);
+  margin-bottom: var(--spacing-sm);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.pdf-index-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.pdf-chip {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  padding: 4px 10px;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--secondary-text);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+}
+
+.pdf-chip:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+.pdf-chip.active {
+  background-color: var(--accent-color);
+  color: var(--surface-color);
+  border-color: var(--accent-color);
+}
+
+.pdf-index-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 4px;
+  max-height: 48vh;
+}
+
+.pdf-index-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-color);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+  text-align: left;
+  width: 100%;
+}
+
+.pdf-index-item:hover {
+  background-color: var(--accent-light);
+  border-color: var(--border-color);
+  transform: translateX(2px);
+}
+
+.pdf-index-item-main {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  min-width: 0;
+}
+
+.pdf-index-num {
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  background: var(--surface-color);
+  border: 1px solid var(--border-color);
+  padding: 2px 8px;
+  border-radius: var(--radius-xs);
+  flex-shrink: 0;
+}
+
+.pdf-index-item-title {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--primary-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pdf-index-badge {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--secondary-text);
+  background: var(--divider-color);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
 }
 
 .pdf-page-label {
@@ -1908,6 +2261,8 @@ body.modal-open {
   overflow: hidden;
   transition: box-shadow var(--transition-normal), border-color var(--transition-normal), background-color var(--transition-normal);
   max-width: 100%;
+  box-sizing: border-box;
+  contain: size layout;
 }
 
 .pdf-page-wrapper:hover {
@@ -1957,6 +2312,8 @@ body.modal-open {
   font-size: 0.85rem;
   font-weight: 500;
   max-width: 100%;
+  box-sizing: border-box;
+  contain: size layout;
   transition: background-color var(--transition-normal), border-color var(--transition-normal);
 }
 
@@ -2277,7 +2634,8 @@ body.modal-open {
   overflow-y: auto;
   overflow-x: auto;
   background: #1a1d20;
-  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
 }
 
 [data-theme="light"] .pdf-fs-viewport {

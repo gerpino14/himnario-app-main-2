@@ -185,12 +185,33 @@
         </div>
 
         <div class="pdf-toolbar-group">
-          <!-- Page indicator -->
+          <!-- Salto directo a Himno # (1-350) -->
+          <div class="pdf-hymn-jump" title="Saltar directamente a cualquier himno (1-350)">
+            <label for="pdf-goto-hymn" class="pdf-hymn-label">Himno</label>
+            <input type="number" id="pdf-goto-hymn" class="pdf-hymn-input" min="1" max="350" placeholder="N°" aria-label="Ir a Himno número">
+            <button type="button" id="pdf-hymn-jump-btn" class="pdf-hymn-go-btn" aria-label="Ir al himno" title="Ir al himno">Ir</button>
+          </div>
+
+          <!-- Botón de Índice / Buscador de Partituras -->
+          <button type="button" id="pdf-index-btn" class="pdf-tool-btn pdf-btn-with-label" aria-label="Índice de himnos" title="Buscar y saltar a cualquier himno por nombre o número">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
+              <line x1="8" y1="6" x2="21" y2="6"></line>
+              <line x1="8" y1="12" x2="21" y2="12"></line>
+              <line x1="8" y1="18" x2="21" y2="18"></line>
+              <line x1="3" y1="6" x2="3.01" y2="6"></line>
+              <line x1="3" y1="12" x2="3.01" y2="12"></line>
+              <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+            <span class="pdf-btn-text">Índice</span>
+          </button>
+
+          <!-- Indicador y salto de página tradicional -->
           <div class="pdf-page-nav">
             <label for="pdf-goto-input" class="pdf-page-label">Pág.</label>
             <input type="number" id="pdf-goto-input" class="pdf-goto-input" min="1" value="1" aria-label="Ir a página">
             <span id="pdf-page-total" class="pdf-page-total">/ —</span>
           </div>
+
           <!-- Fullscreen Toggle -->
           <button id="pdf-fullscreen-btn" class="pdf-tool-btn" aria-label="Pantalla completa"
             title="Abrir en pantalla completa">
@@ -202,6 +223,16 @@
               <line x1="3" y1="21" x2="10" y2="14"></line>
             </svg>
           </button>
+
+          <!-- Abrir en Visor Nativo Externo (Edge / Chrome) -->
+          <a id="pdf-native-btn" class="pdf-tool-btn" href="himnario.pdf" target="_blank" rel="noopener noreferrer"
+            aria-label="Abrir en lector nativo del navegador" title="Abrir en lector nativo de tu navegador">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </a>
         </div>
       </div>
 
@@ -277,6 +308,15 @@
               <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
               <line x1="8" y1="21" x2="16" y2="21"></line>
               <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </button>
+
+          <!-- Botón de Ver Partitura PDF del himno actual -->
+          <button id="reader-sheet-music-btn" class="btn-icon" aria-label="Ver partitura PDF"
+            title="Ver partitura de este himno">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
             </svg>
           </button>
         </div>
@@ -371,13 +411,31 @@
 
               <div class="menu-divider"></div>
 
-              <div class="menu-section-title">Velocidad de reproducción</div>
-
-              <!-- Slider de Velocidad Continuo (Tipo Volumen) -->
-              <div class="speed-slider-container">
+              <!-- Encabezado de Velocidad -->
+              <div class="speed-header">
+                <div class="menu-section-title">Velocidad de reproducción</div>
                 <span id="speed-display">1.00x</span>
+              </div>
+
+              <!-- Slider de Velocidad Continuo con botones - y + -->
+              <div class="speed-slider-container">
+                <button type="button" id="speed-decrease-btn" class="speed-step-btn" aria-label="Disminuir velocidad"
+                  title="Disminuir velocidad (-0.05x)">
+                  <svg class="speed-step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </button>
                 <input type="range" id="speed-slider" min="0.5" max="2.0" step="0.05" value="1.0"
                   aria-label="Ajustar velocidad de reproducción">
+                <button type="button" id="speed-increase-btn" class="speed-step-btn" aria-label="Aumentar velocidad"
+                  title="Aumentar velocidad (+0.05x)">
+                  <svg class="speed-step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </button>
               </div>
 
               <!-- Botones de Acceso Rápido (Presets) -->
@@ -480,6 +538,27 @@
           </button>
         </div>
         <div class="pdf-fs-toolbar-right">
+          <!-- Salto directo a Himno # en Pantalla Completa -->
+          <div class="pdf-hymn-jump" title="Saltar directamente a cualquier himno (1-350)">
+            <label for="pdf-fs-goto-hymn" class="pdf-hymn-label">Himno</label>
+            <input type="number" id="pdf-fs-goto-hymn" class="pdf-hymn-input" min="1" max="350" placeholder="N°" aria-label="Ir a Himno número">
+            <button type="button" id="pdf-fs-hymn-jump-btn" class="pdf-hymn-go-btn" aria-label="Ir al himno" title="Ir al himno">Ir</button>
+          </div>
+
+          <!-- Botón de Índice / Buscador de Partituras en Pantalla Completa -->
+          <button type="button" id="pdf-fs-index-btn" class="pdf-tool-btn pdf-btn-with-label" aria-label="Índice de himnos" title="Buscar y saltar a cualquier himno por nombre o número">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
+              <line x1="8" y1="6" x2="21" y2="6"></line>
+              <line x1="8" y1="12" x2="21" y2="12"></line>
+              <line x1="8" y1="18" x2="21" y2="18"></line>
+              <line x1="3" y1="6" x2="3.01" y2="6"></line>
+              <line x1="3" y1="12" x2="3.01" y2="12"></line>
+              <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+            <span class="pdf-btn-text">Índice</span>
+          </button>
+
+          <!-- Indicador y salto de página tradicional -->
           <div class="pdf-page-nav">
             <label for="pdf-fs-goto-input" class="pdf-page-label">Pág.</label>
             <input type="number" id="pdf-fs-goto-input" class="pdf-goto-input" min="1" value="1"
@@ -494,6 +573,52 @@
         <div id="pdf-fs-pages-container" class="pdf-pages-container">
           <!-- Canvas pages rendered dynamically -->
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Índice Rápido de Partituras -->
+  <div id="pdf-index-modal" class="modal-backdrop hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pdf-index-title">
+    <div class="modal-container pdf-index-container">
+      <div class="pdf-index-header">
+        <div class="pdf-index-title-group">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;color:var(--accent-color);">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+          </svg>
+          <h2 id="pdf-index-title" class="pdf-index-title">Índice de Partituras</h2>
+        </div>
+        <button type="button" id="pdf-index-close" class="btn-icon" aria-label="Cerrar índice" title="Cerrar (Esc)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="pdf-index-search-bar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon" style="width:18px;height:18px;">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="pdf-index-search-input" placeholder="Buscar por número o título (ej: 200 o Firmes)..." autocomplete="off" aria-label="Buscar himno en partituras">
+        <button type="button" id="pdf-index-clear" class="clear-btn hidden" aria-label="Limpiar búsqueda">✕</button>
+      </div>
+
+      <!-- Quick Range Chips -->
+      <div class="pdf-index-chips" role="tablist" aria-label="Rangos de himnos">
+        <button type="button" class="pdf-chip active" data-range="all">Todos</button>
+        <button type="button" class="pdf-chip" data-range="1-50">1-50</button>
+        <button type="button" class="pdf-chip" data-range="51-100">51-100</button>
+        <button type="button" class="pdf-chip" data-range="101-150">101-150</button>
+        <button type="button" class="pdf-chip" data-range="151-200">151-200</button>
+        <button type="button" class="pdf-chip" data-range="201-250">201-250</button>
+        <button type="button" class="pdf-chip" data-range="251-300">251-300</button>
+        <button type="button" class="pdf-chip" data-range="301-350">301-350</button>
+      </div>
+
+      <!-- Lista de himnos con número, título y página del PDF -->
+      <div id="pdf-index-list" class="pdf-index-list" role="listbox">
+        <!-- Renderizado dinámicamente -->
       </div>
     </div>
   </div>
