@@ -146,6 +146,8 @@ function initDOM() {
     iconPlay: document.getElementById('icon-play'),
     iconPause: document.getElementById('icon-pause'),
     playerTime: document.getElementById('player-time'),
+    playerTimeCurrent: document.getElementById('player-time-current'),
+    playerTimeDuration: document.getElementById('player-time-duration'),
     playerProgress: document.getElementById('player-progress'),
     playerVolumeBtn: document.getElementById('player-volume-btn'),
     iconVolume: document.getElementById('icon-volume'),
@@ -588,9 +590,7 @@ function openReader(hymnNumber) {
       }
 
       // Inicializar textos y controles de tiempo
-      if (DOM.playerTime) {
-        DOM.playerTime.textContent = '0:00 / 0:00';
-      }
+      setPlayerTimeDisplay(0, 0);
       if (DOM.playerProgress) {
         DOM.playerProgress.value = 0;
         updateSliderBackground(0);
@@ -930,6 +930,7 @@ function registerEventListeners() {
         DOM.playerProgress.value = 0;
         updateSliderBackground(0);
       }
+      setPlayerTimeDisplay(0, DOM.readerAudio.duration);
     });
   }
 
@@ -938,9 +939,7 @@ function registerEventListeners() {
       const targetTime = (e.target.value / 100) * DOM.readerAudio.duration;
       if (!isNaN(targetTime)) {
         // Actualizar el tiempo transcurrido en texto mientras arrastra
-        if (DOM.playerTime) {
-          DOM.playerTime.textContent = `${formatTime(targetTime)} / ${formatTime(DOM.readerAudio.duration)}`;
-        }
+        setPlayerTimeDisplay(targetTime, DOM.readerAudio.duration);
         // Actualizar el degradado del slider
         updateSliderBackground(e.target.value);
       }
@@ -1313,6 +1312,23 @@ function formatTime(secs) {
   return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 }
 
+/**
+ * Updates both desktop inline time ("0:00 / 3:37") and mobile split timestamps.
+ */
+function setPlayerTimeDisplay(currentSecs, durationSecs) {
+  const currentStr = formatTime(currentSecs);
+  const durationStr = formatTime(durationSecs);
+  if (DOM.playerTime) {
+    DOM.playerTime.textContent = `${currentStr} / ${durationStr}`;
+  }
+  if (DOM.playerTimeCurrent) {
+    DOM.playerTimeCurrent.textContent = currentStr;
+  }
+  if (DOM.playerTimeDuration) {
+    DOM.playerTimeDuration.textContent = durationStr;
+  }
+}
+
 function initAudioDuration() {
   if (!DOM.readerAudio || !DOM.playerTime) return;
   const duration = DOM.readerAudio.duration;
@@ -1329,7 +1345,7 @@ function initAudioDuration() {
     return;
   }
 
-  DOM.playerTime.textContent = `0:00 / ${formatTime(duration)}`;
+  setPlayerTimeDisplay(0, duration);
   if (DOM.playerProgress) {
     DOM.playerProgress.value = 0;
     updateSliderBackground(0);
@@ -1355,7 +1371,7 @@ function updateAudioProgress() {
     const percent = (current / duration) * 100;
     DOM.playerProgress.value = percent;
     updateSliderBackground(percent);
-    DOM.playerTime.textContent = `${formatTime(current)} / ${formatTime(duration)}`;
+    setPlayerTimeDisplay(current, duration);
   }
 }
 
