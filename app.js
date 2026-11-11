@@ -17,6 +17,8 @@ let pistasData = [];
 let isPresentationMode = false;
 let controlsTimeout = null;
 let audioVolume = 1.0;
+let audioPlaybackSpeed = 1.0;
+let toastTimeout = null;
 
 // PDF Viewer State & Virtualization
 let pdfDoc = null;
@@ -120,9 +122,9 @@ function initDOM() {
     readerBar: document.querySelector('.reader-bar'),
     readerFooter: document.querySelector('.reader-nav-footer'),
     presentationToggle: document.getElementById('presentation-toggle'),
-    readerSheetMusicBtn: document.getElementById('reader-sheet-music-btn'),
     closeReader: document.getElementById('close-reader'),
     readerFavBtn: document.getElementById('reader-fav-btn'),
+    readerShareBtn: document.getElementById('reader-share-btn'),
     fontDecrease: document.getElementById('font-decrease'),
     fontIncrease: document.getElementById('font-increase'),
     fontSizeDisplay: document.getElementById('font-size-display'),
@@ -139,6 +141,8 @@ function initDOM() {
     
     // Custom Audio Player Elements
     playerPlayBtn: document.getElementById('player-play-btn'),
+    playerRewindBtn: document.getElementById('player-rewind-btn'),
+    playerForwardBtn: document.getElementById('player-forward-btn'),
     iconPlay: document.getElementById('icon-play'),
     iconPause: document.getElementById('icon-pause'),
     playerTime: document.getElementById('player-time'),
@@ -158,7 +162,8 @@ function initDOM() {
     menuIconVol: document.getElementById('menu-icon-vol'),
     menuIconVolMuted: document.getElementById('menu-icon-vol-muted'),
     playerVolumeSlider: document.getElementById('player-volume-slider'),
-    volumeDisplay: document.getElementById('volume-display')
+    volumeDisplay: document.getElementById('volume-display'),
+    appToast: document.getElementById('app-toast')
   };
 }
 
@@ -219,6 +224,12 @@ function initLocalStorage() {
   if (isNaN(audioVolume) || audioVolume < 0 || audioVolume > 1) {
     audioVolume = 1.0;
   }
+
+  // Load Playback Speed
+  audioPlaybackSpeed = parseFloat(localStorage.getItem('hymnario-playback-speed') || '1.0');
+  if (isNaN(audioPlaybackSpeed) || audioPlaybackSpeed < 0.5 || audioPlaybackSpeed > 2.0) {
+    audioPlaybackSpeed = 1.0;
+  }
 }
 
 function saveFavorites() {
@@ -250,6 +261,13 @@ async function fetchHymns() {
     }
     
     applySearchAndFilters();
+
+    // Open hymn directly if URL contains ?himno=<numero>
+    const urlParams = new URLSearchParams(window.location.search);
+    const sharedHymnNum = parseInt(urlParams.get('himno'), 10);
+    if (!isNaN(sharedHymnNum) && hymnsData.some(h => h.numero === sharedHymnNum)) {
+      openReader(sharedHymnNum);
+    }
   } catch (error) {
     console.error('Failed to load hymns dataset:', error);
     renderErrorState();
@@ -453,8 +471,14 @@ function renderErrorState() {
 }
 
 // Sincroniza y aplica la velocidad de reproducción en audio, slider, indicador, presets y botones +/-
-function applyPlaybackSpeed(speed) {
+function applyPlaybackSpeed(speed, persist = true) {
   const clamped = Math.max(0.5, Math.min(2.0, Math.round(speed * 100) / 100));
+  audioPlaybackSpeed = clamped;
+  if (persist) {
+    try {
+      localStorage.setItem('hymnario-playback-speed', clamped.toFixed(2));
+    } catch (e) {}
+  }
   if (DOM.readerAudio) {
     DOM.readerAudio.playbackRate = clamped;
   }
@@ -544,8 +568,8 @@ function openReader(hymnNumber) {
         DOM.playerDownloadLink.download = `${pista.numero} - ${cleanTitle}.mp3`;
       }
 
-      // Reiniciar velocidad de reproducción a 1.0x
-      applyPlaybackSpeed(1.0);
+      // Restaurar velocidad de reproducción guardada
+      applyPlaybackSpeed(audioPlaybackSpeed, false);
 
       // Inicializar volumen
       DOM.readerAudio.volume = audioVolume;
@@ -571,6 +595,8 @@ function openReader(hymnNumber) {
         DOM.playerProgress.value = 0;
         updateSliderBackground(0);
       }
+      if (DOM.playerRewindBtn) DOM.playerRewindBtn.disabled = true;
+      if (DOM.playerForwardBtn) DOM.playerForwardBtn.disabled = true;
       setAudioPlayState(false);
 
       DOM.readerAudio.src = encodeURI(localUrl);
@@ -591,21 +617,6 @@ function openReader(hymnNumber) {
       DOM.readerAudio.src = '';
     }
   }
-
-  // Configurar acceso directo a partitura PDF del himno
-  if (DOM.readerSheetMusicBtn) {
-    if (hymn.paginas_pdf && hymn.paginas_pdf.length > 0) {
-      const targetPdfPage = hymn.paginas_pdf[0];
-      DOM.readerSheetMusicBtn.classList.remove('hidden');
-      DOM.readerSheetMusicBtn.title = `Ver partitura en PDF (Pág. ${targetPdfPage})`;
-      DOM.readerSheetMusicBtn.onclick = () => {
-        closeReader();
-        openPdfFullscreen(targetPdfPage);
-      };
-    } else {
-      DOM.readerSheetMusicBtn.classList.add('hidden');
-    }
-  }
   
   // Show Reader Overlay Modal
   DOM.readerModal.classList.remove('hidden');
@@ -615,6 +626,9 @@ function openReader(hymnNumber) {
   // Scroll to Top of reader
   DOM.viewport.scrollTop = 0;
   
+  // Sync shareable ?himno=<numero> URL
+  syncHymnUrl(hymn.numero);
+
   // Update Nav Buttons
   updateReaderNavigationState();
 }
@@ -637,6 +651,7 @@ function closeReader() {
   DOM.readerModal.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('modal-open');
   activeHymn = null;
+  syncHymnUrl(null);
   
   // If we unfavorited items inside the reader under the Favorites tab, rerender list
   if (activeFilter === 'favoritos') {
@@ -842,6 +857,7 @@ function registerEventListeners() {
   // Close Reader Modal
   if (DOM.closeReader) DOM.closeReader.addEventListener('click', closeReader);
   if (DOM.readerFavBtn) DOM.readerFavBtn.addEventListener('click', toggleReaderActiveFavorite);
+  if (DOM.readerShareBtn) DOM.readerShareBtn.addEventListener('click', shareActiveHymn);
   
   // Font Resizing Buttons
   if (DOM.fontDecrease) DOM.fontDecrease.addEventListener('click', () => changeFontSize(-2));
@@ -894,6 +910,12 @@ function registerEventListeners() {
   // Custom Audio Player Listeners
   if (DOM.playerPlayBtn && DOM.readerAudio) {
     DOM.playerPlayBtn.addEventListener('click', toggleAudioPlay);
+  }
+  if (DOM.playerRewindBtn && DOM.readerAudio) {
+    DOM.playerRewindBtn.addEventListener('click', () => seekAudioBy(-10));
+  }
+  if (DOM.playerForwardBtn && DOM.readerAudio) {
+    DOM.playerForwardBtn.addEventListener('click', () => seekAudioBy(10));
   }
   
   if (DOM.readerAudio) {
@@ -1294,11 +1316,34 @@ function formatTime(secs) {
 function initAudioDuration() {
   if (!DOM.readerAudio || !DOM.playerTime) return;
   const duration = DOM.readerAudio.duration;
+  const hasDuration = !isNaN(duration) && isFinite(duration) && duration > 0;
+
+  if (DOM.playerRewindBtn) DOM.playerRewindBtn.disabled = !hasDuration;
+  if (DOM.playerForwardBtn) DOM.playerForwardBtn.disabled = !hasDuration;
+
+  // Enforce persisted playback speed once metadata loads (mobile browsers may reset on load)
+  DOM.readerAudio.playbackRate = audioPlaybackSpeed;
+
+  if (hasDuration && DOM.readerAudio.currentTime > 0) {
+    updateAudioProgress();
+    return;
+  }
+
   DOM.playerTime.textContent = `0:00 / ${formatTime(duration)}`;
   if (DOM.playerProgress) {
     DOM.playerProgress.value = 0;
     updateSliderBackground(0);
   }
+}
+
+function seekAudioBy(deltaSeconds) {
+  if (!DOM.readerAudio) return;
+  const duration = DOM.readerAudio.duration;
+  if (isNaN(duration) || !isFinite(duration) || duration <= 0) return;
+
+  const targetTime = Math.max(0, Math.min(duration, DOM.readerAudio.currentTime + deltaSeconds));
+  DOM.readerAudio.currentTime = targetTime;
+  updateAudioProgress();
 }
 
 function updateAudioProgress() {
@@ -1318,6 +1363,146 @@ function updateSliderBackground(percent) {
   if (DOM.playerProgress) {
     DOM.playerProgress.style.setProperty('--progress-percent', `${percent}%`);
   }
+}
+
+/**
+ * Syncs ?himno=<numero> in the browser URL without adding history entries.
+ */
+function syncHymnUrl(hymnNumber) {
+  try {
+    const url = new URL(window.location.href);
+    if (hymnNumber) {
+      url.searchParams.set('himno', hymnNumber);
+    } else {
+      url.searchParams.delete('himno');
+    }
+    window.history.replaceState(null, '', url.toString());
+  } catch (e) {}
+}
+
+/**
+ * Shares or copies the direct URL of the currently open hymn.
+ */
+async function shareActiveHymn() {
+  if (!activeHymn) return;
+
+  const url = new URL(window.location.href);
+  url.searchParams.set('himno', activeHymn.numero);
+  const shareUrl = url.toString();
+  const shareTitle = `Himno #${activeHymn.numero}: ${activeHymn.titulo}`;
+
+  // On mobile with native share support → use native share sheet
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: shareTitle,
+        text: `${shareTitle} — Himnos de la Vida Cristiana`,
+        url: shareUrl
+      });
+      return;
+    } catch (err) {
+      if (err && err.name === 'AbortError') return;
+      // If native share fails for another reason, fall through to custom panel
+    }
+  }
+
+  // On desktop (no navigator.share) → show custom share panel
+  openSharePanel(shareTitle, shareUrl);
+}
+
+function openSharePanel(title, shareUrl) {
+  const panel = document.getElementById('share-panel');
+  if (!panel) return;
+
+  // Update preview info
+  const titleEl = document.getElementById('share-panel-title');
+  const urlEl = document.getElementById('share-panel-url');
+  if (titleEl) titleEl.textContent = title;
+  if (urlEl) {
+    try {
+      const u = new URL(shareUrl);
+      urlEl.textContent = u.hostname + u.pathname;
+    } catch (_) {
+      urlEl.textContent = shareUrl;
+    }
+  }
+
+  // Build social share URLs
+  const encoded = encodeURIComponent(shareUrl);
+  const textEncoded = encodeURIComponent(title + ' — Himnos de la Vida Cristiana');
+
+  const whatsapp = document.getElementById('share-whatsapp');
+  const telegram = document.getElementById('share-telegram');
+  const twitter = document.getElementById('share-twitter');
+  const facebook = document.getElementById('share-facebook');
+
+  if (whatsapp) whatsapp.href = `https://wa.me/?text=${textEncoded}%20${encoded}`;
+  if (telegram) telegram.href = `https://t.me/share/url?url=${encoded}&text=${textEncoded}`;
+  if (twitter) twitter.href = `https://twitter.com/intent/tweet?text=${textEncoded}&url=${encoded}`;
+  if (facebook) facebook.href = `https://www.facebook.com/sharer/sharer.php?u=${encoded}`;
+
+  // Copy button
+  const copyBtn = document.getElementById('share-copy-btn');
+  if (copyBtn) {
+    copyBtn.onclick = async () => {
+      let copied = false;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        try { await navigator.clipboard.writeText(shareUrl); copied = true; } catch (_) {}
+      }
+      if (!copied) {
+        const t = document.createElement('textarea');
+        t.value = shareUrl; t.setAttribute('readonly', '');
+        t.style.position = 'fixed'; t.style.opacity = '0';
+        document.body.appendChild(t); t.select();
+        try { copied = document.execCommand('copy'); } catch (_) {}
+        t.remove();
+      }
+      closeSharePanel();
+      showToast(copied ? 'Enlace copiado al portapapeles' : 'No se pudo copiar el enlace');
+    };
+  }
+
+  // Show panel
+  panel.classList.remove('hidden');
+  requestAnimationFrame(() => panel.classList.add('is-open'));
+
+  // Focus trap: close on backdrop click
+  const backdrop = panel.querySelector('.share-panel-backdrop');
+  if (backdrop) backdrop.onclick = closeSharePanel;
+
+  const closeBtn = document.getElementById('share-panel-close');
+  if (closeBtn) closeBtn.onclick = closeSharePanel;
+}
+
+function closeSharePanel() {
+  const panel = document.getElementById('share-panel');
+  if (!panel) return;
+  panel.classList.remove('is-open');
+  panel.addEventListener('transitionend', () => {
+    panel.classList.add('hidden');
+  }, { once: true });
+}
+
+/**
+ * Shows an accessible non-blocking toast notification for 3 seconds.
+ */
+function showToast(message) {
+  if (!DOM.appToast) return;
+  DOM.appToast.textContent = message;
+  DOM.appToast.classList.remove('hidden');
+  // Force reflow so transition triggers cleanly after removing hidden
+  DOM.appToast.offsetHeight;
+  DOM.appToast.classList.add('is-visible');
+
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    DOM.appToast.classList.remove('is-visible');
+    setTimeout(() => {
+      if (!DOM.appToast.classList.contains('is-visible')) {
+        DOM.appToast.classList.add('hidden');
+      }
+    }, 250);
+  }, 3000);
 }
 
 function toggleAudioMute() {
