@@ -97,6 +97,14 @@
       <nav class="filter-tabs" aria-label="Filtros de sección">
         <button class="tab-btn active" data-filter="all">Todos</button>
         <button class="tab-btn" data-filter="favoritos">Favoritos</button>
+        <button class="tab-btn" data-filter="canticos" id="canticos-tab-btn">
+          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 15px; height: 15px; margin-right: 5px; vertical-align: -2px;">
+            <path d="M9 18V5l12-2v13"></path>
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="16" r="3"></circle>
+          </svg>
+          Cánticos de Júbilo
+        </button>
       </nav>
     </div>
   </section>
@@ -129,6 +137,52 @@
       <div class="skeleton-card"></div>
       <div class="skeleton-card"></div>
     </div>
+
+    <!-- Dedicated Cánticos de Júbilo Section (Independiente del Himnario) -->
+    <section id="canticos-section" class="canticos-section hidden" aria-label="Sección Cánticos de Júbilo">
+      <div class="canticos-header-card">
+        <div class="canticos-header-info">
+          <div class="canticos-title-row">
+            <span class="canticos-badge-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+                <path d="M9 18V5l12-2v13"></path>
+                <circle cx="6" cy="18" r="3"></circle>
+                <circle cx="18" cy="16" r="3"></circle>
+              </svg>
+            </span>
+            <div class="canticos-title-headings">
+              <h2>Cánticos de Júbilo</h2>
+              <span class="canticos-subtitle">Colección de coros y alabanzas · Can-Jub</span>
+            </div>
+            <span class="canticos-count-pill" id="canticos-count-pill">158 cánticos</span>
+          </div>
+        </div>
+
+        <!-- Pequeño buscador de Cánticos -->
+        <div class="canticos-search-box">
+          <svg class="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
+          <input type="text" id="canticos-search-input" placeholder="Buscar coro por número, título o letra..."
+            aria-label="Buscar en Cánticos de Júbilo" autocomplete="off">
+          <button id="canticos-clear-search" class="clear-btn hidden" aria-label="Limpiar búsqueda de coros">&times;</button>
+        </div>
+
+        <!-- Chips de filtro rápido -->
+        <div class="canticos-filter-chips" role="tablist" aria-label="Filtros de cánticos">
+          <button class="canticos-chip active" data-canticos-filter="all">Todos (158)</button>
+          <button class="canticos-chip" data-canticos-filter="doxologias">Doxologías (3)</button>
+          <button class="canticos-chip" data-canticos-filter="con-fuente">Con fuente musical</button>
+        </div>
+      </div>
+
+      <!-- Grid de Cánticos -->
+      <div id="canticos-grid" class="canticos-grid" aria-live="polite">
+        <!-- Rendered dynamically -->
+      </div>
+    </section>
   </main>
 
   <!-- Sidebar Drawer for Index/Contenido -->
@@ -667,6 +721,55 @@
 
     <div id="reader-score-modal-dots" class="reader-score-dots reader-score-modal-dots hidden" role="tablist"
       aria-label="Páginas de la partitura ampliada"></div>
+  </div>
+
+  <!-- Modal de Lectura Exclusivo para Cánticos de Júbilo -->
+  <div id="cantico-reader-modal" class="cantico-modal hidden" role="dialog" aria-modal="true"
+    aria-label="Lectura de cántico de júbilo">
+    <div class="cantico-modal-backdrop" id="cantico-modal-backdrop"></div>
+    <div class="cantico-modal-dialog">
+      <header class="cantico-modal-header">
+        <div class="cantico-header-meta">
+          <span class="cantico-number-tag" id="cantico-modal-num">01</span>
+          <span class="cantico-source-tag" id="cantico-modal-source">AJR 30</span>
+          <span class="cantico-page-tag" id="cantico-modal-page">Pág. 1</span>
+        </div>
+        <button type="button" class="cantico-close-btn" id="cantico-modal-close" aria-label="Cerrar lectura">&times;</button>
+      </header>
+
+      <div class="cantico-modal-body">
+        <h3 class="cantico-modal-title" id="cantico-modal-title">Título del Cántico</h3>
+        <div class="cantico-modal-lyrics" id="cantico-modal-lyrics">
+          <!-- Lyrics lines injected dynamically -->
+        </div>
+      </div>
+
+      <footer class="cantico-modal-footer">
+        <div class="cantico-nav-group">
+          <button type="button" id="cantico-prev-btn" class="cantico-nav-btn" aria-label="Cántico anterior" title="Anterior">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            <span>Anterior</span>
+          </button>
+          <span id="cantico-index-indicator" class="cantico-counter">1 de 158</span>
+          <button type="button" id="cantico-next-btn" class="cantico-nav-btn" aria-label="Cántico siguiente" title="Siguiente">
+            <span>Siguiente</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <button type="button" id="cantico-copy-btn" class="cantico-action-btn" title="Copiar letra del cántico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px;">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span id="cantico-copy-text">Copiar letra</span>
+        </button>
+      </footer>
+    </div>
   </div>
 
   <!-- Global Accessible Toast Notification -->

@@ -1,0 +1,2666 @@
+[
+  {
+    "id": "doxologia-1",
+    "numero_display": "Doxología 1",
+    "numero": 0,
+    "tipo": "doxologia",
+    "titulo": "Al Padre, Hijo Redentor",
+    "fuente": "HVC Contraportada",
+    "pagina_pdf": 1,
+    "letra": [
+      "Al Padre, Hijo Redentor y",
+      "Espíritu Consolador;",
+      "Al Trino Dios en unidad",
+      "Loor eterno tributad. Amén."
+    ]
+  },
+  {
+    "id": "doxologia-2",
+    "numero_display": "Doxología 2",
+    "numero": 0,
+    "tipo": "doxologia",
+    "titulo": "Gloria demos al Padre",
+    "fuente": "HVC Contraportada",
+    "pagina_pdf": 1,
+    "letra": [
+      "Gloria demos al Padre,",
+      "Al Hijo y al Santo Espíritu;",
+      "Como era al principio",
+      "Son hoy y habrán de ser,",
+      "Eternamente. Amén."
+    ]
+  },
+  {
+    "id": "doxologia-3",
+    "numero_display": "Doxología 3",
+    "numero": 0,
+    "tipo": "doxologia",
+    "titulo": "A Dios, el Padre celestial",
+    "fuente": "HVC Contraportada",
+    "pagina_pdf": 1,
+    "letra": [
+      "A Dios, el Padre celestial,",
+      "Al Hijo, nuestro Redentor;",
+      "Al eternal Consolador",
+      "Unidos todos alabad. Amén."
+    ]
+  },
+  {
+    "id": "1",
+    "numero_display": "1",
+    "numero": 1,
+    "tipo": "cantico",
+    "titulo": "Alelú, alelú, alelú, aleluya",
+    "fuente": "AJR 30",
+    "pagina_pdf": 1,
+    "letra": [
+      "2 / Alelú, alelú, alelú, aleluya, load a Dios. / 2",
+      "3 / Load a Dios, aleluya. / 3 Load a Dios."
+    ]
+  },
+  {
+    "id": "2",
+    "numero_display": "2",
+    "numero": 2,
+    "tipo": "cantico",
+    "titulo": "Dios, grande es tu amor",
+    "fuente": "AJR 46",
+    "pagina_pdf": 1,
+    "letra": [
+      "Dios, grande es tu amor,",
+      "Tu gran amor por mí,",
+      "Admirable amor, que durarásin fin.",
+      "Es divino y santo, a mplio cual es el mar,",
+      "Alto más que los cielos e stu amor por mí."
+    ]
+  },
+  {
+    "id": "3",
+    "numero_display": "3",
+    "numero": 3,
+    "tipo": "cantico",
+    "titulo": "No hay imposible",
+    "fuente": "S/M",
+    "pagina_pdf": 1,
+    "letra": [
+      "No hay imposible para Dios, 2 / no lo hay, / 2",
+      "Mi Díos tiene todo poder.",
+      "ÉI hizo todo lo que existe",
+      "El cielo, tierra y mar,",
+      "M i Dios tiene todo poder."
+    ]
+  },
+  {
+    "id": "4",
+    "numero_display": "4",
+    "numero": 4,
+    "tipo": "cantico",
+    "titulo": "Todo lo que respire",
+    "fuente": "S/M",
+    "pagina_pdf": 1,
+    "letra": [
+      "2 / Todo lo que respire, alabe a Jehová / 2",
+      "Alabadle sol y lun a",
+      "Y vosotros todos sus santos,",
+      "2 / Alabad y bendecid el nombre de Jehová / 2"
+    ]
+  },
+  {
+    "id": "5",
+    "numero_display": "5",
+    "numero": 5,
+    "tipo": "cantico",
+    "titulo": "Ensalzarte he",
+    "fuente": "HB 512",
+    "pagina_pdf": 1,
+    "letra": [
+      "Ensalzarte he, mi Dios, mi Rey;",
+      "Y bendecirétu nombre",
+      "Por siglo y para siempre.",
+      "Cada día te bendeciré,",
+      "Y alabarétu nombre",
+      "Por siglo y para siempre.",
+      "Gra nde es Jehová",
+      "Y digno de suprema alabanza:",
+      "Y su grandeza es inescrutable.",
+      "2 / Cada día te bendeciré / 2"
+    ]
+  },
+  {
+    "id": "6",
+    "numero_display": "6",
+    "numero": 6,
+    "tipo": "cantico",
+    "titulo": "Bendición y honra",
+    "fuente": "S/M",
+    "pagina_pdf": 1,
+    "letra": [
+      "Bendición y honra 3 / y gloria sea a Ti / 3",
+      "Bendición y honra y gloria sea a Ti.",
+      "Por la eternidad. Alabadle, todos adoradle;",
+      "Alabad le por la eternidad, ¡Aleluya!",
+      "Bendición y honra y gloria sea a T i",
+      "Por la eternidad."
+    ]
+  },
+  {
+    "id": "7",
+    "numero_display": "7",
+    "numero": 7,
+    "tipo": "cantico",
+    "titulo": "Alabad a Jehová S/M",
+    "fuente": "",
+    "pagina_pdf": 1,
+    "letra": [
+      "Alabad a Jehová, naciones todas;",
+      "Pueblos todos, alabadle.",
+      "Porque ha engrandecido",
+      "Sobre nosotros su misericordia;",
+      "2 / Y la verdad de Jehová",
+      "E spar a siempre. Al eluya. / 2"
+    ]
+  },
+  {
+    "id": "8",
+    "numero_display": "8",
+    "numero": 8,
+    "tipo": "cantico",
+    "titulo": "Gozo inefable",
+    "fuente": "AJR 23",
+    "pagina_pdf": 1,
+    "letra": [
+      "Gozo inefable inunda a mi alma,",
+      "Al recordar que Cristo me amó.",
+      "Gozo inefable, paz infinita",
+      "¡Aleluya! Él me salvó."
+    ]
+  },
+  {
+    "id": "9",
+    "numero_display": "9",
+    "numero": 9,
+    "tipo": "cantico",
+    "titulo": "Aleluya gloria a Jesús",
+    "fuente": "AJR 26",
+    "pagina_pdf": 1,
+    "letra": [
+      "Alelu ya gloria a Jesús;",
+      "Démosle loor cantando con fervor;",
+      "Aleluya gloria a Jesús,",
+      "Nos ha dado gozo y luz.",
+      "Rey de gloria es el Salvador",
+      "Grande es su amor y démosle honor,",
+      "Rey de gloria es el Salvador",
+      "Y en sal cemos alabanzas a Jesús."
+    ]
+  },
+  {
+    "id": "10",
+    "numero_display": "10",
+    "numero": 10,
+    "tipo": "cantico",
+    "titulo": "Suenan melodías",
+    "fuente": "AJR 40",
+    "pagina_pdf": 1,
+    "letra": [
+      "Suenan melodías en mi ser,",
+      "Cantos de amor, loando al Salvador.",
+      "Suenan melodías en mi ser,",
+      "A labanzas a Jesús."
+    ]
+  },
+  {
+    "id": "11",
+    "numero_display": "11",
+    "numero": 11,
+    "tipo": "cantico",
+    "titulo": "Cristo es siempre fiel",
+    "fuente": "AJV 66",
+    "pagina_pdf": 1,
+    "letra": [
+      "2 / Cristo es siempre fiel, / 2",
+      "Cielo y tierra pasarán,",
+      "Mas Cristo es siempre fiel."
+    ]
+  },
+  {
+    "id": "12",
+    "numero_display": "12",
+    "numero": 12,
+    "tipo": "cantico",
+    "titulo": "Admirable es Jesús",
+    "fuente": "PC 22",
+    "pagina_pdf": 1,
+    "letra": [
+      "Admirable es Jesús",
+      "Y tan lleno de amor;",
+      "Admirabl e es Jesús, mi Señor.",
+      "Es su nombre sin par,",
+      "Siempre aél quiero alabar;",
+      "Admirable es Jesús, mi Señor."
+    ]
+  },
+  {
+    "id": "13",
+    "numero_display": "13",
+    "numero": 13,
+    "tipo": "cantico",
+    "titulo": "Cristo rompe las cadenas",
+    "fuente": "CC 15",
+    "pagina_pdf": 1,
+    "letra": [
+      "3 / Cristo rompe las cadenas, / 3",
+      "Y me libra a mí."
+    ]
+  },
+  {
+    "id": "14",
+    "numero_display": "14",
+    "numero": 14,
+    "tipo": "cantico",
+    "titulo": "Mirad, bendecid a Jehová S/M",
+    "fuente": "",
+    "pagina_pdf": 1,
+    "letra": [
+      "Mirad, bendecid a Jehová,",
+      "Vosotros to dos los siervos de Jehová,",
+      "Los que en la casa de Jehová",
+      "Estáis por las noches.",
+      "Alzad vuestras manos al santuario,",
+      "Y bendecid a Jehová,",
+      "Bendígate Jehovádesde Sión,",
+      "El cual ha hecho los cielos y la tierra."
+    ]
+  },
+  {
+    "id": "15",
+    "numero_display": "15",
+    "numero": 15,
+    "tipo": "cantico",
+    "titulo": "Jesús me pastorea",
+    "fuente": "CC 16",
+    "pagina_pdf": 2,
+    "letra": [
+      "2 / Jesús me pastorea,",
+      "M e voy conél hasta el fin. / 2",
+      "2 / Me voy conél,",
+      "M e voy conél hasta el fin. / 2",
+      "Jesús me pastorea,",
+      "M e voy conél hasta el fin."
+    ]
+  },
+  {
+    "id": "16",
+    "numero_display": "16",
+    "numero": 16,
+    "tipo": "cantico",
+    "titulo": "Tu luz, OH Cristo",
+    "fuente": "BN 25",
+    "pagina_pdf": 2,
+    "letra": [
+      "Tu luz, OH Cristo, Tu luz divina,",
+      "Llena mi alma de alegría.",
+      "Tu luz, OH Cristo, Tu luz divina,",
+      "¡Aleluy a! brilla en mí."
+    ]
+  },
+  {
+    "id": "17",
+    "numero_display": "17",
+    "numero": 17,
+    "tipo": "cantico",
+    "titulo": "Quémaravilla que Cristo",
+    "fuente": "BN 45",
+    "pagina_pdf": 2,
+    "letra": [
+      "¡Quémaravilla que Cristo viniera del cielo!",
+      "¡Quémaravilla que Cristo muriera por mí!",
+      "¡Quémaravilla que Cristo e stáen el cielo!",
+      "¡Quémaravilla que Cristo e smi mediador!"
+    ]
+  },
+  {
+    "id": "18",
+    "numero_display": "18",
+    "numero": 18,
+    "tipo": "cantico",
+    "titulo": "La belleza de Cristo",
+    "fuente": "BN 48",
+    "pagina_pdf": 2,
+    "letra": [
+      "La belleza de Cristo que more en mí;",
+      "Su pasión y pureza yo quiero, sí;",
+      "¡ OH, divino Jesús! Ten, ten todo mi ser",
+      "Y que puedan en mí Tu belleza ver."
+    ]
+  },
+  {
+    "id": "19",
+    "numero_display": "19",
+    "numero": 19,
+    "tipo": "cantico",
+    "titulo": "Para mí el vivir es Cristo",
+    "fuente": "BN 93",
+    "pagina_pdf": 2,
+    "letra": [
+      "Para mí el vivir es Cristo,",
+      "Crucificado conél estoy;",
+      "Ya no vivo yo, Cr isto vive en mí,",
+      "Para mí el vivir esél."
+    ]
+  },
+  {
+    "id": "20",
+    "numero_display": "20",
+    "numero": 20,
+    "tipo": "cantico",
+    "titulo": "He aquí, he aquí CSD 52",
+    "fuente": "",
+    "pagina_pdf": 2,
+    "letra": [
+      "2 / He aquí, he aquí,",
+      "E stoy a la puerta y llamo; / 2",
+      "Si un niño oyere mi voz,",
+      "S i una niña oyere mi voz,",
+      "Y abriere la puerta de su corazón,",
+      "Yo entraré."
+    ]
+  },
+  {
+    "id": "21",
+    "numero_display": "21",
+    "numero": 21,
+    "tipo": "cantico",
+    "titulo": "Santo Espíritu",
+    "fuente": "AJV 84",
+    "pagina_pdf": 2,
+    "letra": [
+      "Santo Espíritu llena mi vida,",
+      "Pues por Cristo yo quiero brillar.",
+      "Santo Espíritu llena mi vida,",
+      "Úsame las almas a salvar.",
+      "3 / Alabanzas, / 3 doy a Cristo el Rey.",
+      "3 / Alabanzas, / 3 doy al Rey."
+    ]
+  },
+  {
+    "id": "22",
+    "numero_display": "22",
+    "numero": 22,
+    "tipo": "cantico",
+    "titulo": "Gozo tengo en mi alma",
+    "fuente": "AJR 19",
+    "pagina_pdf": 2,
+    "letra": [
+      "Gozo tengo en mi alma hoy,",
+      "Porque séque Cristo me salvó,",
+      "Él, su paz y salvación me da,",
+      "Todos mis pecadosél borró.",
+      "Melodía puso en mi corazón,",
+      "Gloria a su nombre por su excelso don.",
+      "Gozo tengo en mi alma hoy,",
+      "Porque séque Cristo me salvó."
+    ]
+  },
+  {
+    "id": "23",
+    "numero_display": "23",
+    "numero": 23,
+    "tipo": "cantico",
+    "titulo": "De tal manera amó A JR 21",
+    "fuente": "",
+    "pagina_pdf": 2,
+    "letra": [
+      "De tal manera amóa lmund o nuestro Dios",
+      "Que ha dado a su Hijo, Cristo el Salvador",
+      "Que todos los que enél confían en verdad,",
+      "Tienen vida eternal."
+    ]
+  },
+  {
+    "id": "24",
+    "numero_display": "24",
+    "numero": 24,
+    "tipo": "cantico",
+    "titulo": "O hven a conocer",
+    "fuente": "AJR 22",
+    "pagina_pdf": 2,
+    "letra": [
+      "O hven a conocer 3 / a mi Salvador, / 3",
+      "O hven a conocer a mi Salvador",
+      "Y tendrás su dulce paz."
+    ]
+  },
+  {
+    "id": "25",
+    "numero_display": "25",
+    "numero": 25,
+    "tipo": "cantico",
+    "titulo": "Seréfe liz",
+    "fuente": "AJR 27",
+    "pagina_pdf": 2,
+    "letra": [
+      "Seréfeliz cuandoél vendrá",
+      "Y la victoria ganará",
+      "No habrátristeza en ese día.",
+      "Seréfeliz cuandoél vendrá."
+    ]
+  },
+  {
+    "id": "26",
+    "numero_display": "26",
+    "numero": 26,
+    "tipo": "cantico",
+    "titulo": "A Jesucristo ven pecador",
+    "fuente": "AJR 29",
+    "pagina_pdf": 2,
+    "letra": [
+      "A Jesucristo ven pecador",
+      "Con toda ansiedad, tristeza y maldad.",
+      "A Jesucristo ven pecador.",
+      "Hazlo sin tardar."
+    ]
+  },
+  {
+    "id": "27",
+    "numero_display": "27",
+    "numero": 27,
+    "tipo": "cantico",
+    "titulo": "Abogado en Cristo",
+    "fuente": "AJR 36",
+    "pagina_pdf": 2,
+    "letra": [
+      "Abogado tenemos en Cristo,",
+      "El Santo Hijo de Dios, el Justo,",
+      "Que con su sangre precio sí sima,",
+      "Nos rescatódel mal.",
+      "Si alguno hubiere pecado,",
+      "E nredes de Satanás caído",
+      "Alcanzarápor fe en Cristo,",
+      "L a propiciación total."
+    ]
+  },
+  {
+    "id": "28",
+    "numero_display": "28",
+    "numero": 28,
+    "tipo": "cantico",
+    "titulo": "En la patria celestial",
+    "fuente": "AJR 48",
+    "pagina_pdf": 2,
+    "letra": [
+      "2 / En la patria celestial, / 2",
+      "Una mansión preparada está",
+      "¡ O hque glorioso estar allá!",
+      "2 / En la patria celestial, / 2",
+      "Goces eternos conél tendré",
+      "En la patria celestial."
+    ]
+  },
+  {
+    "id": "29",
+    "numero_display": "29",
+    "numero": 29,
+    "tipo": "cantico",
+    "titulo": "Dorada aurora",
+    "fuente": "AJV 19",
+    "pagina_pdf": 2,
+    "letra": [
+      "Dorada aurora; Cri sto vendrá.",
+      "Dorada aurora gloria será.",
+      "Las duras luchas pasadas ya.",
+      "Con gran victoria Cristo vendrá"
+    ]
+  },
+  {
+    "id": "30",
+    "numero_display": "30",
+    "numero": 30,
+    "tipo": "cantico",
+    "titulo": "¡ Viva el evangelio del amor!",
+    "fuente": "AJV 28",
+    "pagina_pdf": 2,
+    "letra": [
+      "2 / ¡ Viva el evangelio del amor! / 2",
+      "¡Viva el evangelio que nos trajo salvación!",
+      "¡ Viva el evangelio del amor!"
+    ]
+  },
+  {
+    "id": "31",
+    "numero_display": "31",
+    "numero": 31,
+    "tipo": "cantico",
+    "titulo": "Pr onto vendráel Señor",
+    "fuente": "AJV 77",
+    "pagina_pdf": 2,
+    "letra": [
+      "Pronto vendráel Señor,",
+      "Su iglesia a levantar gloriosa;",
+      "La iglesia que compró",
+      "A precio de sangre preciosa.",
+      "Losángeles vendrán,",
+      "A llíse reunirásu pueblo.",
+      "2 / Allíyo quiero estar, para escuchar su voz",
+      "Cuando me diga: \"Ven, buen siervo\" / 2"
+    ]
+  },
+  {
+    "id": "32",
+    "numero_display": "32",
+    "numero": 32,
+    "tipo": "cantico",
+    "titulo": "Por la vía de la cruz",
+    "fuente": "EV 51",
+    "pagina_pdf": 2,
+    "letra": [
+      "Por l a vía de la cruz 3 / él fue por mí. / 3",
+      "Por la vía de la cruzél fue por mí.",
+      "Porél me redi mí."
+    ]
+  },
+  {
+    "id": "33",
+    "numero_display": "33",
+    "numero": 33,
+    "tipo": "cantico",
+    "titulo": "Yo vivo, Señor",
+    "fuente": "PC 14",
+    "pagina_pdf": 3,
+    "letra": [
+      "Yo vivo, Señor, porque Tú vives;",
+      "Porque Tú vives, Señor es que yo vivo.",
+      "Me das consue lo, me das abrigo,",
+      "Y en la aflicción,",
+      "M i Señor estás conmigo.",
+      "Soy salvo, Señor, Tú me salvaste,",
+      "Tú me salvaste, Señor eternamente;",
+      "Yo voy al cielo; voy a la gloria,",
+      "Porque Señor, Tú me diste la victoria."
+    ]
+  },
+  {
+    "id": "34",
+    "numero_display": "34",
+    "numero": 34,
+    "tipo": "cantico",
+    "titulo": "Aquíen esta tierra",
+    "fuente": "PC 48",
+    "pagina_pdf": 3,
+    "letra": [
+      "Aquíen esta tierra conocía Jesús;",
+      "Él me dio la vida, él me dio la luz.",
+      "Porél vivo y creo que a la gloria voy,",
+      "¡Gloria, gloria a Cristo Por quésalvo soy!"
+    ]
+  },
+  {
+    "id": "35",
+    "numero_display": "35",
+    "numero": 35,
+    "tipo": "cantico",
+    "titulo": "La fuente de la salvación",
+    "fuente": "MB 18",
+    "pagina_pdf": 3,
+    "letra": [
+      "La fuente de la salvación",
+      "2 / Fluyendo está. / 2",
+      "La fuente de la salvación",
+      "Fluyen do estápor mí."
+    ]
+  },
+  {
+    "id": "36",
+    "numero_display": "36",
+    "numero": 36,
+    "tipo": "cantico",
+    "titulo": "Hay perdón",
+    "fuente": "MB 28",
+    "pagina_pdf": 3,
+    "letra": [
+      "Hay perdón por la sangre de Jesús,",
+      "Hay perdón por su muerte en la cruz.",
+      "Proclamad que hay perdón,",
+      "Para todos hay perdón,",
+      "Los que acuden al Señor Jesús."
+    ]
+  },
+  {
+    "id": "37",
+    "numero_display": "37",
+    "numero": 37,
+    "tipo": "cantico",
+    "titulo": "Solamente en Cristo",
+    "fuente": "CC 24",
+    "pagina_pdf": 3,
+    "letra": [
+      "Solamente en Cristo, solamente enél,",
+      "La salvación s e encuentra enél.",
+      "No hay otro nombre dado a los hombres;",
+      "Solamente en Cristo, solamente enél."
+    ]
+  },
+  {
+    "id": "38",
+    "numero_display": "38",
+    "numero": 38,
+    "tipo": "cantico",
+    "titulo": "Le veremos algún día",
+    "fuente": "BN 14",
+    "pagina_pdf": 3,
+    "letra": [
+      "Le veremos algún día,",
+      "A Jesús quien nos salvó;",
+      "Volveráa esta tierra,",
+      "Pues a sí nos prometió,",
+      "Cada prueba ter minada,",
+      "Y más cruces no habrá;",
+      "Cuando Cristo vuelva en gloria,",
+      "Y nos lleve más allá."
+    ]
+  },
+  {
+    "id": "39",
+    "numero_display": "39",
+    "numero": 39,
+    "tipo": "cantico",
+    "titulo": "Una mirada de fe",
+    "fuente": "LV 27",
+    "pagina_pdf": 3,
+    "letra": [
+      "2 / Una mirada de fe, una mirada al Señor,",
+      "Es la que puede salvar al pecador. / 2",
+      "2 / Y si túvienes a Cristo Jesús,",
+      "Él te perdonará, porque una mirada de fe,",
+      "Es la que te puede salvar. / 2"
+    ]
+  },
+  {
+    "id": "40",
+    "numero_display": "40",
+    "numero": 40,
+    "tipo": "cantico",
+    "titulo": "¿Quéme puede dar?",
+    "fuente": "HVC 286",
+    "pagina_pdf": 3,
+    "letra": [
+      "¿Quéme puede dar perdón?",
+      "Sólo de Jesús la sangre,",
+      "¿Y un nuevo corazón?",
+      "Sólo de Jesús la sangre.",
+      "Precioso es el raudal,",
+      "Que limpia todo mal;",
+      "No hay otro manantial,",
+      "Sólo de Jesús la sangre."
+    ]
+  },
+  {
+    "id": "41",
+    "numero_display": "41",
+    "numero": 41,
+    "tipo": "cantico",
+    "titulo": "Noticia grata yo te doy",
+    "fuente": "S/M",
+    "pagina_pdf": 3,
+    "letra": [
+      "Noticia grata yo te doy,",
+      "Por mí en la cruz Jesús murió;",
+      "Si crees enél de todo corazón,",
+      "L a vida eterna tendrás."
+    ]
+  },
+  {
+    "id": "42",
+    "numero_display": "42",
+    "numero": 42,
+    "tipo": "cantico",
+    "titulo": "El camino al cielo",
+    "fuente": "S/M",
+    "pagina_pdf": 3,
+    "letra": [
+      "El camino al cielo e s Cristo Jesús,",
+      "Él es la verdad y del mundo es la luz:",
+      "No hay otro nombre que nos valdrá,",
+      "Sólo Jesucristo nos salvará."
+    ]
+  },
+  {
+    "id": "43",
+    "numero_display": "43",
+    "numero": 43,
+    "tipo": "cantico",
+    "titulo": "Fe, la victoria es",
+    "fuente": "BN 86",
+    "pagina_pdf": 3,
+    "letra": [
+      "3 / Fe, la victoria es, / 3",
+      "Que al mundo vencerá."
+    ]
+  },
+  {
+    "id": "44",
+    "numero_display": "44",
+    "numero": 44,
+    "tipo": "cantico",
+    "titulo": "Al cielo voy",
+    "fuente": "CSD 79",
+    "pagina_pdf": 3,
+    "letra": [
+      "2 / Al cielo voy, / 2 túpuedes ir también,",
+      "Jesús te dice: \" ¡ Ven! \".",
+      "2 / AI cielo vo y, / 2 con el Salvador Jesús.",
+      "2 / Ete rn a paz, / 2 e t e rn a paz y amor",
+      "Te ofrece el Salvador.",
+      "2 / Etern a paz, / 2 hoy te ofrece el Salvador.",
+      "2 / No más pecar, / 2 no hieras pecador,",
+      "A Cristo el Salvador.",
+      "2 / No más pecar / 2 él te quiere perdonar."
+    ]
+  },
+  {
+    "id": "45",
+    "numero_display": "45",
+    "numero": 45,
+    "tipo": "cantico",
+    "titulo": "Cuando Cristo venga",
+    "fuente": "CGI 3",
+    "pagina_pdf": 3,
+    "letra": [
+      "Cuando Cristo venga en las nubes,",
+      "Cuando Cristo venga no habrámás dolor,",
+      "Cuando Cristo venga en S u gloria;",
+      "Juntos estaremos con el Salvador."
+    ]
+  },
+  {
+    "id": "46",
+    "numero_display": "46",
+    "numero": 46,
+    "tipo": "cantico",
+    "titulo": "Suenen las trompetas",
+    "fuente": "S/M",
+    "pagina_pdf": 3,
+    "letra": [
+      "Suenen las trompetas en el tercer cielo,",
+      "Y las multitudes van cantando,",
+      "E squ e van pasando todos los valientes",
+      "Que en la tierra amaron a Cristo Jesús.",
+      "¿ Tú de cuáles eres de los que se gozan,",
+      "O de los que lloran l a separación?",
+      "Si quieres gozarte, debes prepararte",
+      "Para ir al encuentro de tú Salvador."
+    ]
+  },
+  {
+    "id": "47",
+    "numero_display": "47",
+    "numero": 47,
+    "tipo": "cantico",
+    "titulo": "Cristo rompe las cadenas",
+    "fuente": "S/M",
+    "pagina_pdf": 3,
+    "letra": [
+      "3 / Cristo rompe las cadenas, / 3",
+      "Cristo da seguridad.",
+      "¿Cómo es posible que yo viva sin Jesús,",
+      "Si el fundamento de mi vida solo esél?",
+      "Él me libródel infierno y de la muerte.",
+      "¿Cómo es posible que yo viva sin Jesús?"
+    ]
+  },
+  {
+    "id": "48",
+    "numero_display": "48",
+    "numero": 48,
+    "tipo": "cantico",
+    "titulo": "Ya viene Cristo",
+    "fuente": "S/M",
+    "pagina_pdf": 3,
+    "letra": [
+      "Ya viene Cristo, señales hay;",
+      "Almas salvadas viene a buscar,",
+      "Los que durmieron se quedarán,",
+      "Los que velaron se irán con Él.",
+      "2 / 4 / Me voy conél, / 4",
+      "Yo no me quedo me voy con Él. / 2"
+    ]
+  },
+  {
+    "id": "49",
+    "numero_display": "49",
+    "numero": 49,
+    "tipo": "cantico",
+    "titulo": "Cada día con Cristo",
+    "fuente": "AJR 12",
+    "pagina_pdf": 4,
+    "letra": [
+      "Cada día con Cristo,",
+      "M e llena de perfecta paz;",
+      "Cada día con Cristo, le amo más y más;",
+      "ÉI me salva y guarda,",
+      "Y séque Él pronto volverá,",
+      "Y vivir con Cristo, más dulce cada día será."
+    ]
+  },
+  {
+    "id": "50",
+    "numero_display": "50",
+    "numero": 50,
+    "tipo": "cantico",
+    "titulo": "Yo quiero más",
+    "fuente": "VJ 37",
+    "pagina_pdf": 4,
+    "letra": [
+      "Yo quiero más y más de Cristo.",
+      "Yo quiero más de su poder.",
+      "Yo quiero más de su presencia,",
+      "Yo quiero más y más deél."
+    ]
+  },
+  {
+    "id": "51",
+    "numero_display": "51",
+    "numero": 51,
+    "tipo": "cantico",
+    "titulo": "¡O h! No hay Dios",
+    "fuente": "CC 13",
+    "pagina_pdf": 4,
+    "letra": [
+      "2 / ¡O h! no hay Dios tan grande como Tú,",
+      "No lo hay, no lo hay. / 2",
+      "2 / ¡OH! no hay Dios pueda hacer las obras,",
+      "Como las que haces Tú. / 2",
+      "2 / No es con espada, n i c o nejército",
+      "Mas con tu Santo Espíritu. / 2",
+      "3 / Y esos mo ntes se moverán. / 3",
+      "2 / Con tu Santo Espíritu. / 2"
+    ]
+  },
+  {
+    "id": "52",
+    "numero_display": "52",
+    "numero": 52,
+    "tipo": "cantico",
+    "titulo": "Soy feliz",
+    "fuente": "AJR 37",
+    "pagina_pdf": 4,
+    "letra": [
+      "Soy feliz, soy feliz desde que encontré",
+      "La salvación en Cristo, con amor, el Señor",
+      "Mostróme la verdad y vida.",
+      "Soy feliz, soy feliz siempre cantaré",
+      "Con dicha indecible e indestructib le",
+      "Tengo paz perfecta y siempre soy feliz."
+    ]
+  },
+  {
+    "id": "53",
+    "numero_display": "53",
+    "numero": 53,
+    "tipo": "cantico",
+    "titulo": "Procura con diligencia",
+    "fuente": "AJR 47",
+    "pagina_pdf": 4,
+    "letra": [
+      "2 / Procura con diligencia",
+      "Presentarte a Dios. / 2",
+      "Aprobado, como obrero que no",
+      "Tiene de que avergonzarse,",
+      "Que traza bien l a Palabra de verdad."
+    ]
+  },
+  {
+    "id": "54",
+    "numero_display": "54",
+    "numero": 54,
+    "tipo": "cantico",
+    "titulo": "Rebosa mi alma",
+    "fuente": "AJV 29",
+    "pagina_pdf": 4,
+    "letra": [
+      "Rebosa mi alma de gozo y loor;",
+      "Hay canto y sonrisa,",
+      "Pues Cristo es mi Señor.",
+      "Otros no comprenden,",
+      "Ni puedo ocultar",
+      "Que mi alma con su gozo",
+      "Siempre rebosando está."
+    ]
+  },
+  {
+    "id": "55",
+    "numero_display": "55",
+    "numero": 55,
+    "tipo": "cantico",
+    "titulo": "Yo séque Cristo",
+    "fuente": "AJR 78",
+    "pagina_pdf": 4,
+    "letra": [
+      "2 / Yo séque Cristo",
+      "Siem pre me ayudará. / 2",
+      "SI consagro todo aél,",
+      "Y soy su siervo fiel.",
+      "Yo séque Cristo siem pre me ayudará."
+    ]
+  },
+  {
+    "id": "56",
+    "numero_display": "56",
+    "numero": 56,
+    "tipo": "cantico",
+    "titulo": "Alegría tengo siempre",
+    "fuente": "AJR 92",
+    "pagina_pdf": 4,
+    "letra": [
+      "Alegría tengo siempre",
+      "E n Jesús mi Salvador;",
+      "Él me da un gozo sin igual",
+      "Y yo canto de su grande amor."
+    ]
+  },
+  {
+    "id": "57",
+    "numero_display": "57",
+    "numero": 57,
+    "tipo": "cantico",
+    "titulo": "¡OH, sí, soy feliz!",
+    "fuente": "AJV 31",
+    "pagina_pdf": 4,
+    "letra": [
+      "2 / ¡O h, sí, soy feliz, feliz; / 2",
+      "Gozo sin par siempreél puede dar,",
+      "¡O h, sí, soy feliz! ¡Sí, soy feliz!"
+    ]
+  },
+  {
+    "id": "58",
+    "numero_display": "58",
+    "numero": 58,
+    "tipo": "cantico",
+    "titulo": "El que tenga gozo",
+    "fuente": "AJV 47",
+    "pagina_pdf": 4,
+    "letra": [
+      "2 / El que tenga gozo, ¡Amén! / 2",
+      "Demos gloria al Señor,",
+      "Nuestro invicto Salvador.",
+      "El que tenga gozo, diga, ¡Amén!\"."
+    ]
+  },
+  {
+    "id": "59",
+    "numero_display": "59",
+    "numero": 59,
+    "tipo": "cantico",
+    "titulo": "En mi corazón te ngo paz",
+    "fuente": "EV 30",
+    "pagina_pdf": 4,
+    "letra": [
+      "2 / En mi corazón tengo paz, / 2",
+      "Jesús me salva, me da Su vida",
+      "Y en mi corazón yo tengo dulce paz."
+    ]
+  },
+  {
+    "id": "60",
+    "numero_display": "60",
+    "numero": 60,
+    "tipo": "cantico",
+    "titulo": "Alláen el monte Horeb",
+    "fuente": "EV 43",
+    "pagina_pdf": 4,
+    "letra": [
+      "2 / Alláen el monte Horeb, l a zarza ardía / 2",
+      "Con gran perplejidad Moisés miraba,",
+      "Pues no se consumiómientras ardía.",
+      "2 / Quita, quita, quita",
+      "Las sandalias de tus pies,",
+      "El lugar que pisas santo es. / 2"
+    ]
+  },
+  {
+    "id": "61",
+    "numero_display": "61",
+    "numero": 61,
+    "tipo": "cantico",
+    "titulo": "Cristo llenómi corazón",
+    "fuente": "PC 12",
+    "pagina_pdf": 4,
+    "letra": [
+      "2 / Cristo llenómi corazón, / 2",
+      "De gozo y felicidad",
+      "Jesucristo sí llenómi corazón."
+    ]
+  },
+  {
+    "id": "62",
+    "numero_display": "62",
+    "numero": 62,
+    "tipo": "cantico",
+    "titulo": "Yo tengo un amigo",
+    "fuente": "MB 41",
+    "pagina_pdf": 4,
+    "letra": [
+      "Yo tengo un amigo que 3 / me ama, / 3",
+      "Yo tengo un amigo que me ama:",
+      "Su nombre es Jesús.",
+      "Tú tienes un amigo que te 3 / ama, / 3",
+      "Tú tienes un amigo que te ama:",
+      "Su nombre es Jesús.",
+      "Tenemos un amigo que 3 / nos ama, / 3",
+      "Tenemos un amigo que nos ama:",
+      "Su nombre es Jesús."
+    ]
+  },
+  {
+    "id": "63",
+    "numero_display": "63",
+    "numero": 63,
+    "tipo": "cantico",
+    "titulo": "Yo tengo gozo en mi alma",
+    "fuente": "CC 32",
+    "pagina_pdf": 4,
+    "letra": [
+      "Yo tengo 3 / gozo en mi alma, / 3",
+      "Y en mi ser.",
+      "Son como 3 / ríos de agua viva, / 3",
+      "E nmi ser."
+    ]
+  },
+  {
+    "id": "64",
+    "numero_display": "64",
+    "numero": 64,
+    "tipo": "cantico",
+    "titulo": "Demos gracia sal Señor",
+    "fuente": "MB 43",
+    "pagina_pdf": 4,
+    "letra": [
+      "2 / Demos gracias al Señor,",
+      "Demos gracias, demos gracias",
+      "Por su amor. / 2",
+      "Por l a mañana las aves cantan",
+      "Las alabanzas de Cristo el Salvador.",
+      "Y tú, amigo, ¿Po rquéno cantas",
+      "Las alabanzas de Cristo el Salvador?"
+    ]
+  },
+  {
+    "id": "65",
+    "numero_display": "65",
+    "numero": 65,
+    "tipo": "cantico",
+    "titulo": "Toma por favor",
+    "fuente": "CC 5",
+    "pagina_pdf": 4,
+    "letra": [
+      "Toma por favor mi mano Señor,",
+      "Contigo quiero ir.",
+      "Con sangre aquípagaste por mí;",
+      "Te quiero hoy seguir.",
+      "Anhelo poder lo malo vencer,",
+      "Y en santidad vivir.",
+      "Toma por favor mi mano Señor,",
+      "Contigo quiero ir."
+    ]
+  },
+  {
+    "id": "66",
+    "numero_display": "66",
+    "numero": 66,
+    "tipo": "cantico",
+    "titulo": "Bendito seas",
+    "fuente": "CC 12",
+    "pagina_pdf": 5,
+    "letra": [
+      "Bendito seas, Jehová, l a roca,",
+      "Por toda la eternidad;",
+      "Mi escondedero y mi refugio eres Tú,",
+      "Bendito Jehová.",
+      "En Tu Palabra esperaré,",
+      "Y mi confianza en Ti pondré.",
+      "¡O hgloria, O haleluya! 4 / Amén. / 4"
+    ]
+  },
+  {
+    "id": "67",
+    "numero_display": "67",
+    "numero": 67,
+    "tipo": "cantico",
+    "titulo": "Como el agua llena la mar",
+    "fuente": "BN 22",
+    "pagina_pdf": 5,
+    "letra": [
+      "Como el agua llena la mar,",
+      "Todo el mundo se ha de llenar",
+      "Del amor, la fe y la gloria del Señor,",
+      "Como el agua llena la mar."
+    ]
+  },
+  {
+    "id": "68",
+    "numero_display": "68",
+    "numero": 68,
+    "tipo": "cantico",
+    "titulo": "Muy feliz soy",
+    "fuente": "BN 31",
+    "pagina_pdf": 5,
+    "letra": [
+      "Muy feliz soy yésta es la razón,",
+      "Cri sto ya quitóla carga mí a.",
+      "Mientras vivaésta es mi canción,",
+      "Cristo ya la carga me quitó.",
+      "Un gran peso había en mi corazón,",
+      "Mas la paz de Cristo reina hoy en mí.",
+      "Ya feliz soy yésta es la razón,",
+      "Cristo ya la carga me quitó."
+    ]
+  },
+  {
+    "id": "69",
+    "numero_display": "69",
+    "numero": 69,
+    "tipo": "cantico",
+    "titulo": "Cual la quietud de un arroy o",
+    "fuente": "LV 30",
+    "pagina_pdf": 5,
+    "letra": [
+      "Cual la quietud de un arro yo,",
+      "E sla paz que yo siento,",
+      "Cuando estoy con mi Señor.",
+      "Es una paz tan sublime,",
+      "Es un gozo indecible,",
+      "Que hace feliz mi corazón.",
+      "Yo quiero más de mi Cristo,",
+      "Más del Maestro,",
+      "Más de Su amor, más por siempre.",
+      "Cual la qui etud de un arro yo,",
+      "E sla paz que yo siento,",
+      "Cuando estoy con mi Señor."
+    ]
+  },
+  {
+    "id": "70",
+    "numero_display": "70",
+    "numero": 70,
+    "tipo": "cantico",
+    "titulo": "Quépuedo darle",
+    "fuente": "CSD 27",
+    "pagina_pdf": 5,
+    "letra": [
+      "¿Quépuedo darle, Pobre que soy?",
+      "Un cordero blanco s i yo fuera pastor.",
+      "Y si fuera mago daría rico don:",
+      "Mas, pobre que soy, l e darémi corazón."
+    ]
+  },
+  {
+    "id": "71",
+    "numero_display": "71",
+    "numero": 71,
+    "tipo": "cantico",
+    "titulo": "Cristo tanto me amó CSD 56",
+    "fuente": "",
+    "pagina_pdf": 5,
+    "letra": [
+      "2 / Cristo tanto me amó, / 2",
+      "Feliz y salvo soy, y con Jesús yo voy,",
+      "Porque tantoél me amó.",
+      "2 / Cristo tanto me amó, / 2",
+      "Murióen la cruz por mí,",
+      "Me libertóa sí, porque tanto Él me amó.",
+      "2 / Cristo tanto me amó, / 2",
+      "A todos contaré: \"Sufriópor mí, yo sé\",",
+      "Porque tantoél me amó."
+    ]
+  },
+  {
+    "id": "72",
+    "numero_display": "72",
+    "numero": 72,
+    "tipo": "cantico",
+    "titulo": "Maravilloso es",
+    "fuente": "HB 222",
+    "pagina_pdf": 5,
+    "letra": [
+      "2 / Maravilloso es, maravillo es,",
+      "Cuando pienso que Dios me ama a mí. / 2"
+    ]
+  },
+  {
+    "id": "73",
+    "numero_display": "73",
+    "numero": 73,
+    "tipo": "cantico",
+    "titulo": "Siempre cantando",
+    "fuente": "S/M",
+    "pagina_pdf": 5,
+    "letra": [
+      "Siempre cantando, siempre sonriendo",
+      "Si fiel a Cristo estás. Comparte con otros,",
+      "Goces divi nos y galardón ganarás.",
+      "Deja entrar el sol, con sonrisa andad",
+      "Quien sonríe gana gozo sin igual.",
+      "Deja entrar el sol, con sonrisa andad",
+      "Y tu alma brillará, cual brilla el sol."
+    ]
+  },
+  {
+    "id": "74",
+    "numero_display": "74",
+    "numero": 74,
+    "tipo": "cantico",
+    "titulo": "Tengo paz como un río",
+    "fuente": "S/M",
+    "pagina_pdf": 5,
+    "letra": [
+      "Tengo paz como un río, paz como un río,",
+      "Tengo paz como un río e nmi ser.",
+      "Tengo paz como un río, paz como un río,",
+      "Tengo paz como un río e nmi corazón."
+    ]
+  },
+  {
+    "id": "75",
+    "numero_display": "75",
+    "numero": 75,
+    "tipo": "cantico",
+    "titulo": "ÉI trajo gozo a mi ser",
+    "fuente": "AJR 25",
+    "pagina_pdf": 5,
+    "letra": [
+      "2 / ÉI trajo gozo a mi ser, 2 /",
+      "Ahora cada día me ama fiel,",
+      "Él trajo gozo a mi ser."
+    ]
+  },
+  {
+    "id": "76",
+    "numero_display": "76",
+    "numero": 76,
+    "tipo": "cantico",
+    "titulo": "Aleluya Cristo me salvó CG120",
+    "fuente": "",
+    "pagina_pdf": 5,
+    "letra": [
+      "Al eluya Cristo me salvó,",
+      "A leluya Él me transformó,",
+      "Aleluya mi alma El llenó:",
+      "Jesús ha hecho grandes cosas para mí.",
+      "Aleluya salvo soy por fe,",
+      "Aleluya esta cosa sé",
+      "Aleluya gloria a Cristo Rey:",
+      "Jesús ha hecho grandes cosas para mí.",
+      "Aleluya canto con fervo r,",
+      "A leluya canto al Salvador,",
+      "Aleluya démosle loor:",
+      "Jesús ha hecho grandes cosas para mí."
+    ]
+  },
+  {
+    "id": "77",
+    "numero_display": "77",
+    "numero": 77,
+    "tipo": "cantico",
+    "titulo": "Bendice alma mí",
+    "fuente": "S/M",
+    "pagina_pdf": 5,
+    "letra": [
+      "2 / Bendice alma mí a a Jehová, / 2",
+      "Jehová, Dios mí o,",
+      "Mucho te has engrandecido.",
+      "2 / Te has vestido de gloria y majestad, / 2",
+      "Jehová, Dios mí o,",
+      "Mucho te has engrandecido."
+    ]
+  },
+  {
+    "id": "78",
+    "numero_display": "78",
+    "numero": 78,
+    "tipo": "cantico",
+    "titulo": "Fija tus ojos en Cristo",
+    "fuente": "AJV 26",
+    "pagina_pdf": 5,
+    "letra": [
+      "Fija tus ojos en Cristo,",
+      "Tan lleno de gracia y amor",
+      "Y lo terrenal sin valor será,",
+      "A la luz del glorioso Señor."
+    ]
+  },
+  {
+    "id": "79",
+    "numero_display": "79",
+    "numero": 79,
+    "tipo": "cantico",
+    "titulo": "Clama a mí AJR 28",
+    "fuente": "",
+    "pagina_pdf": 5,
+    "letra": [
+      "\"Clama a mí y te responderé,",
+      "Clama a mí y te enseñaré",
+      "Cosas grandes que no sabes\", Dice nuestro",
+      "Dios. Pues oremos sin dudar jamás,",
+      "Y tendremos bendición y paz,",
+      "Ganaremos la victoria ¡Gloria a Dios!"
+    ]
+  },
+  {
+    "id": "80",
+    "numero_display": "80",
+    "numero": 80,
+    "tipo": "cantico",
+    "titulo": "Quéglorioso",
+    "fuente": "AJR 50",
+    "pagina_pdf": 6,
+    "letra": [
+      "¡Quéglorioso es andar con Él,",
+      "Quéglorioso es hablar con Él;",
+      "Él mis pasos guiaráy al fin me llevará",
+      "Quéglorioso es andar con Él!"
+    ]
+  },
+  {
+    "id": "81",
+    "numero_display": "81",
+    "numero": 81,
+    "tipo": "cantico",
+    "titulo": "Hacia el blanco celestial",
+    "fuente": "AJR 85",
+    "pagina_pdf": 6,
+    "letra": [
+      "Hacia el blanco celestial seguirécon fe.",
+      "Pronto el premio alcanzaré",
+      "D e mí amado Rey.",
+      "Una sola cosa haré, el pasado olvidaré",
+      "Miraréadelante con fervor."
+    ]
+  },
+  {
+    "id": "82",
+    "numero_display": "82",
+    "numero": 82,
+    "tipo": "cantico",
+    "titulo": "Cristo mi Salvador",
+    "fuente": "BN 75",
+    "pagina_pdf": 6,
+    "letra": [
+      "Cristo mi Salvador 3 / me guardará, / 3",
+      "Cristo mi Salvador me guardará,",
+      "Siempre me guardará."
+    ]
+  },
+  {
+    "id": "83",
+    "numero_display": "83",
+    "numero": 83,
+    "tipo": "cantico",
+    "titulo": "Por quéte afanas",
+    "fuente": "AJV 7",
+    "pagina_pdf": 6,
+    "letra": [
+      "¿Por quéte afanas hoy por el mañana,",
+      "T u corazón hoy llenas de pesar?",
+      "Si Dios tiene cuidado de las aves,",
+      "D e ti sin duda ha de cuidar.",
+      "Conoce tus pruebas, tus cargasél lleva.",
+      "Si Dios tiene cuidado de las aves,",
+      "D e ti sin duda ha de cuidar."
+    ]
+  },
+  {
+    "id": "84",
+    "numero_display": "84",
+    "numero": 84,
+    "tipo": "cantico",
+    "titulo": "Brillando y luchando",
+    "fuente": "AJV 24",
+    "pagina_pdf": 6,
+    "letra": [
+      "Brillando y luchando por Cristo el Señor.",
+      "Velando y orando, soldados sin temor;",
+      "Siempre andando y hablando",
+      "Con nuestro Salvador,",
+      "Viviendo siempre por Cristo el Rey."
+    ]
+  },
+  {
+    "id": "85",
+    "numero_display": "85",
+    "numero": 85,
+    "tipo": "cantico",
+    "titulo": "A T i, mi Cristo",
+    "fuente": "AJV 39",
+    "pagina_pdf": 6,
+    "letra": [
+      "A T i, mi Cristo, si e mpre serviré;",
+      "A Ti, mi Cristo fiel seguiré.",
+      "Tu voluntad, revélame Señor.",
+      "Quiero obedecerte con amor."
+    ]
+  },
+  {
+    "id": "86",
+    "numero_display": "86",
+    "numero": 86,
+    "tipo": "cantico",
+    "titulo": "Quédate Señor",
+    "fuente": "CC 55",
+    "pagina_pdf": 6,
+    "letra": [
+      "3 / Quédate Seño r / 3 e ncada corazón.",
+      "3 / Quédate Señor / 3 aquí.",
+      "O h Cristo mí o, haz en mi alma un altar",
+      "Para adorarte con devoción.",
+      "Para beber del agua de la vida",
+      "Y a sí saciar siempre mi corazón."
+    ]
+  },
+  {
+    "id": "87",
+    "numero_display": "87",
+    "numero": 87,
+    "tipo": "cantico",
+    "titulo": "Hoy, ayer y por los siglos",
+    "fuente": "BN 107",
+    "pagina_pdf": 6,
+    "letra": [
+      "Hoy, ayer y por los siglos,",
+      "Cristo es siempre fiel;",
+      "Cambios hay, mas Cristo siempre",
+      "Permanece fiel.",
+      "2 / Gloria sea aél / 2 Cambios hay,",
+      "Mas Cristo siempre permanece fiel."
+    ]
+  },
+  {
+    "id": "88",
+    "numero_display": "88",
+    "numero": 88,
+    "tipo": "cantico",
+    "titulo": "No debes preocuparte",
+    "fuente": "CSD 15",
+    "pagina_pdf": 6,
+    "letra": [
+      "No debes preocuparte por mañana,",
+      "Y a sí entristecer tu corazón;",
+      "Si nuestro Padre a los gorrio nes",
+      "Cuida, t e cuidarácon más razón.",
+      "Él te ama, te cuida,",
+      "Tu cargaél alivia;",
+      "Si nuestro Padre a los gorriones",
+      "Cuida, t e cuidarácon más razón."
+    ]
+  },
+  {
+    "id": "89",
+    "numero_display": "89",
+    "numero": 89,
+    "tipo": "cantico",
+    "titulo": "Pide y se te dará CSD 26",
+    "fuente": "",
+    "pagina_pdf": 6,
+    "letra": [
+      "2 / Pide y se te dará, busca fiel y hallarás;",
+      "Llama hoy a la puerta, s e te abrirá. / 2"
+    ]
+  },
+  {
+    "id": "90",
+    "numero_display": "90",
+    "numero": 90,
+    "tipo": "cantico",
+    "titulo": "Cuando como un monte",
+    "fuente": "CSU 4",
+    "pagina_pdf": 6,
+    "letra": [
+      "Cuando como un monte",
+      "Crecen tus temores,",
+      "O h, espera en Jehová",
+      "Creyendo mientras oras;",
+      "Y con alas deáguilas",
+      "T e levantarás a sí,",
+      "Alto, alto, sí, más alto",
+      "Que túmonte de temor."
+    ]
+  },
+  {
+    "id": "91",
+    "numero_display": "91",
+    "numero": 91,
+    "tipo": "cantico",
+    "titulo": "Si andamos en luz",
+    "fuente": "HVC 315",
+    "pagina_pdf": 6,
+    "letra": [
+      "Si andamos en luz comoél estáen luz,",
+      "Comunión tenemos juntos,",
+      "Y la sangre del Señor Jesús",
+      "2 / Limpia al pecador / 2",
+      "Si, limpia a todo pecador."
+    ]
+  },
+  {
+    "id": "92",
+    "numero_display": "92",
+    "numero": 92,
+    "tipo": "cantico",
+    "titulo": "A T i, O h Jehová S/M",
+    "fuente": "",
+    "pagina_pdf": 6,
+    "letra": [
+      "2 / A T i, O h Jehová,",
+      "Levantarémi alma. / 2",
+      "Dios mí o, en Ti confío;",
+      "No sea yo avergonzado,",
+      "No se ale gren de mí mis enemigos.",
+      "A Ti, O h Jehová, levantarémi alma."
+    ]
+  },
+  {
+    "id": "93",
+    "numero_display": "93",
+    "numero": 93,
+    "tipo": "cantico",
+    "titulo": "Debajo de sus alas",
+    "fuente": "AJV 53",
+    "pagina_pdf": 6,
+    "letra": [
+      "Debajo de sus alas seguro estaré",
+      "Al abrigo del Altísimo;",
+      "Cubierto con sus plumas",
+      "Ningún temor tendré",
+      "Al abrigo del Altísimo.",
+      "Por la pestilencia y por la mortand ad,",
+      "Jamás mi corazón dolor tendrá.",
+      "Pues mandarás usángeles a mí,",
+      "Me llevarán e nbrazos de su amor.",
+      "Debajo de sus alas seguro estaré",
+      "Al abrigo del Altísimo;",
+      "Cubierto con sus plumas",
+      "Ningún temor tendré",
+      "Al abrigo del Altísimo."
+    ]
+  },
+  {
+    "id": "94",
+    "numero_display": "94",
+    "numero": 94,
+    "tipo": "cantico",
+    "titulo": "Orando sin cesar",
+    "fuente": "S/M",
+    "pagina_pdf": 6,
+    "letra": [
+      "2 / Orando sin cesar venceremos, / 2",
+      "Para poder vencer, necesitas el poder,",
+      "Orando sin cesar venceremos.",
+      "Venceré, porque Él estáconmigo,",
+      "Venceré, porque es mi Amigo fiel,",
+      "2 / Venceré, venceré, vencerás, vencerás,",
+      "Venceremos en el nombre del Señor. / 2"
+    ]
+  },
+  {
+    "id": "95",
+    "numero_display": "95",
+    "numero": 95,
+    "tipo": "cantico",
+    "titulo": "Dios co ntesta la oración",
+    "fuente": "S/M",
+    "pagina_pdf": 7,
+    "letra": [
+      "Dios contesta 3 / la oración, / 3",
+      "Dios contesta la oración, gloria sea aél.",
+      "Tiene poder para salvar,",
+      "Tiene poder para sanar,",
+      "Tiene poder para guardar, gloria sea aél."
+    ]
+  },
+  {
+    "id": "96",
+    "numero_display": "96",
+    "numero": 96,
+    "tipo": "cantico",
+    "titulo": "Estando yo en el camino",
+    "fuente": "S/M",
+    "pagina_pdf": 7,
+    "letra": [
+      "Estando yo en el camino, gui o me Jehová,",
+      "Por la senda que conduce,",
+      "A su santa voluntad.",
+      "No me ha fallado Su benevolencia,",
+      "Ni su fidelidad, a sí estando yo en el camino,",
+      "Guio me Jehová."
+    ]
+  },
+  {
+    "id": "97",
+    "numero_display": "97",
+    "numero": 97,
+    "tipo": "cantico",
+    "titulo": "Puedo confiar en el Señor",
+    "fuente": "S/M",
+    "pagina_pdf": 7,
+    "letra": [
+      "Puedo confiar en el Señor,",
+      "Que me va a guiar.",
+      "Puedo confiar en el Señor que no va a fallar.",
+      "Si el sol llegara a oscurecer y no brillar más.",
+      "Yo igual confío en el Señor",
+      "Que no va a fallar,",
+      "2 / Puedo descansar, / 2",
+      "Pues su mansión, Cristo me dará.",
+      "Si el sol llegara a oscurecer y no brillar más.",
+      "Yo igual confío en el Señor",
+      "Que no va a fallar."
+    ]
+  },
+  {
+    "id": "98",
+    "numero_display": "98",
+    "numero": 98,
+    "tipo": "cantico",
+    "titulo": "Tráelas Señor a ti",
+    "fuente": "VJ 46",
+    "pagina_pdf": 7,
+    "letra": [
+      "Tráelas Señor a ti, tráelas a tu redil;",
+      "2 / A esas almas pérdidas",
+      "Que andan sin vida, Señor sin ti, / 2",
+      "Tráelas Señor a ti, no las dejes jamás;",
+      "2 / Ellas andan alegres, pero en sus almas",
+      "No tienen paz. / 2"
+    ]
+  },
+  {
+    "id": "99",
+    "numero_display": "99",
+    "numero": 99,
+    "tipo": "cantico",
+    "titulo": "La pr esencia del Señor",
+    "fuente": "S/M",
+    "pagina_pdf": 7,
+    "letra": [
+      "2 / La presencia del Señor",
+      "2 / Yo la siento en mi / 2 Yo 2 / la siento / 2 en mí / 2.",
+      "Cuando leo en la Biblia,",
+      "Yo la siento; cuando oro,",
+      "Cuando canto yo la siento.",
+      "La presencia del Señor yo la siento,",
+      "E nla Iglesia y donde quiera que yo voy."
+    ]
+  },
+  {
+    "id": "100",
+    "numero_display": "100",
+    "numero": 100,
+    "tipo": "cantico",
+    "titulo": "Cristo es la roca",
+    "fuente": "S/M",
+    "pagina_pdf": 7,
+    "letra": [
+      "Cristo es la roca de poder, 3 / Escóndeme / 3",
+      "Hasta que pase O h Señor la tempestad,",
+      "2 / Escóndeme / 2 con tu poder.",
+      "Cristo es la roca de poder",
+      "Que calmarála tempestad,",
+      "Cristo Jesús mi Salvador, 2 / e scóndeme / 2"
+    ]
+  },
+  {
+    "id": "101",
+    "numero_display": "101",
+    "numero": 101,
+    "tipo": "cantico",
+    "titulo": "Dios es nuestro amparo",
+    "fuente": "S/M",
+    "pagina_pdf": 7,
+    "letra": [
+      "Dios es nuestro amparo, nuestra fortaleza,",
+      "Nuestro pronto auxilio e nla tribulación.",
+      "Aunque se traspasen los montes a la mar,",
+      "Aunque la tierra tiemble debemos de cantar.",
+      "2 / Cielo y tierra pasarán,",
+      "Mas tu Palabra no pasará / 2",
+      "2 / No, no, no pasará / 2"
+    ]
+  },
+  {
+    "id": "102",
+    "numero_display": "102",
+    "numero": 102,
+    "tipo": "cantico",
+    "titulo": "Con fe marchemos",
+    "fuente": "AJR 43",
+    "pagina_pdf": 7,
+    "letra": [
+      "Con fe marchemos,",
+      "A delante sin temor cristiano,",
+      "Cristo el Capitán estáguiando;",
+      "Siempre Él nos da la orden, \"Adelante\".",
+      "¡A la batalla! No tememos nada de Satán.",
+      "OH sí, cristianos, vamos adelante con afán.",
+      "(Si con afán\\."
+    ]
+  },
+  {
+    "id": "103",
+    "numero_display": "103",
+    "numero": 103,
+    "tipo": "cantico",
+    "titulo": "Nuestra patria",
+    "fuente": "EV 50",
+    "pagina_pdf": 7,
+    "letra": [
+      "Nuestra patria serápara Cristo,",
+      "Si unidos luchamos por El;",
+      "Una tierra que honre al Bendito",
+      "Y que muestre de Dios el poder.",
+      "A luchar pues con santo entusiasmo,",
+      "Prediquemos de Cristo doquier.",
+      "2 / ¡ O hcristianos luchad!",
+      "Vuestra pa tria salvad,",
+      "Que Jesús pronto vendrá / 2"
+    ]
+  },
+  {
+    "id": "104",
+    "numero_display": "104",
+    "numero": 104,
+    "tipo": "cantico",
+    "titulo": "Somos soldaditos",
+    "fuente": "MB 47",
+    "pagina_pdf": 7,
+    "letra": [
+      "Somos soldaditos, siervos del Señor;",
+      "Vamos en defensa de nuestro evangelio,",
+      "2 / Ta - ta - ta ta - t a - ta - ta / 2",
+      "Y ganaremos l a victoria con Jesús."
+    ]
+  },
+  {
+    "id": "105",
+    "numero_display": "105",
+    "numero": 105,
+    "tipo": "cantico",
+    "titulo": "Levanten la bandera",
+    "fuente": "CC 35",
+    "pagina_pdf": 7,
+    "letra": [
+      "2 / Levant en la bandera,",
+      "Los hijos del Señor / 2",
+      "2 / Cuando Cristo venga, todo serácanto,",
+      "Todos cantaremos: \"¡Gloria al Señor! / 2"
+    ]
+  },
+  {
+    "id": "106",
+    "numero_display": "106",
+    "numero": 106,
+    "tipo": "cantico",
+    "titulo": "Seréfeliz",
+    "fuente": "BN 41",
+    "pagina_pdf": 7,
+    "letra": [
+      "Seréfeliz al terminar",
+      "M i día aquíy al cielo entrar;",
+      "No habrátristeza sólo belleza,",
+      "Allídoél me ha de llevar.",
+      "Seréfeliz cuandoél vendrá",
+      "Y la victoriaél ganará;",
+      "¡ O hcuan precioso! serédichoso,",
+      "Cuando el Señor Jesús vendrá."
+    ]
+  },
+  {
+    "id": "107",
+    "numero_display": "107",
+    "numero": 107,
+    "tipo": "cantico",
+    "titulo": "Si soy tentado a pecar",
+    "fuente": "CSD 10",
+    "pagina_pdf": 7,
+    "letra": [
+      "Si soy tentado a pecar",
+      "Debo la armadura usar.",
+      "El escudo de la fe yo me lo pondré;",
+      "La Palabra de Dios siempr e citaré;",
+      "Cual espada es con que m e defenderé."
+    ]
+  },
+  {
+    "id": "108",
+    "numero_display": "108",
+    "numero": 108,
+    "tipo": "cantico",
+    "titulo": "Las promesas del Señor",
+    "fuente": "AJR 31",
+    "pagina_pdf": 7,
+    "letra": [
+      "2 / Las promesas del Señor mí as son / 2",
+      "En la Biblia yo las leo y sé,",
+      "Las promesas del Señor mí as son."
+    ]
+  },
+  {
+    "id": "109",
+    "numero_display": "109",
+    "numero": 109,
+    "tipo": "cantico",
+    "titulo": "Toda la armadura",
+    "fuente": "HVCA 303",
+    "pagina_pdf": 7,
+    "letra": [
+      "Toda la armadura del Señor tomad",
+      "Para poder vencer,",
+      "Cota de justicia y cinto de verdad",
+      "Tome cada fiel.",
+      "Y del evangelio vuestros pies calzad",
+      "Y escudo de la fe.",
+      "Espada y yelmo de salud tomad.",
+      "Valientes sed."
+    ]
+  },
+  {
+    "id": "110",
+    "numero_display": "110",
+    "numero": 110,
+    "tipo": "cantico",
+    "titulo": "Lucha para Cristo",
+    "fuente": "S/M",
+    "pagina_pdf": 8,
+    "letra": [
+      "2 / Lucha para Cristo,",
+      "Pues hay almas que salvar / 2",
+      "4 / Almas que salv ar / 4",
+      "Lucha para Cristo,",
+      "Pues hay almas que salvar."
+    ]
+  },
+  {
+    "id": "111",
+    "numero_display": "111",
+    "numero": 111,
+    "tipo": "cantico",
+    "titulo": "Del vivo pan",
+    "fuente": "AJR 16",
+    "pagina_pdf": 8,
+    "letra": [
+      "Del vivo pan he de comer,",
+      "Del agua viva he de beber.",
+      "Y dice Cristo que a sí no tendrésed jamás;",
+      "2 / Su sed no volverá, no, nunca volverá / 2",
+      "Y dice Cristo que a sí no tendrésed jamás."
+    ]
+  },
+  {
+    "id": "112",
+    "numero_display": "112",
+    "numero": 112,
+    "tipo": "cantico",
+    "titulo": "El domingo",
+    "fuente": "AJV 52",
+    "pagina_pdf": 8,
+    "letra": [
+      "El domingo estoy contento,",
+      "El lunes tengo paz,",
+      "El martes lleno de su amor",
+      "Y todo lo demás: el miércoles y el jueves",
+      "Yo ando en la luz,",
+      "El viernes y el sábado yo vivo con Jesús.",
+      "O h, 3 / gloria / 3 O hgloria al Señor.",
+      "O haleluya, salvo soy por mi buen redentor.",
+      "O h, 3 / gloria / 3 O hgloria al Señor,",
+      "O haleluya salvo soy, a Cristo doy loor."
+    ]
+  },
+  {
+    "id": "113",
+    "numero_display": "113",
+    "numero": 113,
+    "tipo": "cantico",
+    "titulo": "Bellas palabras de vida",
+    "fuente": "CC 7",
+    "pagina_pdf": 8,
+    "letra": [
+      "Bellas palabras de vida,",
+      "Son las de Cristo Jesús,",
+      "Ellas alientan mi alma;",
+      "Dan fortaleza y luz.",
+      "Bellas palabras de vida",
+      "Resplandecen en mí ser,",
+      "2 / Bellas palabras que nunca en mi vida",
+      "Había escuchado hasta hoy / 2"
+    ]
+  },
+  {
+    "id": "114",
+    "numero_display": "114",
+    "numero": 114,
+    "tipo": "cantico",
+    "titulo": "Hermosa",
+    "fuente": "CC 20",
+    "pagina_pdf": 8,
+    "letra": [
+      "3 / Hermosa / 3 Es la palabra del Señor.",
+      "3 / Div ino / 3 El evangelio de su amor.",
+      "3 / Eterna / 3 La vida y paz que Cristo da.",
+      "3 / Sublime / 3 Serámirar a nuestro Rey."
+    ]
+  },
+  {
+    "id": "115",
+    "numero_display": "115",
+    "numero": 115,
+    "tipo": "cantico",
+    "titulo": "La B - I - B - L - I -",
+    "fuente": "BN 19",
+    "pagina_pdf": 8,
+    "letra": [
+      "La B - I - B - L - I - A, e sel libro de mi Dios;",
+      "En ella sólo confío yo, l a B - I - B - L - I - A.",
+      "En la Santa Biblia vi,",
+      "Que yo iba a perdición;",
+      "Es la fe en Cristo que vale, sí,",
+      "Para dar la salvación."
+    ]
+  },
+  {
+    "id": "116",
+    "numero_display": "116",
+    "numero": 116,
+    "tipo": "cantico",
+    "titulo": "He decidido",
+    "fuente": "VJ 24",
+    "pagina_pdf": 8,
+    "letra": [
+      "3 / He dec idido seguir a Cristo / 3",
+      "2 / No vuelvo atrás / 2",
+      "3 / El Rey de gloria m e ha transformado / 3",
+      "2 / No vuelvo atrás / 2",
+      "3 / La vida vieja ya he dejado / 3",
+      "2 / No vuelvo atrás / 2"
+    ]
+  },
+  {
+    "id": "117",
+    "numero_display": "117",
+    "numero": 117,
+    "tipo": "cantico",
+    "titulo": "Ahora te acepto",
+    "fuente": "AJV 50",
+    "pagina_pdf": 8,
+    "letra": [
+      "Ahora te acepto glorioso Señor,",
+      "Ya me ha vencido tu altísimo amor.",
+      "Tú eres mi gozo y mi Salvador;",
+      "Yo rindo mi todo a T i."
+    ]
+  },
+  {
+    "id": "118",
+    "numero_display": "118",
+    "numero": 118,
+    "tipo": "cantico",
+    "titulo": "Y si todos trabajamos",
+    "fuente": "AJV 2",
+    "pagina_pdf": 8,
+    "letra": [
+      "Y si todos trabajamos 2 / unidos / 2;",
+      "Y si todos trabajamos, ¡Quégozo será!",
+      "Tu obra es mi obra,",
+      "Nuestra obra es de Dios.",
+      "Y si todos trabajamos, ¡Quégozo será!"
+    ]
+  },
+  {
+    "id": "119",
+    "numero_display": "119",
+    "numero": 119,
+    "tipo": "cantico",
+    "titulo": "Ganar a los per didos",
+    "fuente": "AJV 38",
+    "pagina_pdf": 8,
+    "letra": [
+      "Ganar a los perdidos e snuestro gran deber.",
+      "Ganar a los perdidos,",
+      "Cristo nos daráel poder.",
+      "Ganar a los perdidos y traerlos a Jesús,",
+      "El Salvador, quien al mundo es amor y luz."
+    ]
+  },
+  {
+    "id": "120",
+    "numero_display": "120",
+    "numero": 120,
+    "tipo": "cantico",
+    "titulo": "Quiero que el mundo sepa",
+    "fuente": "EV 41",
+    "pagina_pdf": 8,
+    "letra": [
+      "Quiero que el mundo lo sepa",
+      "Que por Jesús salvo soy.",
+      "Quiero que el mundo se entere",
+      "Que a la gloria yo voy.",
+      "Yo vivía en el pecado,",
+      "Porque vivía sin Dios;",
+      "Pero la sangre de Cristo",
+      "Me ha limpiado el corazón."
+    ]
+  },
+  {
+    "id": "121",
+    "numero_display": "121",
+    "numero": 121,
+    "tipo": "cantico",
+    "titulo": "Para quépecar",
+    "fuente": "PC 11",
+    "pagina_pdf": 8,
+    "letra": [
+      "¿Para quépecar si soy salvo,",
+      "S i ya tengo tanta luz?",
+      "¿Para quépecar si la vida",
+      "Dios me ha dado en Jesús?",
+      "¿Para quépecar si el infierno",
+      "Sólo espera al pecador?",
+      "2 / ¿Para quépecar? / 2",
+      "¿Para quépecar contra Dios? / 2",
+      "Es mejor vivir santamente,",
+      "Victorioso contra el mal,",
+      "Pues Jesús prepara a sus santos",
+      "U na patria eterna l.",
+      "Una patria hermosa en los cielos,",
+      "Donde el mundo no entrará.",
+      "2 / 2 / ¿Para quépecar? / 2",
+      "¿Para quépecar contra Dios? / 2"
+    ]
+  },
+  {
+    "id": "122",
+    "numero_display": "122",
+    "numero": 122,
+    "tipo": "cantico",
+    "titulo": "Sólo el poder de Dios",
+    "fuente": "PC 16",
+    "pagina_pdf": 8,
+    "letra": [
+      "Sólo el poder de Dios",
+      "Puede cambiar tu ser;",
+      "La prueba yo te doy,",
+      "Él me ha cambiad o a mí.",
+      "No ves que soy feliz",
+      "Siguiendo al Señor;",
+      "Nueva criatura soy, nueva soy."
+    ]
+  },
+  {
+    "id": "123",
+    "numero_display": "123",
+    "numero": 123,
+    "tipo": "cantico",
+    "titulo": "Una nueva vida tengo",
+    "fuente": "PC 21",
+    "pagina_pdf": 8,
+    "letra": [
+      "Una nueva vida tengo; transformado soy;",
+      "Y a la gloria voy. Una nueva vida tengo.",
+      "¡Aleluya a Jesús!"
+    ]
+  },
+  {
+    "id": "124",
+    "numero_display": "124",
+    "numero": 124,
+    "tipo": "cantico",
+    "titulo": "Envíame, Señor",
+    "fuente": "PC 25",
+    "pagina_pdf": 9,
+    "letra": [
+      "// /Envíame, Señor // / a predicar;",
+      "// /Y dame tu poder // / para guiar,",
+      "// /Por sendas de salud // / al pecador.",
+      "// /Envíame, Señor // / a predicar,",
+      "// /Envíame, Señor // / a predicar."
+    ]
+  },
+  {
+    "id": "125",
+    "numero_display": "125",
+    "numero": 125,
+    "tipo": "cantico",
+    "titulo": "Ando con Cristo CC",
+    "fuente": "",
+    "pagina_pdf": 9,
+    "letra": [
+      "8",
+      "Ando con Cristo, e nsombras y en luz,",
+      "Estoy con mi Jesús.",
+      "Ando con Cristo, él es mi amigo mejor.",
+      "// Cuando yo recuerdo queél muriópor",
+      "mí,",
+      "Al mundo do jamás volveré //",
+      "// No, no, no, no, no;",
+      "Al mundo do jamás volveré //",
+      "Ando con Cristo, e nsombras y en luz,",
+      "Estoy con mi Jesús.",
+      "Ando con Cristo, él es mi amigo mejor."
+    ]
+  },
+  {
+    "id": "126",
+    "numero_display": "126",
+    "numero": 126,
+    "tipo": "cantico",
+    "titulo": "Si no hubi era sido",
+    "fuente": "CC 11",
+    "pagina_pdf": 9,
+    "letra": [
+      "// Si no hubiera sido por el Señor //",
+      "// Mi alma se hubiera perdido",
+      "Si no hubiera sido por el Señor //"
+    ]
+  },
+  {
+    "id": "127",
+    "numero_display": "127",
+    "numero": 127,
+    "tipo": "cantico",
+    "titulo": "Contad la historia de amor BN",
+    "fuente": "",
+    "pagina_pdf": 9,
+    "letra": [
+      "6",
+      "Contad la historia de amor,",
+      "Contadla con mucho fervor,",
+      "Que todo el que cree e ssalvo por fe.",
+      "Contad la historia de amor."
+    ]
+  },
+  {
+    "id": "128",
+    "numero_display": "128",
+    "numero": 128,
+    "tipo": "cantico",
+    "titulo": "Echémi carga en el Gólgota BN",
+    "fuente": "",
+    "pagina_pdf": 9,
+    "letra": [
+      "27",
+      "Echémi carga en el Gólgota, do mi pecado",
+      "Jesús llevó.",
+      "Se fue mi llanto, con gozo canto,",
+      "Echémi carga en el Gólgota."
+    ]
+  },
+  {
+    "id": "129",
+    "numero_display": "129",
+    "numero": 129,
+    "tipo": "cantico",
+    "titulo": "Quieres tu saber BN",
+    "fuente": "",
+    "pagina_pdf": 9,
+    "letra": [
+      "51",
+      "¿Quieres tu saber por quéyo amo, yo amo",
+      "a Cris to?",
+      "¿Quieres tu saber por quéle amo?",
+      "Yo con gozo te diré:",
+      "Es que El dejósu hogar celeste al morir",
+      "por mí,",
+      "Esta es la razón por quéyo amo",
+      "A Jesús, mi Salvador."
+    ]
+  },
+  {
+    "id": "130",
+    "numero_display": "130",
+    "numero": 130,
+    "tipo": "cantico",
+    "titulo": "Señor, te pedimos",
+    "fuente": "BN 65",
+    "pagina_pdf": 9,
+    "letra": [
+      "Señor, te pedimos // un avivamiento //",
+      "Que empiece primero en mí.",
+      "Señor, te pedimos // más avivamiento //",
+      "Que siga creciendo en mí."
+    ]
+  },
+  {
+    "id": "131",
+    "numero_display": "131",
+    "numero": 131,
+    "tipo": "cantico",
+    "titulo": "Sigo a Jesucristo BN",
+    "fuente": "",
+    "pagina_pdf": 9,
+    "letra": [
+      "129",
+      "// /Sigo // / a Jesucristo, tras Jesús, en la luz",
+      "Yo le seguiré; // /Sigo // / a Jesucristo,",
+      "Dondequiera que El Me guíe seguiré"
+    ]
+  },
+  {
+    "id": "132",
+    "numero_display": "132",
+    "numero": 132,
+    "tipo": "cantico",
+    "titulo": "¡ld!, ¡ld!, ¡ld!|",
+    "fuente": "CSU 8",
+    "pagina_pdf": 9,
+    "letra": [
+      "// / ¡ld! // / la Biblia dice: ¡Id! Contad a niños",
+      "por doquier,",
+      "A cada pecador que en la cruz murió",
+      "Jesús,",
+      "Y ofrece a todos salvación. OH, ¿quién irá?",
+      "y, ¿Tú, irás?",
+      "¡Y orad! la Biblia dice: ¡Orad! que",
+      "obreros vayan a la mies",
+      "Los niños a salvar, contándoles",
+      "con claridad",
+      "La bella historia de su amor.",
+      "¿Quién orará? ¿Tú, orarás?",
+      "// / ¡Dad! // / la Biblia dice: ¡Dad! Servicio y",
+      "dinero",
+      "Todos demos con amor; Y ¿cuánto dar?",
+      "¡De corazón",
+      "Dad lo mejor al Salvador! OH, ¿Quién",
+      "dará? y ¿Tú, darás?"
+    ]
+  },
+  {
+    "id": "133",
+    "numero_display": "133",
+    "numero": 133,
+    "tipo": "cantico",
+    "titulo": "Todas mis cargas",
+    "fuente": "CSU 9",
+    "pagina_pdf": 9,
+    "letra": [
+      "To das mis cargas Jesús las llevó, // él las",
+      "llevó // ;",
+      "Todas mis cargas Jesús las llevóe nuna",
+      "dura cruz.",
+      "Hoy sólo paz reina en mi corazón, // Mi",
+      "corazón // ;",
+      "Hoy sólo paz reina en mi corazón,",
+      "Cristo ya vive enél.",
+      "Fuente de gozo es mi corazón, // Mi",
+      "corazón // ;",
+      "Fuente de gozo es mi corazón, Cristo",
+      "es mi Redentor."
+    ]
+  },
+  {
+    "id": "134",
+    "numero_display": "134",
+    "numero": 134,
+    "tipo": "cantico",
+    "titulo": "Después de la tormenta",
+    "fuente": "S/M",
+    "pagina_pdf": 9,
+    "letra": [
+      "Después de la tormenta viene la calma,",
+      "viene la paz.",
+      "Si a Cristo de rodillas hoy se lo pides, El te",
+      "lo da;",
+      "No importa que legiones del enemigo",
+      "quieran vencer,",
+      "// AI nombre de mi Cristo, Sagrado nombre,",
+      "tendrán que huir //"
+    ]
+  },
+  {
+    "id": "135",
+    "numero_display": "135",
+    "numero": 135,
+    "tipo": "cantico",
+    "titulo": "Jesús tomómi carga",
+    "fuente": "S/M",
+    "pagina_pdf": 9,
+    "letra": [
+      "Jesús tomómi carga, y // /la",
+      "sepultóen la mar // /",
+      "Ahora canto alegre, a legre muy",
+      "alegre,",
+      "Porque El tomómi carga y la",
+      "sepultóen la mar."
+    ]
+  },
+  {
+    "id": "136",
+    "numero_display": "136",
+    "numero": 136,
+    "tipo": "cantico",
+    "titulo": "Estoy listo",
+    "fuente": "S/M",
+    "pagina_pdf": 9,
+    "letra": [
+      "// /Estoy listo, siél me llama // / a su viña a",
+      "trabajar.",
+      "// Yo estaréen la viña trabajando, e nla viña",
+      "del Señor //"
+    ]
+  },
+  {
+    "id": "137",
+    "numero_display": "137",
+    "numero": 137,
+    "tipo": "cantico",
+    "titulo": "Yo pensaba",
+    "fuente": "S/M",
+    "pagina_pdf": 10,
+    "letra": [
+      "Yo pensaba que el hombre era grande por",
+      "su poder,",
+      "Gran de por su valor, grande por su saber.",
+      "Yo pensaba que el hombre era grande",
+      "Y me equivoqué, porque grande sólo es",
+      "Dios.",
+      "Sube hasta el cielo y lo verás",
+      "Que pequeñito el mundo es,",
+      "Sube hasta el cielo y lo verás;",
+      "Como un juguete de Cristal,",
+      "Que con amor hay que cuidar,",
+      "Sube hasta el cielo y lo verás."
+    ]
+  },
+  {
+    "id": "138",
+    "numero_display": "138",
+    "numero": 138,
+    "tipo": "cantico",
+    "titulo": "Con quélimpiará EV",
+    "fuente": "",
+    "pagina_pdf": 10,
+    "letra": [
+      "22",
+      "¿Con quélimpiaráe ljoven su camino?",
+      "// Con guardar Tu Palabra //",
+      "En mi corazón he guardado Tus dichos,",
+      "Para no pecar contra Ti."
+    ]
+  },
+  {
+    "id": "139",
+    "numero_display": "139",
+    "numero": 139,
+    "tipo": "cantico",
+    "titulo": "Dios cuida de mí",
+    "fuente": "AJR 18",
+    "pagina_pdf": 10,
+    "letra": [
+      "// Dios cuida de mí // de noche y de día,",
+      "Dios cuida de mí.",
+      "// Dios cuida de t i // e n",
+      "sol y en sombra, Dios",
+      "cuida de ti."
+    ]
+  },
+  {
+    "id": "140",
+    "numero_display": "140",
+    "numero": 140,
+    "tipo": "cantico",
+    "titulo": "Con pluma de oro CC",
+    "fuente": "",
+    "pagina_pdf": 10,
+    "letra": [
+      "33",
+      "Con pluma de oro // /escrito está // /",
+      "Con pluma de oro escrito está,",
+      "Mi nombre más allá.",
+      "// Más allám i nombre escrito está //"
+    ]
+  },
+  {
+    "id": "141",
+    "numero_display": "141",
+    "numero": 141,
+    "tipo": "cantico",
+    "titulo": "Todas las cosas hermosas",
+    "fuente": "BN 17",
+    "pagina_pdf": 10,
+    "letra": [
+      "Todas las cosas hermosas vienen de",
+      "nuestro Señor;",
+      "Grandes y maravillosas, pruebas son de su",
+      "amor.",
+      "Coro: ¡Bella creación! ¡Bella creación!",
+      "Gozo nos darásaber cuan grande",
+      "Es nuestro Dios, que siempre nos",
+      "cuidará.",
+      "Sol y estrellas y luna, a ves y",
+      "flores también,",
+      "Vienen de Dios cada uno;",
+      "h i zo los para mi bien."
+    ]
+  },
+  {
+    "id": "142",
+    "numero_display": "142",
+    "numero": 142,
+    "tipo": "cantico",
+    "titulo": "Fue negro mí corazón BN",
+    "fuente": "",
+    "pagina_pdf": 10,
+    "letra": [
+      "29",
+      "Fue negro mí corazón, mas Cristo de Dios",
+      "el don,",
+      "Con sangre lo lavó, cual nieve lo dejó,",
+      "Confiando en Sus dichos sé",
+      "Que en calles de oro andaré,",
+      "¡Quédía de salvación! Lavómi corazón."
+    ]
+  },
+  {
+    "id": "143",
+    "numero_display": "143",
+    "numero": 143,
+    "tipo": "cantico",
+    "titulo": "Cual lirio ha de ser",
+    "fuente": "BN 114",
+    "pagina_pdf": 10,
+    "letra": [
+      "Cual lirio ha de ser mi corazoncito,",
+      "Cual fresco rocío, cual un pajarito.",
+      "Tan blanco, tan puro, go zoso a sí,",
+      "// Alabando a Dios por su amor para mí //"
+    ]
+  },
+  {
+    "id": "144",
+    "numero_display": "144",
+    "numero": 144,
+    "tipo": "cantico",
+    "titulo": "Aunque no esté",
+    "fuente": "CSD 71",
+    "pagina_pdf": 10,
+    "letra": [
+      "Aunque no estéen la infantería, caballería,",
+      "artillería,",
+      "Aunque en av ión no vaya volando,",
+      "// /Soldado soy de Jesús // /",
+      "Aunque no estéen la infantería, caballería,",
+      "artillería,",
+      "Aunque en avión no vaya volando,",
+      "Soldado soy de Jesús."
+    ]
+  },
+  {
+    "id": "145",
+    "numero_display": "145",
+    "numero": 145,
+    "tipo": "cantico",
+    "titulo": "Me ve siempre Dios",
+    "fuente": "CSD 72",
+    "pagina_pdf": 10,
+    "letra": [
+      "Me ve siempre Dios, m e oye también,",
+      "Siempre me ve y escucha mi hablar;",
+      "Cuidado al hacer, cuidado al hablar.",
+      "Cristo muy cerca siempre está."
+    ]
+  },
+  {
+    "id": "146",
+    "numero_display": "146",
+    "numero": 146,
+    "tipo": "cantico",
+    "titulo": "Un galardón",
+    "fuente": "CSU 16",
+    "pagina_pdf": 10,
+    "letra": [
+      "// Un galardón // precioso premio de Jesús,",
+      "Los niños que lavados son podrán ganar su",
+      "galardón."
+    ]
+  },
+  {
+    "id": "147",
+    "numero_display": "147",
+    "numero": 147,
+    "tipo": "cantico",
+    "titulo": "Cuan eterno gozo",
+    "fuente": "HVC 303",
+    "pagina_pdf": 10,
+    "letra": [
+      "Cuan eterno gozo al hombre da,",
+      "Dar sus diezmos todos a Jehová,",
+      "Paz habráen su corazón,",
+      "Grande y fiel satisfacción",
+      "Y abundancia de felicidad."
+    ]
+  },
+  {
+    "id": "148",
+    "numero_display": "148",
+    "numero": 148,
+    "tipo": "cantico",
+    "titulo": "Adiós",
+    "fuente": "AJR 94",
+    "pagina_pdf": 10,
+    "letra": [
+      "Adiós, que el Salvadores guarde,",
+      "Y con su gracia os conserve,",
+      "Adiós, y hasta otro día,",
+      "Que el Señor os désu paz."
+    ]
+  },
+  {
+    "id": "149",
+    "numero_display": "149",
+    "numero": 149,
+    "tipo": "cantico",
+    "titulo": "Que Dios te bendiga BN",
+    "fuente": "",
+    "pagina_pdf": 10,
+    "letra": [
+      "96",
+      "Que Dios te bendiga doquiera que estés,",
+      "Contando a las almas las nuevas de paz.",
+      "Que siga la obra con todo fervor;",
+      "Que Cristo Te llene de amor,"
+    ]
+  },
+  {
+    "id": "150",
+    "numero_display": "150",
+    "numero": 150,
+    "tipo": "cantico",
+    "titulo": "¡ Bienvenido seas aquí! CC",
+    "fuente": "",
+    "pagina_pdf": 10,
+    "letra": [
+      "44",
+      "// Bienvenido seas aquí //",
+      "En nombre de nuestro Buen",
+      "Jesús.",
+      "Bienvenido seas aquí."
+    ]
+  },
+  {
+    "id": "151",
+    "numero_display": "151",
+    "numero": 151,
+    "tipo": "cantico",
+    "titulo": "Yo amo la Escuela Dominical",
+    "fuente": "S/M",
+    "pagina_pdf": 10,
+    "letra": [
+      "Yo amo // la Escuela Dominical //",
+      "Y cada domingo vendrésin faltar,",
+      "Trayendo a uno más."
+    ]
+  },
+  {
+    "id": "152",
+    "numero_display": "152",
+    "numero": 152,
+    "tipo": "cantico",
+    "titulo": "Voy a la Escuela Dominical",
+    "fuente": "S/M",
+    "pagina_pdf": 10,
+    "letra": [
+      "Voy a la Escuela Dominical, voy a",
+      "aprender a adora r;",
+      "Voy a la Escuela temprano, l a senda",
+      "angosta a andar.",
+      "Quiero aprender de Jesús, vivir en su",
+      "santa ley.",
+      "Así me preparo temprano y voy a la",
+      "Escuela Dominical."
+    ]
+  },
+  {
+    "id": "153",
+    "numero_display": "153",
+    "numero": 153,
+    "tipo": "cantico",
+    "titulo": "La clase ha terminado",
+    "fuente": "CSU 31",
+    "pagina_pdf": 11,
+    "letra": [
+      "La clase ha terminado y a casa vamos ya.",
+      "// Ad iós, adiós sed fieles al Señor //",
+      "La Escuela ha terminado, nos vamos al",
+      "hogar;",
+      "// Adiós, adiós, Portaos siempre bien //"
+    ]
+  },
+  {
+    "id": "154",
+    "numero_display": "154",
+    "numero": 154,
+    "tipo": "cantico",
+    "titulo": "Que e nesta mesa",
+    "fuente": "CC 26",
+    "pagina_pdf": 11,
+    "letra": [
+      "Que e nesta mesa, buen Señor,",
+      "Todos te adoran con fervor.",
+      "Bendice el pan que hoy nos das,",
+      "Y a nuestras almas da solaz.",
+      "Amén."
+    ]
+  },
+  {
+    "id": "155",
+    "numero_display": "155",
+    "numero": 155,
+    "tipo": "cantico",
+    "titulo": "Te damos gracias Padre",
+    "fuente": "S/M",
+    "pagina_pdf": 11,
+    "letra": [
+      "Te damos gracias Padre, por todo Tú amor;",
+      "El pan es Tuyo y casa y por la protección.",
+      "Amén."
+    ]
+  }
+]

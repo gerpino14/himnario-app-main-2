@@ -34,6 +34,12 @@ let readerScoreModalOpen = false;
 let readerScoreModalZoomFactor = 1.0;
 let readerScoreModalRenderToken = 0;
 
+// Cánticos de Júbilo State
+let canticosData = [];
+let filteredCanticos = [];
+let activeCanticosFilter = 'all';
+let activeCanticoIndex = -1;
+
 // DOM Elements Cache
 let DOM = {};
 
@@ -41,6 +47,7 @@ function initDOM() {
   DOM = {
     themeToggle: document.getElementById('theme-toggle'),
     favoritesToggle: document.getElementById('favorites-toggle'),
+    mainSearchBar: document.querySelector('.search-bar'),
     searchInput: document.getElementById('search-input'),
     clearSearch: document.getElementById('clear-search'),
     filterTabs: document.querySelectorAll('.tab-btn'),
@@ -52,6 +59,28 @@ function initDOM() {
     closeDrawer: document.getElementById('close-drawer'),
     drawerBody: document.getElementById('drawer-body'),
     hymnsGrid: document.getElementById('hymns-grid'),
+
+    // Cánticos de Júbilo DOM Elements
+    canticosTabBtn: document.getElementById('canticos-tab-btn'),
+    canticosSection: document.getElementById('canticos-section'),
+    canticosCountPill: document.getElementById('canticos-count-pill'),
+    canticosSearchInput: document.getElementById('canticos-search-input'),
+    canticosClearSearch: document.getElementById('canticos-clear-search'),
+    canticosFilterChips: document.querySelectorAll('.canticos-chip'),
+    canticosGrid: document.getElementById('canticos-grid'),
+    canticoReaderModal: document.getElementById('cantico-reader-modal'),
+    canticoModalBackdrop: document.getElementById('cantico-modal-backdrop'),
+    canticoModalClose: document.getElementById('cantico-modal-close'),
+    canticoModalNum: document.getElementById('cantico-modal-num'),
+    canticoModalSource: document.getElementById('cantico-modal-source'),
+    canticoModalPage: document.getElementById('cantico-modal-page'),
+    canticoModalTitle: document.getElementById('cantico-modal-title'),
+    canticoModalLyrics: document.getElementById('cantico-modal-lyrics'),
+    canticoPrevBtn: document.getElementById('cantico-prev-btn'),
+    canticoNextBtn: document.getElementById('cantico-next-btn'),
+    canticoIndexIndicator: document.getElementById('cantico-index-indicator'),
+    canticoCopyBtn: document.getElementById('cantico-copy-btn'),
+    canticoCopyText: document.getElementById('cantico-copy-text'),
     
     // Reader Modal
     readerModal: document.getElementById('reader-modal'),
@@ -211,11 +240,15 @@ function saveFavorites() {
 // ----------------------------------------------------
 async function fetchHymns() {
   try {
-    // Cargar himnos y pistas de audio en paralelo
-    const [hymnsRes, pistasRes] = await Promise.all([
+    // Cargar himnos, pistas de audio y cánticos de júbilo en paralelo
+    const [hymnsRes, pistasRes, canticosRes] = await Promise.all([
       fetch('himnos.json'),
       fetch('himnos_pistas.json').catch(e => {
         console.warn("No se pudo cargar himnos_pistas.json, reproductor de audio deshabilitado.", e);
+        return null;
+      }),
+      fetch('canticos.json').catch(e => {
+        console.warn("No se pudo cargar canticos.json.", e);
         return null;
       })
     ]);
@@ -229,8 +262,13 @@ async function fetchHymns() {
     if (pistasRes && pistasRes.ok) {
       pistasData = await pistasRes.json();
     }
+
+    if (canticosRes && canticosRes.ok) {
+      canticosData = await canticosRes.json();
+      filteredCanticos = [...canticosData];
+    }
     
-    applySearchAndFilters();
+    handleViewSwitch();
 
     // Open hymn directly if URL contains ?himno=<numero>
     const urlParams = new URLSearchParams(window.location.search);
@@ -249,6 +287,37 @@ async function fetchHymns() {
 // ----------------------------------------------------
 function removeAccents(str) {
   return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+function handleViewSwitch() {
+  const isCanticos = activeFilter === 'canticos';
+
+  // Ocultar o mostrar buscador principal en barra pegajosa
+  if (DOM.mainSearchBar) {
+    DOM.mainSearchBar.classList.toggle('hidden', isCanticos);
+  }
+
+  if (isCanticos) {
+    // Ocultar sección de Himnos
+    if (DOM.hymnsGrid) DOM.hymnsGrid.classList.add('hidden');
+    if (DOM.resultsCount && DOM.resultsCount.parentElement) {
+      DOM.resultsCount.parentElement.classList.add('hidden');
+    }
+    // Mostrar sección exclusiva de Cánticos de Júbilo
+    if (DOM.canticosSection) {
+      DOM.canticosSection.classList.remove('hidden');
+      applyCanticosFilters();
+    }
+  } else {
+    // Ocultar sección de Cánticos
+    if (DOM.canticosSection) DOM.canticosSection.classList.add('hidden');
+    // Mostrar sección de Himnos
+    if (DOM.hymnsGrid) DOM.hymnsGrid.classList.remove('hidden');
+    if (DOM.resultsCount && DOM.resultsCount.parentElement) {
+      DOM.resultsCount.parentElement.classList.remove('hidden');
+    }
+    applySearchAndFilters();
+  }
 }
 
 function applySearchAndFilters() {
@@ -307,6 +376,163 @@ function updateResultsCount() {
     DOM.resultsCount.textContent = '1 resultado encontrado';
   } else {
     DOM.resultsCount.textContent = `${count} resultados encontrados`;
+  }
+}
+
+// ----------------------------------------------------
+// 3.1 Cánticos de Júbilo Engine (Módulo Independiente)
+// ----------------------------------------------------
+function applyCanticosFilters() {
+  if (!canticosData || canticosData.length === 0) return;
+
+  const query = removeAccents(DOM.canticosSearchInput ? DOM.canticosSearchInput.value.trim() : '');
+
+  filteredCanticos = canticosData.filter(item => {
+    // 1. Filtro por Chips
+    if (activeCanticosFilter === 'doxologias' && item.tipo !== 'doxologia') return false;
+    if (activeCanticosFilter === 'con-fuente' && (!item.fuente || item.fuente === 'S/M')) return false;
+
+    // 2. Filtro por Búsqueda (Número, Título, Fuente o Letra)
+    if (query !== '') {
+      const numStr = (item.numero_display || '').toString().toLowerCase();
+      if (numStr === query || numStr.includes(query)) return true;
+
+      const titleMatch = removeAccents(item.titulo || '').includes(query);
+      if (titleMatch) return true;
+
+      const sourceMatch = removeAccents(item.fuente || '').includes(query);
+      if (sourceMatch) return true;
+
+      if (Array.isArray(item.letra)) {
+        for (const line of item.letra) {
+          if (removeAccents(line).includes(query)) return true;
+        }
+      }
+      return false;
+    }
+
+    return true;
+  });
+
+  if (DOM.canticosCountPill) {
+    const total = filteredCanticos.length;
+    DOM.canticosCountPill.textContent = `${total} cántico${total === 1 ? '' : 's'}`;
+  }
+
+  renderCanticos();
+}
+
+function renderCanticos() {
+  if (!DOM.canticosGrid) return;
+
+  if (filteredCanticos.length === 0) {
+    DOM.canticosGrid.innerHTML = `
+      <div class="empty-state" style="grid-column: 1 / -1; padding: 48px 20px; text-align: center; color: var(--secondary-text);">
+        <p style="font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; color: var(--primary-text);">No se encontraron cánticos</p>
+        <p style="font-size: 0.9rem;">Prueba buscando por número (ej: 14), título o palabras de la letra.</p>
+      </div>
+    `;
+    return;
+  }
+
+  DOM.canticosGrid.innerHTML = filteredCanticos.map(item => {
+    const sourceBadge = item.fuente ? `<span class="cantico-source-tag">${item.fuente}</span>` : '';
+    const pageBadge = item.pagina_pdf ? `<span class="cantico-page-tag">Pág. ${item.pagina_pdf}</span>` : '';
+    const previewText = item.letra && item.letra.length > 0 ? item.letra.slice(0, 2).join(' / ') : '';
+    return `
+      <article class="cantico-card" data-cantico-id="${item.id}" tabindex="0" role="button" aria-label="Cántico ${item.numero_display}: ${item.titulo}">
+        <div class="cantico-card-header">
+          <span class="cantico-card-num">${item.numero_display}</span>
+          <div class="cantico-card-tags">
+            ${sourceBadge}
+            ${pageBadge}
+          </div>
+        </div>
+        <h3 class="cantico-card-title">${item.titulo}</h3>
+        ${previewText ? `<p class="cantico-card-preview">${previewText}</p>` : ''}
+      </article>
+    `;
+  }).join('');
+}
+
+function openCanticoReader(id) {
+  const index = filteredCanticos.findIndex(c => c.id === id);
+  if (index === -1) return;
+  activeCanticoIndex = index;
+  renderCurrentCanticoInModal();
+  if (DOM.canticoReaderModal) {
+    DOM.canticoReaderModal.classList.remove('hidden');
+    document.body.classList.add('modal-open');
+  }
+}
+
+function renderCurrentCanticoInModal() {
+  if (activeCanticoIndex < 0 || activeCanticoIndex >= filteredCanticos.length) return;
+  const item = filteredCanticos[activeCanticoIndex];
+  if (!item) return;
+
+  if (DOM.canticoModalNum) DOM.canticoModalNum.textContent = item.numero_display;
+  if (DOM.canticoModalSource) {
+    if (item.fuente) {
+      DOM.canticoModalSource.textContent = item.fuente;
+      DOM.canticoModalSource.style.display = 'inline-block';
+    } else {
+      DOM.canticoModalSource.style.display = 'none';
+    }
+  }
+  if (DOM.canticoModalPage) DOM.canticoModalPage.textContent = `Pág. ${item.pagina_pdf || 1}`;
+  if (DOM.canticoModalTitle) DOM.canticoModalTitle.textContent = item.titulo;
+
+  if (DOM.canticoModalLyrics) {
+    DOM.canticoModalLyrics.innerHTML = (item.letra || []).map(line => `<p>${line}</p>`).join('');
+  }
+
+  if (DOM.canticoIndexIndicator) {
+    DOM.canticoIndexIndicator.textContent = `${activeCanticoIndex + 1} de ${filteredCanticos.length}`;
+  }
+
+  if (DOM.canticoPrevBtn) {
+    DOM.canticoPrevBtn.disabled = activeCanticoIndex === 0;
+  }
+  if (DOM.canticoNextBtn) {
+    DOM.canticoNextBtn.disabled = activeCanticoIndex === filteredCanticos.length - 1;
+  }
+}
+
+function closeCanticoReader() {
+  if (DOM.canticoReaderModal) {
+    DOM.canticoReaderModal.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+  }
+}
+
+function navigateCantico(direction) {
+  const newIndex = activeCanticoIndex + direction;
+  if (newIndex >= 0 && newIndex < filteredCanticos.length) {
+    activeCanticoIndex = newIndex;
+    renderCurrentCanticoInModal();
+  }
+}
+
+async function copyCanticoLyrics() {
+  if (activeCanticoIndex < 0 || activeCanticoIndex >= filteredCanticos.length) return;
+  const item = filteredCanticos[activeCanticoIndex];
+  const textToCopy = `${item.numero_display}. ${item.titulo}\n\n${(item.letra || []).join('\n')}\n\n(Cánticos de Júbilo · Pág. ${item.pagina_pdf})`;
+
+  try {
+    await navigator.clipboard.writeText(textToCopy);
+    if (DOM.canticoCopyBtn) {
+      DOM.canticoCopyBtn.classList.add('copied');
+      if (DOM.canticoCopyText) DOM.canticoCopyText.textContent = '¡Copiado!';
+      setTimeout(() => {
+        DOM.canticoCopyBtn.classList.remove('copied');
+        if (DOM.canticoCopyText) DOM.canticoCopyText.textContent = 'Copiar letra';
+      }, 2000);
+    }
+    showToast('Letra copiada al portapapeles');
+  } catch (e) {
+    console.error('Error al copiar letra:', e);
+    showToast('No se pudo copiar la letra');
   }
 }
 
@@ -787,21 +1013,81 @@ function registerEventListeners() {
         });
       }
       activeFilter = 'favoritos';
-      applySearchAndFilters();
+      handleViewSwitch();
     });
   }
   
-  // Section Filters Tabs
+  // Section Filters Tabs (Todos / Favoritos / Cánticos de Júbilo)
   if (DOM.filterTabs) {
     DOM.filterTabs.forEach(tab => {
       tab.addEventListener('click', () => {
         DOM.filterTabs.forEach(btn => btn.classList.remove('active'));
         tab.classList.add('active');
         activeFilter = tab.getAttribute('data-filter');
-        applySearchAndFilters();
+        handleViewSwitch();
       });
     });
   }
+
+  // Cánticos de Júbilo Event Listeners
+  if (DOM.canticosSearchInput) {
+    DOM.canticosSearchInput.addEventListener('input', (e) => {
+      const val = e.target.value;
+      if (DOM.canticosClearSearch) {
+        DOM.canticosClearSearch.classList.toggle('hidden', val.length === 0);
+      }
+      applyCanticosFilters();
+    });
+  }
+
+  if (DOM.canticosClearSearch) {
+    DOM.canticosClearSearch.addEventListener('click', () => {
+      if (DOM.canticosSearchInput) {
+        DOM.canticosSearchInput.value = '';
+        DOM.canticosSearchInput.focus();
+      }
+      DOM.canticosClearSearch.classList.add('hidden');
+      applyCanticosFilters();
+    });
+  }
+
+  if (DOM.canticosFilterChips) {
+    DOM.canticosFilterChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        DOM.canticosFilterChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        activeCanticosFilter = chip.getAttribute('data-canticos-filter');
+        applyCanticosFilters();
+      });
+    });
+  }
+
+  if (DOM.canticosGrid) {
+    DOM.canticosGrid.addEventListener('click', (e) => {
+      const card = e.target.closest('.cantico-card');
+      if (card) {
+        const id = card.getAttribute('data-cantico-id');
+        openCanticoReader(id);
+      }
+    });
+
+    DOM.canticosGrid.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        const card = e.target.closest('.cantico-card');
+        if (card) {
+          e.preventDefault();
+          const id = card.getAttribute('data-cantico-id');
+          openCanticoReader(id);
+        }
+      }
+    });
+  }
+
+  if (DOM.canticoModalClose) DOM.canticoModalClose.addEventListener('click', closeCanticoReader);
+  if (DOM.canticoModalBackdrop) DOM.canticoModalBackdrop.addEventListener('click', closeCanticoReader);
+  if (DOM.canticoPrevBtn) DOM.canticoPrevBtn.addEventListener('click', () => navigateCantico(-1));
+  if (DOM.canticoNextBtn) DOM.canticoNextBtn.addEventListener('click', () => navigateCantico(1));
+  if (DOM.canticoCopyBtn) DOM.canticoCopyBtn.addEventListener('click', copyCanticoLyrics);
   
   // Category Badge close button
   if (DOM.categoryFilterBadge) {
@@ -896,6 +1182,18 @@ function registerEventListeners() {
   
   // Back key gestures (Escape closes modals / drawer)
   document.addEventListener('keydown', (e) => {
+    // Cántico Reader Modal
+    if (DOM.canticoReaderModal && !DOM.canticoReaderModal.classList.contains('hidden')) {
+      if (e.key === 'Escape') {
+        closeCanticoReader();
+      } else if (e.key === 'ArrowLeft') {
+        navigateCantico(-1);
+      } else if (e.key === 'ArrowRight') {
+        navigateCantico(1);
+      }
+      return;
+    }
+
     // Expanded Hymn Score Modal (Ampliar)
     if (readerScoreModalOpen && DOM.readerScoreModal && !DOM.readerScoreModal.classList.contains('hidden')) {
       if (e.key === 'Escape') {
@@ -1181,7 +1479,7 @@ function setRangeFilter(range) {
   } else {
     DOM.rangeFilterBadge.classList.add('hidden');
   }
-  applySearchAndFilters();
+  handleViewSwitch();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
