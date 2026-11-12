@@ -343,6 +343,14 @@ svg {
   box-shadow: 0 4px 10px rgba(192, 161, 92, 0.2);
 }
 
+.tab-text-full {
+  display: inline;
+}
+
+.tab-text-short {
+  display: none;
+}
+
 /* Status Bar & badges */
 .status-bar {
   max-width: var(--max-width);
@@ -2670,8 +2678,16 @@ body.modal-open {
 .canticos-title-row {
   display: flex;
   align-items: center;
-  gap: var(--spacing-md);
-  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.canticos-header-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  min-width: 0;
+  flex: 1;
 }
 
 .canticos-badge-icon {
@@ -2684,6 +2700,17 @@ body.modal-open {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
+
+.canticos-badge-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.canticos-title-headings {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .canticos-title-headings h2 {
@@ -2700,18 +2727,9 @@ body.modal-open {
   color: var(--secondary-text);
   margin: 2px 0 0;
   display: block;
-}
-
-.canticos-count-pill {
-  margin-left: auto;
-  background-color: var(--accent-light);
-  color: var(--accent-color);
-  border: 1px solid var(--accent-color);
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 999px;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Pequeño Buscador de Cánticos */
@@ -2749,6 +2767,7 @@ body.modal-open {
   font-family: var(--font-ui);
   font-size: 0.925rem;
   color: var(--primary-text);
+  text-overflow: ellipsis;
 }
 
 .canticos-search-box input:focus {
@@ -2761,7 +2780,8 @@ body.modal-open {
   gap: var(--spacing-sm);
   overflow-x: auto;
   scrollbar-width: none;
-  padding-bottom: 2px;
+  -webkit-overflow-scrolling: touch;
+  padding: 2px 0 4px 0;
 }
 
 .canticos-filter-chips::-webkit-scrollbar {
@@ -2772,13 +2792,18 @@ body.modal-open {
   background: var(--surface-color);
   border: 1px solid var(--border-color);
   color: var(--secondary-text);
-  padding: 5px 12px;
+  padding: 6px 14px;
   border-radius: 999px;
   font-family: var(--font-ui);
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
   white-space: nowrap;
+  flex-shrink: 0;
+  min-height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   transition: all var(--transition-fast);
 }
 
@@ -3088,14 +3113,138 @@ body.modal-open {
   border-color: var(--accent-color);
 }
 
+@media (max-width: 600px) {
+  .search-wrapper {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .filter-tabs {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .filter-tabs .tab-btn {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 8px 6px;
+    font-size: 0.8rem;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+  .tab-text-full {
+    display: none !important;
+  }
+
+  .tab-text-short {
+    display: inline !important;
+  }
+
+  .canticos-header-card {
+    padding: 14px 16px;
+    gap: 12px;
+    border-radius: var(--radius-md);
+  }
+
+  .canticos-badge-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .canticos-badge-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .canticos-title-headings h2 {
+    font-size: 1.15rem;
+  }
+
+  .canticos-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .canticos-search-box input {
+    height: 42px;
+    font-size: 0.875rem;
+    padding: 0 34px 0 38px;
+  }
+
+  .canticos-search-box .icon-search {
+    left: 12px;
+    width: 16px;
+    height: 16px;
+  }
+
+  .cantico-card {
+    padding: 12px 14px;
+    gap: 6px;
+  }
+
+  .cantico-card-num {
+    font-size: 1.05rem;
+  }
+
+  .cantico-card-title {
+    font-size: 0.975rem;
+  }
+
+  .cantico-card-preview {
+    font-size: 0.825rem;
+  }
+}
+
 @media (max-width: 480px) {
+  .cantico-modal {
+    padding: 10px;
+  }
+
   .cantico-modal-dialog {
-    max-height: 94vh;
+    max-height: 92vh;
+    border-radius: var(--radius-md);
   }
+
+  .cantico-modal-header {
+    padding: 12px 14px;
+  }
+
   .cantico-modal-body {
-    padding: var(--spacing-lg) var(--spacing-md);
+    padding: 16px 14px;
+    gap: 10px;
   }
+
+  .cantico-modal-title {
+    font-size: 1.2rem;
+  }
+
+  .cantico-modal-lyrics {
+    font-size: 1.05rem;
+    line-height: 1.65;
+  }
+
+  .cantico-modal-footer {
+    padding: 10px 14px;
+    gap: 8px;
+  }
+
+  .cantico-nav-btn {
+    min-height: 42px;
+    padding: 8px 10px;
+  }
+
   .cantico-nav-btn span {
     display: none;
+  }
+
+  .cantico-action-btn {
+    min-height: 42px;
+    padding: 8px 12px;
+  }
+
+  .cantico-action-btn span {
+    font-size: 0.8rem;
   }
 }

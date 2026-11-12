@@ -388,9 +388,8 @@ function applyCanticosFilters() {
   const query = removeAccents(DOM.canticosSearchInput ? DOM.canticosSearchInput.value.trim() : '');
 
   filteredCanticos = canticosData.filter(item => {
-    // 1. Filtro por Chips
+    // 1. Filtro por Chips (Todos / Doxologías)
     if (activeCanticosFilter === 'doxologias' && item.tipo !== 'doxologia') return false;
-    if (activeCanticosFilter === 'con-fuente' && (!item.fuente || item.fuente === 'S/M')) return false;
 
     // 2. Filtro por Búsqueda (Número, Título, Fuente o Letra)
     if (query !== '') {
