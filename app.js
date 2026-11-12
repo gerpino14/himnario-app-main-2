@@ -20,42 +20,19 @@ let audioVolume = 1.0;
 let audioPlaybackSpeed = 1.0;
 let toastTimeout = null;
 
-// PDF Viewer State & Virtualization
+// Shared PDF Document Cache
 let pdfDoc = null;
+let pdfDocLoadPromise = null;
 let pdfTotalPages = 0;
-let pdfCurrentScale = 1.0;
-let pdfFitToWidth = true;
-let pdfRenderedPages = new Set();
-let pdfRenderingPages = new Set();
-let pdfPageDimensions = [];
-let pdfObserver = null;
-let pdfFloatingIndicator = null;
-let pdfScrollTimeout = null;
-let pdfLoaded = false;
-let pdfActiveRenderTasks = {};
-let pdfRenderQueue = [];
-let pdfActiveRenders = 0;
-let pdfCurrentVisiblePage = 1;
-let pdfScrollRaf = null;
 
-// Fullscreen PDF Viewer State & Virtualization
-let pdfFsOpen = false;
-let pdfFsScale = 1.0;
-let pdfFsFitToWidth = true;
-let pdfFsRenderedPages = new Set();
-let pdfFsRenderingPages = new Set();
-let pdfFsObserver = null;
-let pdfFsScrollTimeout = null;
-let pdfFsFloatingIndicator = null;
-let pdfFsActiveRenderTasks = {};
-let pdfFsRenderQueue = [];
-let pdfFsActiveRenders = 0;
-let pdfFsCurrentVisiblePage = 1;
-let pdfFsScrollRaf = null;
-
-
-const MAX_CONCURRENT_PDF_RENDERS = 2;
-const PDF_BUFFER_PAGES = 2;
+// Reader Embedded Score State
+let readerActiveTab = 'lyrics';
+let readerScorePageIdx = 0;
+let readerScoreZoomFactor = 1.0;
+let readerScoreRenderToken = 0;
+let readerScoreModalOpen = false;
+let readerScoreModalZoomFactor = 1.0;
+let readerScoreModalRenderToken = 0;
 
 // DOM Elements Cache
 let DOM = {};
@@ -76,46 +53,6 @@ function initDOM() {
     drawerBody: document.getElementById('drawer-body'),
     hymnsGrid: document.getElementById('hymns-grid'),
     
-    // PDF Viewer
-    pdfSection: document.getElementById('pdf-viewer-section'),
-    pdfLoading: document.getElementById('pdf-loading'),
-    pdfProgressFill: document.getElementById('pdf-progress-fill'),
-    pdfPagesContainer: document.getElementById('pdf-pages-container'),
-    pdfZoomIn: document.getElementById('pdf-zoom-in'),
-    pdfZoomOut: document.getElementById('pdf-zoom-out'),
-    pdfZoomDisplay: document.getElementById('pdf-zoom-display'),
-    pdfFitWidth: document.getElementById('pdf-fit-width'),
-    pdfGotoInput: document.getElementById('pdf-goto-input'),
-    pdfPageTotal: document.getElementById('pdf-page-total'),
-    pdfGotoHymn: document.getElementById('pdf-goto-hymn'),
-    pdfHymnJumpBtn: document.getElementById('pdf-hymn-jump-btn'),
-    pdfIndexBtn: document.getElementById('pdf-index-btn'),
-    pdfFullscreenBtn: document.getElementById('pdf-fullscreen-btn'),
-    statusBar: document.querySelector('.status-bar'),
-    
-    // Fullscreen PDF Viewer
-    pdfFsModal: document.getElementById('pdf-fullscreen-modal'),
-    pdfFsClose: document.getElementById('pdf-fs-close'),
-    pdfFsViewport: document.getElementById('pdf-fs-viewport'),
-    pdfFsPagesContainer: document.getElementById('pdf-fs-pages-container'),
-    pdfFsZoomIn: document.getElementById('pdf-fs-zoom-in'),
-    pdfFsZoomOut: document.getElementById('pdf-fs-zoom-out'),
-    pdfFsZoomDisplay: document.getElementById('pdf-fs-zoom-display'),
-    pdfFsFitWidth: document.getElementById('pdf-fs-fit-width'),
-    pdfFsGotoHymn: document.getElementById('pdf-fs-goto-hymn'),
-    pdfFsHymnJumpBtn: document.getElementById('pdf-fs-hymn-jump-btn'),
-    pdfFsIndexBtn: document.getElementById('pdf-fs-index-btn'),
-    pdfFsGotoInput: document.getElementById('pdf-fs-goto-input'),
-    pdfFsPageTotal: document.getElementById('pdf-fs-page-total'),
-
-    // PDF Index Modal
-    pdfIndexModal: document.getElementById('pdf-index-modal'),
-    pdfIndexClose: document.getElementById('pdf-index-close'),
-    pdfIndexSearchInput: document.getElementById('pdf-index-search-input'),
-    pdfIndexClear: document.getElementById('pdf-index-clear'),
-    pdfIndexChips: document.querySelectorAll('.pdf-chip'),
-    pdfIndexList: document.getElementById('pdf-index-list'),
-    
     // Reader Modal
     readerModal: document.getElementById('reader-modal'),
     readerContainer: document.querySelector('.reader-container'),
@@ -131,7 +68,38 @@ function initDOM() {
     readerCategory: document.getElementById('reader-category'),
     readerNumber: document.getElementById('reader-number'),
     readerTitle: document.getElementById('reader-title'),
+    readerViewTabs: document.getElementById('reader-view-tabs'),
+    readerTabLyrics: document.getElementById('reader-tab-lyrics'),
+    readerTabScore: document.getElementById('reader-tab-score'),
+    readerScorePagesBadge: document.getElementById('reader-score-pages-badge'),
     readerLyrics: document.getElementById('reader-lyrics'),
+    readerScoreView: document.getElementById('reader-score-view'),
+    readerScorePagePill: document.getElementById('reader-score-page-pill'),
+    readerScoreCaption: document.getElementById('reader-score-caption'),
+    readerScoreZoomOut: document.getElementById('reader-score-zoom-out'),
+    readerScoreZoomIn: document.getElementById('reader-score-zoom-in'),
+    readerScoreZoomLabel: document.getElementById('reader-score-zoom-label'),
+    readerScoreZoomFit: document.getElementById('reader-score-zoom-fit'),
+    readerScoreExpandBtn: document.getElementById('reader-score-expand-btn'),
+    readerScorePrevBtn: document.getElementById('reader-score-prev-btn'),
+    readerScoreNextBtn: document.getElementById('reader-score-next-btn'),
+    readerScoreDots: document.getElementById('reader-score-dots'),
+    readerScoreStatus: document.getElementById('reader-score-status'),
+    readerScorePages: document.getElementById('reader-score-pages'),
+
+    // Expanded Hymn Score Modal (Ampliar)
+    readerScoreModal: document.getElementById('reader-score-modal'),
+    readerScoreModalClose: document.getElementById('reader-score-modal-close'),
+    readerScoreModalTitle: document.getElementById('reader-score-modal-title'),
+    readerScoreModalPill: document.getElementById('reader-score-modal-pill'),
+    readerScoreModalZoomOut: document.getElementById('reader-score-modal-zoom-out'),
+    readerScoreModalZoomIn: document.getElementById('reader-score-modal-zoom-in'),
+    readerScoreModalZoomFit: document.getElementById('reader-score-modal-zoom-fit'),
+    readerScoreModalZoomLabel: document.getElementById('reader-score-modal-zoom-label'),
+    readerScoreModalPrev: document.getElementById('reader-score-modal-prev'),
+    readerScoreModalNext: document.getElementById('reader-score-modal-next'),
+    readerScoreModalPages: document.getElementById('reader-score-modal-pages'),
+    readerScoreModalDots: document.getElementById('reader-score-modal-dots'),
     prevHymnBtn: document.getElementById('prev-hymn-btn'),
     nextHymnBtn: document.getElementById('next-hymn-btn'),
     readerProgress: document.getElementById('reader-progress-indicator'),
@@ -629,6 +597,27 @@ function openReader(hymnNumber) {
   // Sync shareable ?himno=<numero> URL
   syncHymnUrl(hymn.numero);
 
+  // Configure Letra / Partitura segmented tabs
+  readerScoreRenderToken++;
+  readerScoreModalRenderToken++;
+  readerScorePageIdx = 0;
+  readerScoreZoomFactor = 1.0;
+  readerScoreModalZoomFactor = 1.0;
+  if (readerScoreModalOpen) closeReaderScoreModal();
+  if (DOM.readerScorePages) DOM.readerScorePages.innerHTML = '';
+  if (DOM.readerScoreStatus) DOM.readerScoreStatus.classList.add('hidden');
+  const scorePages = Array.isArray(hymn.paginas_pdf) ? hymn.paginas_pdf : [];
+  if (DOM.readerViewTabs) {
+    if (scorePages.length > 0) {
+      const badgeText = formatScorePagesBadge(scorePages);
+      DOM.readerViewTabs.classList.remove('hidden');
+      if (DOM.readerScorePagesBadge) DOM.readerScorePagesBadge.textContent = badgeText;
+    } else {
+      DOM.readerViewTabs.classList.add('hidden');
+    }
+  }
+  setReaderTab('lyrics');
+
   // Update Nav Buttons
   updateReaderNavigationState();
 }
@@ -641,6 +630,10 @@ function closeReader() {
 
   if (DOM.playerOptionsMenu) {
     DOM.playerOptionsMenu.classList.add('hidden');
+  }
+
+  if (readerScoreModalOpen) {
+    closeReaderScoreModal();
   }
 
   if (isPresentationMode) {
@@ -794,7 +787,6 @@ function registerEventListeners() {
         });
       }
       activeFilter = 'favoritos';
-      hidePdfViewer();
       applySearchAndFilters();
     });
   }
@@ -802,21 +794,11 @@ function registerEventListeners() {
   // Section Filters Tabs
   if (DOM.filterTabs) {
     DOM.filterTabs.forEach(tab => {
-      tab.addEventListener('click', (e) => {
+      tab.addEventListener('click', () => {
         DOM.filterTabs.forEach(btn => btn.classList.remove('active'));
         tab.classList.add('active');
-        const filter = tab.getAttribute('data-filter');
-        
-        if (filter === 'pdf') {
-          // Switch to PDF view
-          activeFilter = 'pdf';
-          showPdfViewer();
-        } else {
-          // Switch back to hymns view
-          activeFilter = filter;
-          hidePdfViewer();
-          applySearchAndFilters();
-        }
+        activeFilter = tab.getAttribute('data-filter');
+        applySearchAndFilters();
       });
     });
   }
@@ -858,6 +840,51 @@ function registerEventListeners() {
   if (DOM.closeReader) DOM.closeReader.addEventListener('click', closeReader);
   if (DOM.readerFavBtn) DOM.readerFavBtn.addEventListener('click', toggleReaderActiveFavorite);
   if (DOM.readerShareBtn) DOM.readerShareBtn.addEventListener('click', shareActiveHymn);
+
+  // Reader Letra / Partitura Tabs, Carousel & Score Zoom
+  if (DOM.readerTabLyrics) DOM.readerTabLyrics.addEventListener('click', () => setReaderTab('lyrics'));
+  if (DOM.readerTabScore) DOM.readerTabScore.addEventListener('click', () => setReaderTab('score'));
+  if (DOM.readerScoreZoomIn) {
+    DOM.readerScoreZoomIn.addEventListener('click', () => adjustScoreZoom(false, 1.2));
+  }
+  if (DOM.readerScoreZoomOut) {
+    DOM.readerScoreZoomOut.addEventListener('click', () => adjustScoreZoom(false, 0.8));
+  }
+  if (DOM.readerScoreZoomFit) {
+    DOM.readerScoreZoomFit.addEventListener('click', () => resetScoreZoom(false));
+  }
+  if (DOM.readerScorePrevBtn) {
+    DOM.readerScorePrevBtn.addEventListener('click', () => stepScorePage(-1));
+  }
+  if (DOM.readerScoreNextBtn) {
+    DOM.readerScoreNextBtn.addEventListener('click', () => stepScorePage(1));
+  }
+  if (DOM.readerScoreExpandBtn) {
+    DOM.readerScoreExpandBtn.addEventListener('click', openReaderScoreModal);
+  }
+
+  // Expanded Score Modal Controls
+  if (DOM.readerScoreModalClose) {
+    DOM.readerScoreModalClose.addEventListener('click', closeReaderScoreModal);
+  }
+  if (DOM.readerScoreModalZoomIn) {
+    DOM.readerScoreModalZoomIn.addEventListener('click', () => adjustScoreZoom(true, 1.2));
+  }
+  if (DOM.readerScoreModalZoomOut) {
+    DOM.readerScoreModalZoomOut.addEventListener('click', () => adjustScoreZoom(true, 0.8));
+  }
+  if (DOM.readerScoreModalZoomFit) {
+    DOM.readerScoreModalZoomFit.addEventListener('click', () => resetScoreZoom(true));
+  }
+  if (DOM.readerScoreModalPrev) {
+    DOM.readerScoreModalPrev.addEventListener('click', () => stepScorePage(-1));
+  }
+  if (DOM.readerScoreModalNext) {
+    DOM.readerScoreModalNext.addEventListener('click', () => stepScorePage(1));
+  }
+
+  bindScoreSwipe(DOM.readerScorePages, () => stepScorePage(1), () => stepScorePage(-1));
+  bindScoreSwipe(DOM.readerScoreModalPages, () => stepScorePage(1), () => stepScorePage(-1));
   
   // Font Resizing Buttons
   if (DOM.fontDecrease) DOM.fontDecrease.addEventListener('click', () => changeFontSize(-2));
@@ -869,20 +896,19 @@ function registerEventListeners() {
   
   // Back key gestures (Escape closes modals / drawer)
   document.addEventListener('keydown', (e) => {
-    // PDF Index modal
-    if (DOM.pdfIndexModal && !DOM.pdfIndexModal.classList.contains('hidden')) {
+    // Expanded Hymn Score Modal (Ampliar)
+    if (readerScoreModalOpen && DOM.readerScoreModal && !DOM.readerScoreModal.classList.contains('hidden')) {
       if (e.key === 'Escape') {
-        closePdfIndexModal();
+        closeReaderScoreModal();
+      } else if (e.key === 'ArrowLeft') {
+        stepScorePage(-1);
+      } else if (e.key === 'ArrowRight') {
+        stepScorePage(1);
       }
       return;
     }
 
-    // Fullscreen PDF modal
-    if (pdfFsOpen && DOM.pdfFsModal && !DOM.pdfFsModal.classList.contains('hidden')) {
-      if (e.key === 'Escape') {
-        closePdfFullscreen();
-      }
-    } else if (DOM.readerModal && !DOM.readerModal.classList.contains('hidden')) {
+    if (DOM.readerModal && !DOM.readerModal.classList.contains('hidden')) {
       if (e.key === 'Escape') {
         closeReader();
       } else if (e.key === 'ArrowLeft' && DOM.prevHymnBtn && !DOM.prevHymnBtn.disabled) {
@@ -1562,6 +1588,10 @@ function updateVolumeMuteIcons(isMuted) {
 // 10. Presentation Mode & Fullscreen Functions
 // ----------------------------------------------------
 function togglePresentationMode() {
+  if (readerScoreModalOpen) {
+    closeReaderScoreModal();
+  }
+
   if (isPresentationMode) {
     exitPresentationMode(true);
   } else {
@@ -1571,7 +1601,11 @@ function togglePresentationMode() {
 
 function enterPresentationMode() {
   if (!DOM.readerContainer) return;
-  
+
+  if (readerActiveTab !== 'lyrics') {
+    setReaderTab('lyrics');
+  }
+
   isPresentationMode = true;
   DOM.readerContainer.classList.add('is-presentation');
   
@@ -1651,1390 +1685,310 @@ function showPresentationControls() {
 }
 
 // ----------------------------------------------------
-// 11. PDF Viewer Module (Continuous Scroll Virtualizado & Navegación Rápida)
+// 11. Embedded Hymn Score Viewer (Letra / Partitura + Ampliar)
 // ----------------------------------------------------
 
-let pdfIndexActiveRange = 'all';
-
 /**
- * Retorna el himno correspondiente a una página del PDF.
+ * Formatea la etiqueta de páginas de partitura (1 página o rango de varias).
  */
-function getHymnForPdfPage(pageNum) {
-  if (!hymnsData || hymnsData.length === 0) return null;
-  // Coincidencia exacta con alguna de las páginas asignadas al himno
-  const exact = hymnsData.find(h => h.paginas_pdf && h.paginas_pdf.includes(pageNum));
-  if (exact) return exact;
-
-  // Si no coincide exactamente, buscar el himno inmediatamente anterior
-  let closest = null;
-  for (const h of hymnsData) {
-    if (h.paginas_pdf && h.paginas_pdf[0] <= pageNum) {
-      if (!closest || h.paginas_pdf[0] > closest.paginas_pdf[0]) {
-        closest = h;
-      }
-    }
+function formatScorePagesBadge(pages) {
+  if (!Array.isArray(pages) || pages.length === 0) return '';
+  if (pages.length === 1) return `Pág. ${pages[0]}`;
+  const isContiguous = pages.every((p, idx) => idx === 0 || p === pages[idx - 1] + 1);
+  if (isContiguous) {
+    return `Págs. ${pages[0]}–${pages[pages.length - 1]}`;
   }
-  return closest;
+  return `Págs. ${pages.join(', ')}`;
 }
 
 /**
- * Salta instantáneamente a cualquier himno (1-350) por su número oficial.
+ * Carga y cachea una única instancia de pdfDoc compartida por toda la app.
  */
-function jumpToHymn(hymnNum, isFs = false) {
-  hymnNum = parseInt(hymnNum);
-  if (isNaN(hymnNum) || hymnNum < 1 || hymnNum > 350) {
-    alert('Por favor ingresa un número de himno válido entre 1 y 350.');
-    return;
-  }
-
-  const hymn = hymnsData.find(h => h.numero === hymnNum);
-  if (!hymn || !hymn.paginas_pdf || hymn.paginas_pdf.length === 0) {
-    console.warn(`El himno ${hymnNum} no tiene páginas PDF asociadas.`);
-    return;
-  }
-
-  const targetPage = hymn.paginas_pdf[0];
-
-  if (isFs || pdfFsOpen) {
-    goToFsPage(targetPage);
-  } else {
-    if (activeFilter !== 'pdf') {
-      const pdfTab = document.querySelector('.filter-btn[data-filter="pdf"]');
-      if (pdfTab) pdfTab.click();
-    }
-    goToPdfPage(targetPage);
-  }
-
-  // Sincronizar inputs
-  if (DOM.pdfGotoHymn) DOM.pdfGotoHymn.value = hymnNum;
-  if (DOM.pdfFsGotoHymn) DOM.pdfFsGotoHymn.value = hymnNum;
-
-  // Indicador flotante informativo
-  const indicator = (isFs || pdfFsOpen) ? pdfFsFloatingIndicator : pdfFloatingIndicator;
-  if (indicator) {
-    indicator.textContent = `Himno ${hymn.numero}: ${hymn.titulo} (Pág. ${targetPage})`;
-    indicator.classList.add('is-visible');
-    clearTimeout(pdfScrollTimeout);
-    pdfScrollTimeout = setTimeout(() => {
-      indicator.classList.remove('is-visible');
-    }, 2800);
-  }
-}
-
-/**
- * Abre el modal con el índice completo de partituras para buscar por título o número.
- */
-function openPdfIndexModal() {
-  if (!DOM.pdfIndexModal) return;
-  DOM.pdfIndexModal.classList.remove('hidden');
-  DOM.pdfIndexModal.setAttribute('aria-hidden', 'false');
-  document.body.classList.add('modal-open');
-
-  if (DOM.pdfIndexSearchInput) {
-    DOM.pdfIndexSearchInput.value = '';
-    setTimeout(() => DOM.pdfIndexSearchInput.focus(), 60);
-  }
-  if (DOM.pdfIndexClear) DOM.pdfIndexClear.classList.add('hidden');
-
-  pdfIndexActiveRange = 'all';
-  if (DOM.pdfIndexChips) {
-    DOM.pdfIndexChips.forEach(chip => {
-      chip.classList.toggle('active', chip.getAttribute('data-range') === 'all');
-    });
-  }
-
-  renderPdfIndexList();
-}
-
-/**
- * Cierra el modal del índice de partituras.
- */
-function closePdfIndexModal() {
-  if (!DOM.pdfIndexModal) return;
-  DOM.pdfIndexModal.classList.add('hidden');
-  DOM.pdfIndexModal.setAttribute('aria-hidden', 'true');
-  if (!pdfFsOpen && (!DOM.readerModal || DOM.readerModal.classList.contains('hidden'))) {
-    document.body.classList.remove('modal-open');
-  }
-}
-
-/**
- * Renderiza la lista filtrada de himnos dentro del modal de índice de partituras.
- */
-function renderPdfIndexList() {
-  if (!DOM.pdfIndexList || !hymnsData) return;
-
-  const query = (DOM.pdfIndexSearchInput?.value || '').trim().toLowerCase();
-  const normalizedQuery = typeof removeAccents === 'function' ? removeAccents(query) : query;
-
-  let filtered = hymnsData.filter(h => h.paginas_pdf && h.paginas_pdf.length > 0);
-
-  // Filtro por rango
-  if (pdfIndexActiveRange !== 'all') {
-    const [min, max] = pdfIndexActiveRange.split('-').map(Number);
-    filtered = filtered.filter(h => h.numero >= min && h.numero <= max);
-  }
-
-  // Filtro por búsqueda
-  if (query) {
-    const queryNum = parseInt(query);
-    filtered = filtered.filter(h => {
-      if (!isNaN(queryNum) && h.numero.toString().includes(query)) return true;
-      const titleNorm = typeof removeAccents === 'function' ? removeAccents(h.titulo.toLowerCase()) : h.titulo.toLowerCase();
-      return titleNorm.includes(normalizedQuery);
-    });
-  }
-
-  if (filtered.length === 0) {
-    DOM.pdfIndexList.innerHTML = `
-      <div style="padding: 28px; text-align: center; color: var(--secondary-text);">
-        No se encontraron himnos con "${query}"
-      </div>
-    `;
-    return;
-  }
-
-  DOM.pdfIndexList.innerHTML = filtered.map(h => `
-    <button type="button" class="pdf-index-item" data-hymn-num="${h.numero}" data-page="${h.paginas_pdf[0]}">
-      <div class="pdf-index-item-main">
-        <span class="pdf-index-num">#${h.numero}</span>
-        <span class="pdf-index-item-title">${h.titulo}</span>
-      </div>
-      <span class="pdf-index-badge">Pág. ${h.paginas_pdf[0]}</span>
-    </button>
-  `).join('');
-
-  DOM.pdfIndexList.querySelectorAll('.pdf-index-item').forEach(btn => {
-    btn.onclick = () => {
-      const num = parseInt(btn.getAttribute('data-hymn-num'));
-      closePdfIndexModal();
-      jumpToHymn(num, pdfFsOpen);
-    };
-  });
-}
-
-/**
- * Configura los event listeners del modal del índice de partituras.
- */
-function initPdfIndexListeners() {
-  if (DOM.pdfIndexBtn) {
-    DOM.pdfIndexBtn.onclick = openPdfIndexModal;
-  }
-  if (DOM.pdfFsIndexBtn) {
-    DOM.pdfFsIndexBtn.onclick = openPdfIndexModal;
-  }
-  if (DOM.pdfIndexClose) {
-    DOM.pdfIndexClose.onclick = closePdfIndexModal;
-  }
-
-  if (DOM.pdfIndexModal) {
-    DOM.pdfIndexModal.onclick = (e) => {
-      if (e.target === DOM.pdfIndexModal) closePdfIndexModal();
-    };
-  }
-
-  if (DOM.pdfIndexSearchInput) {
-    DOM.pdfIndexSearchInput.oninput = () => {
-      const hasText = DOM.pdfIndexSearchInput.value.trim().length > 0;
-      if (DOM.pdfIndexClear) DOM.pdfIndexClear.classList.toggle('hidden', !hasText);
-      renderPdfIndexList();
-    };
-  }
-
-  if (DOM.pdfIndexClear) {
-    DOM.pdfIndexClear.onclick = () => {
-      if (DOM.pdfIndexSearchInput) {
-        DOM.pdfIndexSearchInput.value = '';
-        DOM.pdfIndexSearchInput.focus();
-      }
-      DOM.pdfIndexClear.classList.add('hidden');
-      renderPdfIndexList();
-    };
-  }
-
-  if (DOM.pdfIndexChips) {
-    DOM.pdfIndexChips.forEach(chip => {
-      chip.onclick = () => {
-        DOM.pdfIndexChips.forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        pdfIndexActiveRange = chip.getAttribute('data-range') || 'all';
-        renderPdfIndexList();
-      };
-    });
-  }
-
-  // Inputs de salto directo por Himno #
-  const setupHymnInput = (input, goBtn, isFs) => {
-    if (goBtn) {
-      goBtn.onclick = () => {
-        if (input) jumpToHymn(input.value, isFs);
-      };
-    }
-    if (input) {
-      input.onkeydown = (e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          jumpToHymn(input.value, isFs);
-          input.blur();
-        }
-      };
-    }
-  };
-
-  setupHymnInput(DOM.pdfGotoHymn, DOM.pdfHymnJumpBtn, false);
-  setupHymnInput(DOM.pdfFsGotoHymn, DOM.pdfFsHymnJumpBtn, true);
-}
-
-/**
- * Muestra la sección del visor PDF continuo y oculta la cuadrícula de himnos.
- */
-function showPdfViewer() {
-  if (DOM.hymnsGrid) DOM.hymnsGrid.classList.add('hidden');
-  if (DOM.statusBar) DOM.statusBar.classList.add('hidden');
-
-  if (DOM.pdfSection) {
-    DOM.pdfSection.classList.remove('hidden');
-    DOM.pdfSection.style.animation = 'none';
-    DOM.pdfSection.offsetHeight; // force reflow
-    DOM.pdfSection.style.animation = '';
-  }
-
-  if (!pdfLoaded && !pdfDoc) {
-    initPdfViewer();
-  } else if (pdfDoc) {
-    reobservePdfPages();
-  }
-}
-
-/**
- * Oculta la sección del visor PDF continuo.
- */
-function hidePdfViewer() {
-  if (DOM.pdfSection) DOM.pdfSection.classList.add('hidden');
-  if (DOM.hymnsGrid) DOM.hymnsGrid.classList.remove('hidden');
-  if (DOM.statusBar) DOM.statusBar.classList.remove('hidden');
-
-  if (pdfFloatingIndicator) {
-    pdfFloatingIndicator.classList.remove('is-visible');
-  }
-
-  cancelAllPdfRenders();
-  if (pdfObserver) {
-    pdfObserver.disconnect();
-  }
-}
-
-/**
- * Inicializa PDF.js y carga el documento en modo scroll continuo.
- */
-async function initPdfViewer() {
+async function ensurePdfDocumentLoaded(onProgress) {
+  if (pdfDoc) return pdfDoc;
   if (typeof pdfjsLib === 'undefined') {
-    console.error('PDF.js library not loaded');
-    showPdfError('No se pudo cargar la biblioteca PDF.js');
-    return;
+    throw new Error('La biblioteca PDF.js no está disponible.');
   }
 
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-  if (DOM.pdfLoading) DOM.pdfLoading.classList.remove('hidden');
-  if (DOM.pdfPagesContainer) DOM.pdfPagesContainer.innerHTML = '';
-
-  try {
+  if (!pdfDocLoadPromise) {
     const loadingTask = pdfjsLib.getDocument({
       url: 'himnario.pdf',
       cMapUrl: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/cmaps/',
       cMapPacked: true,
     });
 
-    loadingTask.onProgress = (progress) => {
-      if (progress.total > 0 && DOM.pdfProgressFill) {
-        const percent = Math.min(100, (progress.loaded / progress.total) * 100);
-        DOM.pdfProgressFill.style.width = `${percent}%`;
-      }
-    };
+    if (typeof onProgress === 'function') {
+      loadingTask.onProgress = onProgress;
+    }
 
-    pdfDoc = await loadingTask.promise;
-    pdfTotalPages = pdfDoc.numPages;
-    pdfLoaded = true;
+    pdfDocLoadPromise = loadingTask.promise
+      .then((doc) => {
+        pdfDoc = doc;
+        pdfTotalPages = doc.numPages;
+        return doc;
+      })
+      .catch((err) => {
+        pdfDocLoadPromise = null;
+        throw err;
+      });
+  }
 
-    if (DOM.pdfPageTotal) DOM.pdfPageTotal.textContent = `/ ${pdfTotalPages}`;
-    if (DOM.pdfGotoInput) DOM.pdfGotoInput.max = pdfTotalPages;
-    if (DOM.pdfFsPageTotal) DOM.pdfFsPageTotal.textContent = `/ ${pdfTotalPages}`;
-    if (DOM.pdfFsGotoInput) DOM.pdfFsGotoInput.max = pdfTotalPages;
+  return pdfDocLoadPromise;
+}
 
-    await fetchPageDimensions();
-    createPagePlaceholders();
+/**
+ * Alterna entre la vista de Letra y la vista de Partitura dentro del lector.
+ */
+function setReaderTab(tab) {
+  const hasScore = activeHymn && Array.isArray(activeHymn.paginas_pdf) && activeHymn.paginas_pdf.length > 0;
+  const targetTab = (tab === 'score' && hasScore) ? 'score' : 'lyrics';
+  readerActiveTab = targetTab;
 
-    if (DOM.pdfLoading) DOM.pdfLoading.classList.add('hidden');
+  const isScore = targetTab === 'score';
+  if (DOM.readerTabLyrics) {
+    DOM.readerTabLyrics.classList.toggle('is-active', !isScore);
+    DOM.readerTabLyrics.setAttribute('aria-selected', String(!isScore));
+  }
+  if (DOM.readerTabScore) {
+    DOM.readerTabScore.classList.toggle('is-active', isScore);
+    DOM.readerTabScore.setAttribute('aria-selected', String(isScore));
+  }
+  if (DOM.readerLyrics) DOM.readerLyrics.classList.toggle('hidden', isScore);
+  if (DOM.readerScoreView) DOM.readerScoreView.classList.toggle('hidden', !isScore);
 
-    createFloatingIndicator();
-    setupPdfObserver();
-    registerPdfEventListeners();
-    initPdfIndexListeners();
-
-  } catch (error) {
-    console.error('Failed to load PDF:', error);
-    showPdfError('No se pudo cargar el himnario PDF. Verifica que el archivo "himnario.pdf" exista en la carpeta del proyecto.');
+  if (isScore) {
+    renderActiveHymnScore();
   }
 }
 
 /**
- * Obtiene las dimensiones base de las páginas.
+ * Actualiza los controles de carrusel (píldora 1/2, flechas y puntos de paginación).
  */
-async function fetchPageDimensions() {
-  pdfPageDimensions = [];
-  const firstPage = await pdfDoc.getPage(1);
-  const baseViewport = firstPage.getViewport({ scale: 1.0 });
+function updateScoreCarouselChrome({ pages, idx, totalDocPages, pillEl, captionEl, prevBtn, nextBtn, dotsEl }) {
+  const hasMultiple = pages.length > 1;
+  const pageNum = pages[idx];
 
-  for (let i = 0; i < pdfTotalPages; i++) {
-    pdfPageDimensions.push({
-      width: baseViewport.width,
-      height: baseViewport.height,
-    });
+  if (pillEl) pillEl.textContent = `${idx + 1}/${pages.length}`;
+  if (captionEl) captionEl.textContent = `(Pág. ${pageNum} de ${totalDocPages} en el himnario)`;
+
+  if (prevBtn) {
+    prevBtn.classList.toggle('hidden', !hasMultiple);
+    prevBtn.disabled = idx <= 0;
   }
-}
-
-/**
- * Crea todos los contenedores / placeholders de páginas para el scroll continuo.
- */
-function createPagePlaceholders() {
-  if (!DOM.pdfPagesContainer) return;
-  DOM.pdfPagesContainer.innerHTML = '';
-
-  const containerWidth = DOM.pdfPagesContainer.clientWidth - 2;
-
-  for (let i = 0; i < pdfTotalPages; i++) {
-    const pageNum = i + 1;
-    const dim = pdfPageDimensions[i];
-    const scale = pdfFitToWidth ? (containerWidth / dim.width) : pdfCurrentScale;
-    const displayWidth = dim.width * scale;
-    const displayHeight = dim.height * scale;
-
-    const wrapper = document.createElement('div');
-    wrapper.className = 'pdf-page-skeleton';
-    wrapper.setAttribute('data-page', pageNum);
-    wrapper.setAttribute('data-page-label', `Página ${pageNum}`);
-    wrapper.style.width = `${displayWidth}px`;
-    wrapper.style.height = `${displayHeight}px`;
-
-    DOM.pdfPagesContainer.appendChild(wrapper);
+  if (nextBtn) {
+    nextBtn.classList.toggle('hidden', !hasMultiple);
+    nextBtn.disabled = idx >= pages.length - 1;
   }
 
-  if (pdfFitToWidth && pdfPageDimensions.length > 0) {
-    const scale = containerWidth / pdfPageDimensions[0].width;
-    pdfCurrentScale = scale;
-    updateZoomDisplay();
-  }
-}
-
-/**
- * Configura el IntersectionObserver para lazy loading fluido en scroll vertical.
- */
-function setupPdfObserver() {
-  if (pdfObserver) pdfObserver.disconnect();
-
-  pdfObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const pageNum = parseInt(entry.target.getAttribute('data-page'));
-      if (entry.isIntersecting && !isNaN(pageNum)) {
-        queuePdfPageRender(pageNum);
-      }
-    });
-  }, {
-    root: null,
-    rootMargin: '300px 0px',
-    threshold: 0.01,
-  });
-
-  const pages = DOM.pdfPagesContainer.querySelectorAll('[data-page]');
-  pages.forEach(page => pdfObserver.observe(page));
-
-  window.removeEventListener('scroll', onPdfScroll);
-  window.addEventListener('scroll', onPdfScroll, { passive: true });
-}
-
-function onPdfScroll() {
-  if (!pdfScrollRaf) {
-    pdfScrollRaf = requestAnimationFrame(() => {
-      pdfScrollRaf = null;
-      handlePdfScroll();
-    });
-  }
-}
-
-/**
- * Encola una página para renderizarla sin descartes de distancia.
- */
-function queuePdfPageRender(pageNum, prioritize = false) {
-  if (pageNum < 1 || pageNum > pdfTotalPages) return;
-  if (pdfRenderedPages.has(pageNum) || pdfRenderingPages.has(pageNum)) return;
-  if (!pdfDoc) return;
-
-  if (prioritize) {
-    pdfRenderQueue = pdfRenderQueue.filter(p => p !== pageNum);
-    pdfRenderQueue.unshift(pageNum);
-  } else if (!pdfRenderQueue.includes(pageNum)) {
-    pdfRenderQueue.push(pageNum);
-  }
-  processPdfRenderQueue();
-}
-
-/**
- * Procesa la cola de renderizado priorizando cercanía a la vista activa.
- */
-function processPdfRenderQueue() {
-  if (!pdfDoc) return;
-
-  pdfRenderQueue.sort((a, b) => Math.abs(a - pdfCurrentVisiblePage) - Math.abs(b - pdfCurrentVisiblePage));
-
-  while (pdfActiveRenders < MAX_CONCURRENT_PDF_RENDERS && pdfRenderQueue.length > 0) {
-    const next = pdfRenderQueue.shift();
-    if (!pdfRenderedPages.has(next) && !pdfRenderingPages.has(next)) {
-      executePdfPageRender(next);
+  if (dotsEl) {
+    dotsEl.classList.toggle('hidden', !hasMultiple);
+    dotsEl.innerHTML = '';
+    if (hasMultiple) {
+      pages.forEach((p, i) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'reader-score-dot' + (i === idx ? ' is-active' : '');
+        dot.setAttribute('role', 'tab');
+        dot.setAttribute('aria-selected', String(i === idx));
+        dot.setAttribute('aria-label', `Ir a página ${i + 1} de ${pages.length} (Pág. ${p})`);
+        dot.onclick = () => goToScorePage(i);
+        dotsEl.appendChild(dot);
+      });
     }
   }
 }
 
-/**
- * Renderiza la página del PDF en un elemento canvas con aceleración por hardware.
- */
-async function executePdfPageRender(pageNum) {
-  const currentTarget = DOM.pdfPagesContainer?.querySelector(`[data-page="${pageNum}"]`);
-  if (!currentTarget || !pdfDoc) return;
+function goToScorePage(index) {
+  const pages = activeHymn && Array.isArray(activeHymn.paginas_pdf) ? activeHymn.paginas_pdf : [];
+  if (pages.length === 0) return;
+  readerScorePageIdx = Math.max(0, Math.min(pages.length - 1, index));
+  if (readerActiveTab === 'score') {
+    renderScoreTarget(false);
+  }
+  if (readerScoreModalOpen) {
+    renderScoreTarget(true);
+  }
+}
 
-  pdfRenderingPages.add(pageNum);
-  pdfActiveRenders++;
+function stepScorePage(delta) {
+  goToScorePage(readerScorePageIdx + delta);
+}
+
+function adjustScoreZoom(isModal, factor) {
+  if (isModal) {
+    readerScoreModalZoomFactor = Math.max(0.5, Math.min(2.5, readerScoreModalZoomFactor * factor));
+    renderScoreTarget(true);
+  } else {
+    readerScoreZoomFactor = Math.max(0.5, Math.min(2.5, readerScoreZoomFactor * factor));
+    renderScoreTarget(false);
+  }
+}
+
+function resetScoreZoom(isModal) {
+  if (isModal) {
+    readerScoreModalZoomFactor = 1.0;
+    renderScoreTarget(true);
+  } else {
+    readerScoreZoomFactor = 1.0;
+    renderScoreTarget(false);
+  }
+}
+
+function bindScoreSwipe(container, onSwipeNext, onSwipePrev) {
+  if (!container) return;
+  let startX = 0;
+  let startY = 0;
+
+  container.addEventListener('touchstart', (e) => {
+    if (!e.touches || e.touches.length !== 1) return;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+  }, { passive: true });
+
+  container.addEventListener('touchend', (e) => {
+    if (!e.changedTouches || e.changedTouches.length !== 1) return;
+    // Do not hijack horizontal drag when zoomed in horizontally
+    if (container.scrollWidth > container.clientWidth + 6) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+      if (dx < 0) onSwipeNext();
+      else onSwipePrev();
+    }
+  }, { passive: true });
+}
+
+function openReaderScoreModal() {
+  if (!activeHymn || !DOM.readerScoreModal) return;
+  const pages = Array.isArray(activeHymn.paginas_pdf) ? activeHymn.paginas_pdf : [];
+  if (pages.length === 0) return;
+
+  readerScoreModalOpen = true;
+  readerScoreModalZoomFactor = 1.0;
+  DOM.readerScoreModal.classList.remove('hidden');
+  DOM.readerScoreModal.setAttribute('aria-hidden', 'false');
+  if (DOM.readerScoreModalTitle) {
+    DOM.readerScoreModalTitle.textContent = `Himno #${activeHymn.numero} · ${activeHymn.titulo}`;
+  }
+  renderScoreTarget(true);
+}
+
+function closeReaderScoreModal() {
+  if (!DOM.readerScoreModal) return;
+  readerScoreModalOpen = false;
+  readerScoreModalRenderToken++;
+  DOM.readerScoreModal.classList.add('hidden');
+  DOM.readerScoreModal.setAttribute('aria-hidden', 'true');
+  if (DOM.readerScoreModalPages) DOM.readerScoreModalPages.innerHTML = '';
+}
+
+/**
+ * Renderiza la página activa de la partitura (1 página a la vez en carrusel)
+ * tanto en la tarjeta del lector como en el modal ampliado.
+ */
+async function renderScoreTarget(isModal = false) {
+  if (!activeHymn) return;
+  const pages = Array.isArray(activeHymn.paginas_pdf) ? activeHymn.paginas_pdf : [];
+  if (pages.length === 0) return;
+
+  const pagesContainer = isModal ? DOM.readerScoreModalPages : DOM.readerScorePages;
+  if (!pagesContainer) return;
+
+  const idx = Math.max(0, Math.min(pages.length - 1, readerScorePageIdx));
+  readerScorePageIdx = idx;
+
+  const token = isModal ? ++readerScoreModalRenderToken : ++readerScoreRenderToken;
+  const hymnNum = activeHymn.numero;
+  const zoomFactor = isModal ? readerScoreModalZoomFactor : readerScoreZoomFactor;
+  const zoomLabel = isModal ? DOM.readerScoreModalZoomLabel : DOM.readerScoreZoomLabel;
+
+  if (!isModal && DOM.readerScoreStatus) {
+    DOM.readerScoreStatus.classList.remove('hidden', 'is-error');
+    DOM.readerScoreStatus.innerHTML = '<div class="pdf-spinner" aria-hidden="true"></div><span>Cargando partitura…</span>';
+  }
 
   try {
-    const page = await pdfDoc.getPage(pageNum);
-    if (activeFilter !== 'pdf') {
-      pdfRenderingPages.delete(pageNum);
-      return;
+    const doc = await ensurePdfDocumentLoaded();
+    const stillValid = isModal
+      ? (token === readerScoreModalRenderToken && readerScoreModalOpen)
+      : (token === readerScoreRenderToken && readerActiveTab === 'score');
+    if (!stillValid || !activeHymn || activeHymn.numero !== hymnNum) return;
+
+    updateScoreCarouselChrome({
+      pages,
+      idx,
+      totalDocPages: doc.numPages,
+      pillEl: isModal ? DOM.readerScoreModalPill : DOM.readerScorePagePill,
+      captionEl: isModal ? null : DOM.readerScoreCaption,
+      prevBtn: isModal ? DOM.readerScoreModalPrev : DOM.readerScorePrevBtn,
+      nextBtn: isModal ? DOM.readerScoreModalNext : DOM.readerScoreNextBtn,
+      dotsEl: isModal ? DOM.readerScoreModalDots : DOM.readerScoreDots,
+    });
+
+    const pageNum = pages[idx];
+    if (pageNum < 1 || pageNum > doc.numPages) return;
+
+    const page = await doc.getPage(pageNum);
+    const stillValid2 = isModal
+      ? (token === readerScoreModalRenderToken && readerScoreModalOpen)
+      : (token === readerScoreRenderToken && readerActiveTab === 'score');
+    if (!stillValid2 || !activeHymn || activeHymn.numero !== hymnNum) return;
+
+    const baseViewport = page.getViewport({ scale: 1.0 });
+    const availWidth = Math.max(240, pagesContainer.clientWidth - (isModal ? 32 : 16));
+    let fitScale = availWidth / baseViewport.width;
+    if (isModal) {
+      const availHeight = Math.max(280, pagesContainer.clientHeight - 24);
+      fitScale = Math.min(fitScale, availHeight / baseViewport.height);
     }
 
-    const viewport = page.getViewport({ scale: pdfCurrentScale });
-    const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
-    const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2.0);
+    const renderScale = fitScale * zoomFactor;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const viewport = page.getViewport({ scale: renderScale * dpr });
 
     const canvas = document.createElement('canvas');
+    canvas.className = 'reader-score-canvas';
+    canvas.width = Math.floor(viewport.width);
+    canvas.height = Math.floor(viewport.height);
+    canvas.style.width = `${Math.floor(viewport.width / dpr)}px`;
+    canvas.style.height = `${Math.floor(viewport.height / dpr)}px`;
+
     const ctx = canvas.getContext('2d');
-    canvas.width = Math.floor(viewport.width * dpr);
-    canvas.height = Math.floor(viewport.height * dpr);
-    canvas.style.width = `${viewport.width}px`;
-    canvas.style.height = `${viewport.height}px`;
-    ctx.scale(dpr, dpr);
+    await page.render({ canvasContext: ctx, viewport }).promise;
 
-    const renderTask = page.render({
-      canvasContext: ctx,
-      viewport: viewport,
-    });
+    const stillValid3 = isModal
+      ? (token === readerScoreModalRenderToken && readerScoreModalOpen)
+      : (token === readerScoreRenderToken && readerActiveTab === 'score');
+    if (!stillValid3 || !activeHymn || activeHymn.numero !== hymnNum) return;
 
-    pdfActiveRenderTasks[pageNum] = renderTask;
-    await renderTask.promise;
-    delete pdfActiveRenderTasks[pageNum];
+    const card = document.createElement('div');
+    card.className = 'reader-score-page-card';
+    card.setAttribute('data-page', pageNum);
+    card.appendChild(canvas);
 
-    const targetElement = DOM.pdfPagesContainer?.querySelector(`[data-page="${pageNum}"]`);
-    if (targetElement && activeFilter === 'pdf') {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'pdf-page-wrapper';
-      wrapper.setAttribute('data-page', pageNum);
-      wrapper.style.width = `${viewport.width}px`;
-      wrapper.style.height = `${viewport.height}px`;
+    pagesContainer.innerHTML = '';
+    pagesContainer.appendChild(card);
 
-      const badge = document.createElement('span');
-      badge.className = 'pdf-page-number';
-      badge.textContent = pageNum;
-
-      wrapper.appendChild(canvas);
-      wrapper.appendChild(badge);
-
-      targetElement.replaceWith(wrapper);
-      if (pdfObserver) pdfObserver.observe(wrapper);
+    if (zoomLabel) {
+      zoomLabel.textContent = `${Math.round(zoomFactor * 100)}%`;
     }
-
-    pdfRenderedPages.add(pageNum);
-    pdfRenderingPages.delete(pageNum);
-
-    evictOffscreenPdfPages(pdfCurrentVisiblePage);
-
-  } catch (error) {
-    delete pdfActiveRenderTasks[pageNum];
-    pdfRenderingPages.delete(pageNum);
-    if (error && error.name !== 'RenderingCancelledException') {
-      console.warn(`Error renderizando página ${pageNum}:`, error);
+    if (!isModal && DOM.readerScoreStatus) {
+      DOM.readerScoreStatus.classList.add('hidden');
     }
-  } finally {
-    pdfActiveRenders--;
-    processPdfRenderQueue();
-  }
-}
-
-/**
- * Libera de memoria páginas fuera de vista lejanas (> 5 páginas) para evitar cierres en móvil.
- */
-function evictOffscreenPdfPages(centerPage) {
-  if (!DOM.pdfPagesContainer) return;
-  const maxDistance = 5;
-
-  for (const renderedPage of Array.from(pdfRenderedPages)) {
-    if (Math.abs(renderedPage - centerPage) > maxDistance) {
-      const el = DOM.pdfPagesContainer.querySelector(`.pdf-page-wrapper[data-page="${renderedPage}"]`);
-      if (el) {
-        const canvas = el.querySelector('canvas');
-        if (canvas) {
-          canvas.width = 0;
-          canvas.height = 0;
-        }
-
-        const skeleton = document.createElement('div');
-        skeleton.className = 'pdf-page-skeleton';
-        skeleton.setAttribute('data-page', renderedPage);
-        skeleton.setAttribute('data-page-label', `Página ${renderedPage}`);
-        skeleton.style.width = el.style.width;
-        skeleton.style.height = el.style.height;
-
-        el.replaceWith(skeleton);
-        if (pdfObserver) pdfObserver.observe(skeleton);
-      }
-      pdfRenderedPages.delete(renderedPage);
-    }
-  }
-
-  for (const pageStr in pdfActiveRenderTasks) {
-    const p = parseInt(pageStr);
-    if (Math.abs(p - centerPage) > maxDistance + 3) {
-      try {
-        pdfActiveRenderTasks[p].cancel();
-      } catch (e) {}
-      delete pdfActiveRenderTasks[p];
-      pdfRenderingPages.delete(p);
+  } catch (err) {
+    const activeToken = isModal ? readerScoreModalRenderToken : readerScoreRenderToken;
+    if (token !== activeToken) return;
+    console.error('Error al renderizar partitura del himno:', err);
+    if (!isModal && DOM.readerScoreStatus) {
+      DOM.readerScoreStatus.classList.remove('hidden');
+      DOM.readerScoreStatus.classList.add('is-error');
+      DOM.readerScoreStatus.textContent = 'No se pudo cargar la partitura desde himnario.pdf.';
     }
   }
 }
 
-/**
- * Cancela renders pendientes inline.
- */
-function cancelAllPdfRenders() {
-  for (const pageStr in pdfActiveRenderTasks) {
-    try {
-      pdfActiveRenderTasks[pageStr].cancel();
-    } catch (e) {}
-  }
-  pdfActiveRenderTasks = {};
-  pdfRenderQueue = [];
-  pdfRenderingPages.clear();
-  pdfActiveRenders = 0;
-}
-
-/**
- * Re-observa las páginas al volver a la pestaña de PDF.
- */
-function reobservePdfPages() {
-  if (!pdfObserver || !DOM.pdfPagesContainer) return;
-  const pages = DOM.pdfPagesContainer.querySelectorAll('[data-page]');
-  pages.forEach(page => pdfObserver.observe(page));
-}
-
-/**
- * Maneja el evento de scroll en O(1) y sincroniza página e himno actual.
- */
-function handlePdfScroll() {
-  if (activeFilter !== 'pdf' || !DOM.pdfPagesContainer) return;
-
-  const containerRect = DOM.pdfPagesContainer.getBoundingClientRect();
-  const baseDim = pdfPageDimensions[0];
-  const pageHeight = (baseDim ? baseDim.height * pdfCurrentScale : 800) + 20;
-  const relativeY = (window.innerHeight * 0.4) - containerRect.top;
-
-  let approxPage = Math.max(1, Math.min(pdfTotalPages, Math.floor(relativeY / pageHeight) + 1));
-
-  for (let p = Math.max(1, approxPage - 1); p <= Math.min(pdfTotalPages, approxPage + 1); p++) {
-    const el = DOM.pdfPagesContainer.querySelector(`[data-page="${p}"]`);
-    if (el) {
-      const rect = el.getBoundingClientRect();
-      if (rect.top <= window.innerHeight * 0.5 && rect.bottom >= window.innerHeight * 0.1) {
-        approxPage = p;
-        break;
-      }
-    }
-  }
-
-  const currentPage = approxPage;
-  pdfCurrentVisiblePage = currentPage;
-
-  evictOffscreenPdfPages(currentPage);
-
-  queuePdfPageRender(currentPage);
-  if (currentPage > 1) queuePdfPageRender(currentPage - 1);
-  if (currentPage < pdfTotalPages) queuePdfPageRender(currentPage + 1);
-
-  if (DOM.pdfGotoInput && document.activeElement !== DOM.pdfGotoInput) {
-    DOM.pdfGotoInput.value = currentPage;
-  }
-
-  // Sincronizar himno actual visible
-  const hymn = getHymnForPdfPage(currentPage);
-  if (hymn && DOM.pdfGotoHymn && document.activeElement !== DOM.pdfGotoHymn) {
-    DOM.pdfGotoHymn.value = hymn.numero;
-  }
-
-  if (pdfFloatingIndicator) {
-    if (hymn) {
-      pdfFloatingIndicator.textContent = `Pág. ${currentPage} de ${pdfTotalPages} · Himno ${hymn.numero}: ${hymn.titulo}`;
-    } else {
-      pdfFloatingIndicator.textContent = `Página ${currentPage} de ${pdfTotalPages}`;
-    }
-    pdfFloatingIndicator.classList.add('is-visible');
-  }
-
-  clearTimeout(pdfScrollTimeout);
-  pdfScrollTimeout = setTimeout(() => {
-    if (pdfFloatingIndicator) {
-      pdfFloatingIndicator.classList.remove('is-visible');
-    }
-  }, 1800);
-}
-
-/**
- * Crea el indicador flotante de página.
- */
-function createFloatingIndicator() {
-  if (pdfFloatingIndicator) return;
-  pdfFloatingIndicator = document.createElement('div');
-  pdfFloatingIndicator.className = 'pdf-floating-indicator';
-  pdfFloatingIndicator.textContent = `Página 1 de ${pdfTotalPages}`;
-  document.body.appendChild(pdfFloatingIndicator);
-}
-
-/**
- * Zoom in/out en modo continuo.
- */
-function pdfZoom(direction) {
-  pdfFitToWidth = false;
-  if (DOM.pdfFitWidth) DOM.pdfFitWidth.classList.remove('is-active');
-
-  if (direction === 'in') {
-    pdfCurrentScale = Math.min(pdfCurrentScale * 1.25, 5.0);
-  } else {
-    pdfCurrentScale = Math.max(pdfCurrentScale * 0.8, 0.3);
-  }
-
-  updateZoomDisplay();
-  rebuildPdfPages();
-}
-
-/**
- * Ajusta al ancho en modo continuo.
- */
-function pdfFitToWidthMode() {
-  pdfFitToWidth = true;
-  if (DOM.pdfFitWidth) DOM.pdfFitWidth.classList.add('is-active');
-
-  const containerWidth = DOM.pdfPagesContainer.clientWidth - 4;
-  if (pdfPageDimensions.length > 0 && containerWidth > 0) {
-    pdfCurrentScale = containerWidth / pdfPageDimensions[0].width;
-  }
-  updateZoomDisplay();
-  rebuildPdfPages();
-}
-
-/**
- * Actualiza el porcentaje del zoom.
- */
-function updateZoomDisplay() {
-  if (DOM.pdfZoomDisplay) {
-    DOM.pdfZoomDisplay.textContent = `${Math.round(pdfCurrentScale * 100)}%`;
-  }
-}
-
-/**
- * Reconstruye las páginas al cambiar zoom conservando la posición relativa.
- */
-function rebuildPdfPages() {
-  if (!DOM.pdfPagesContainer || pdfPageDimensions.length === 0) return;
-
-  const currentPage = parseInt(DOM.pdfGotoInput?.value) || pdfCurrentVisiblePage || 1;
-  const target = DOM.pdfPagesContainer.querySelector(`[data-page="${currentPage}"]`);
-  let relativeOffset = 0;
-  
-  if (target) {
-    const targetTop = target.getBoundingClientRect().top + window.scrollY;
-    relativeOffset = (window.scrollY - targetTop) / target.offsetHeight;
-  }
-
-  cancelAllPdfRenders();
-  pdfRenderedPages.clear();
-
-  if (pdfObserver) pdfObserver.disconnect();
-
-  createPagePlaceholders();
-  setupPdfObserver();
-
-  if (target) {
-    setTimeout(() => {
-      const newTarget = DOM.pdfPagesContainer.querySelector(`[data-page="${currentPage}"]`);
-      if (newTarget) {
-        const newTargetTop = newTarget.getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({
-          top: newTargetTop + (relativeOffset * newTarget.offsetHeight),
-          behavior: 'instant'
-        });
-      }
-    }, 0);
-  }
-}
-
-/**
- * Navega de inmediato a una página específica en el scroll continuo.
- */
-function goToPdfPage(pageNum) {
-  pageNum = Math.max(1, Math.min(pdfTotalPages, pageNum));
-  pdfCurrentVisiblePage = pageNum;
-
-  if (DOM.pdfGotoInput && document.activeElement !== DOM.pdfGotoInput) {
-    DOM.pdfGotoInput.value = pageNum;
-  }
-
-  const hymn = getHymnForPdfPage(pageNum);
-  if (hymn && DOM.pdfGotoHymn && document.activeElement !== DOM.pdfGotoHymn) {
-    DOM.pdfGotoHymn.value = hymn.numero;
-  }
-
-  // Priorizar la página requerida en la cola de renderizado
-  queuePdfPageRender(pageNum, true);
-  if (pageNum > 1) queuePdfPageRender(pageNum - 1);
-  if (pageNum < pdfTotalPages) queuePdfPageRender(pageNum + 1);
-
-  const target = DOM.pdfPagesContainer?.querySelector(`[data-page="${pageNum}"]`);
-  if (target) {
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-}
-
-/**
- * Mensaje de error al cargar el PDF.
- */
-function showPdfError(message) {
-  if (DOM.pdfLoading) DOM.pdfLoading.classList.add('hidden');
-  if (DOM.pdfPagesContainer) {
-    DOM.pdfPagesContainer.innerHTML = `
-      <div class="empty-state" style="padding: var(--spacing-xxl)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
-          <line x1="12" y1="9" x2="12" y2="13"/>
-          <line x1="12" y1="17" x2="12.01" y2="17"/>
-        </svg>
-        <h3>Error al cargar</h3>
-        <p>${message}</p>
-      </div>
-    `;
-  }
-}
-
-/**
- * Event listeners para controles del visor PDF inline.
- */
-function registerPdfEventListeners() {
-  if (DOM.pdfZoomIn) {
-    DOM.pdfZoomIn.onclick = () => pdfZoom('in');
-  }
-  if (DOM.pdfZoomOut) {
-    DOM.pdfZoomOut.onclick = () => pdfZoom('out');
-  }
-  if (DOM.pdfFitWidth) {
-    DOM.pdfFitWidth.onclick = pdfFitToWidthMode;
-  }
-  if (DOM.pdfFullscreenBtn) {
-    DOM.pdfFullscreenBtn.onclick = () => openPdfFullscreen();
-  }
-
-  if (DOM.pdfGotoInput) {
-    DOM.pdfGotoInput.onchange = () => {
-      const page = parseInt(DOM.pdfGotoInput.value);
-      if (!isNaN(page) && page >= 1 && page <= pdfTotalPages) {
-        goToPdfPage(page);
-      }
-    };
-
-    DOM.pdfGotoInput.onkeydown = (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        const page = parseInt(DOM.pdfGotoInput.value);
-        if (!isNaN(page) && page >= 1 && page <= pdfTotalPages) {
-          goToPdfPage(page);
-          DOM.pdfGotoInput.blur();
-        }
-      }
-    };
-  }
-
-  let resizeTimeout;
-  window.addEventListener('resize', () => {
-    if (activeFilter !== 'pdf' || !pdfFitToWidth || !pdfDoc) return;
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-      const containerWidth = DOM.pdfPagesContainer.clientWidth - 4;
-      if (pdfPageDimensions.length > 0 && containerWidth > 0) {
-        pdfCurrentScale = containerWidth / pdfPageDimensions[0].width;
-        updateZoomDisplay();
-        rebuildPdfPages();
-      }
-    }, 300);
-  });
-}
-
-// ----------------------------------------------------
-// 12. Fullscreen PDF Viewer Module (Continuo & Rápido)
-// ----------------------------------------------------
-
-/**
- * Abre el visor de partituras en pantalla completa con scroll continuo.
- */
-function openPdfFullscreen(initialPage) {
-  if (!pdfDoc || !pdfLoaded) {
-    initPdfViewer().then(() => {
-      openPdfFullscreen(initialPage);
-    });
-    return;
-  }
-
-  pdfFsOpen = true;
-
-  if (DOM.pdfFsModal) {
-    DOM.pdfFsModal.classList.remove('hidden');
-    DOM.pdfFsModal.setAttribute('aria-hidden', 'false');
-  }
-  document.body.classList.add('modal-open');
-
-  if (DOM.pdfFsPageTotal) DOM.pdfFsPageTotal.textContent = `/ ${pdfTotalPages}`;
-  if (DOM.pdfFsGotoInput) DOM.pdfFsGotoInput.max = pdfTotalPages;
-
-  const targetPage = (typeof initialPage === 'number' && initialPage >= 1 && initialPage <= pdfTotalPages)
-    ? initialPage
-    : (parseInt(DOM.pdfGotoInput?.value) || pdfCurrentVisiblePage || 1);
-
-  pdfFsCurrentVisiblePage = targetPage;
-  if (DOM.pdfFsGotoInput) DOM.pdfFsGotoInput.value = targetPage;
-
-  const hymn = getHymnForPdfPage(targetPage);
-  if (hymn && DOM.pdfFsGotoHymn) DOM.pdfFsGotoHymn.value = hymn.numero;
-
-  pdfFsFitToWidth = true;
-  if (DOM.pdfFsFitWidth) DOM.pdfFsFitWidth.classList.add('is-active');
-
-  setTimeout(() => {
-    let containerWidth = DOM.pdfFsPagesContainer.clientWidth - 4;
-    if (containerWidth <= 0) {
-      containerWidth = window.innerWidth - 40;
-    }
-    
-    if (pdfPageDimensions.length > 0) {
-      pdfFsScale = containerWidth / pdfPageDimensions[0].width;
-    } else {
-      pdfFsScale = pdfCurrentScale;
-    }
-    updateFsZoomDisplay();
-
-    createFsPagePlaceholders();
-    setupFsObserver();
-    registerFsEventListeners();
-    createFsFloatingIndicator();
-
-    setTimeout(() => {
-      goToFsPage(targetPage);
-    }, 50);
-  }, 50);
-}
-
-/**
- * Cierra el visor de pantalla completa.
- */
-function closePdfFullscreen() {
-  pdfFsOpen = false;
-
-  const currentPage = pdfFsCurrentVisiblePage || parseInt(DOM.pdfFsGotoInput?.value) || 1;
-  pdfCurrentVisiblePage = currentPage;
-  if (DOM.pdfGotoInput) DOM.pdfGotoInput.value = currentPage;
-
-  if (DOM.pdfFsModal) {
-    DOM.pdfFsModal.classList.add('hidden');
-    DOM.pdfFsModal.setAttribute('aria-hidden', 'true');
-  }
-  document.body.classList.remove('modal-open');
-
-  cancelAllFsRenders();
-  if (pdfFsObserver) {
-    pdfFsObserver.disconnect();
-    pdfFsObserver = null;
-  }
-  pdfFsRenderedPages.clear();
-  if (DOM.pdfFsPagesContainer) DOM.pdfFsPagesContainer.innerHTML = '';
-
-  if (pdfFsFloatingIndicator) {
-    pdfFsFloatingIndicator.remove();
-    pdfFsFloatingIndicator = null;
-  }
-
-  if (DOM.pdfFsViewport) {
-    DOM.pdfFsViewport.removeEventListener('scroll', onFsScroll);
-  }
-
-  if (activeFilter === 'pdf') {
-    if (pdfObserver) reobservePdfPages();
-    goToPdfPage(currentPage);
-  }
-}
-
-/**
- * Crea los placeholders de todas las páginas en el visor de pantalla completa.
- */
-function createFsPagePlaceholders() {
-  if (!DOM.pdfFsPagesContainer) return;
-  DOM.pdfFsPagesContainer.innerHTML = '';
-
-  let containerWidth = DOM.pdfFsPagesContainer.clientWidth - 2;
-  if (containerWidth <= 0) containerWidth = window.innerWidth - 40;
-
-  for (let i = 0; i < pdfTotalPages; i++) {
-    const pageNum = i + 1;
-    const dim = pdfPageDimensions[i];
-    const scale = pdfFsFitToWidth ? (containerWidth / dim.width) : pdfFsScale;
-    const displayWidth = dim.width * scale;
-    const displayHeight = dim.height * scale;
-
-    const wrapper = document.createElement('div');
-    wrapper.className = 'pdf-page-skeleton';
-    wrapper.setAttribute('data-page', pageNum);
-    wrapper.setAttribute('data-page-label', `Página ${pageNum}`);
-    wrapper.style.width = `${displayWidth}px`;
-    wrapper.style.height = `${displayHeight}px`;
-
-    DOM.pdfFsPagesContainer.appendChild(wrapper);
-  }
-
-  if (pdfFsFitToWidth && pdfPageDimensions.length > 0) {
-    const scale = containerWidth / pdfPageDimensions[0].width;
-    pdfFsScale = scale;
-    updateFsZoomDisplay();
-  }
-}
-
-/**
- * Observer para el visor de pantalla completa.
- */
-function setupFsObserver() {
-  if (pdfFsObserver) pdfFsObserver.disconnect();
-
-  pdfFsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const pageNum = parseInt(entry.target.getAttribute('data-page'));
-      if (entry.isIntersecting && !isNaN(pageNum)) {
-        queueFsPageRender(pageNum);
-      }
-    });
-  }, {
-    root: DOM.pdfFsViewport,
-    rootMargin: '300px 0px',
-    threshold: 0.01,
-  });
-
-  const pages = DOM.pdfFsPagesContainer.querySelectorAll('[data-page]');
-  pages.forEach(page => pdfFsObserver.observe(page));
-
-  if (DOM.pdfFsViewport) {
-    DOM.pdfFsViewport.removeEventListener('scroll', onFsScroll);
-    DOM.pdfFsViewport.addEventListener('scroll', onFsScroll, { passive: true });
-  }
-}
-
-function onFsScroll() {
-  if (!pdfFsScrollRaf) {
-    pdfFsScrollRaf = requestAnimationFrame(() => {
-      pdfFsScrollRaf = null;
-      handleFsScroll();
-    });
-  }
-}
-
-/**
- * Encola páginas de pantalla completa priorizándolas.
- */
-function queueFsPageRender(pageNum, prioritize = false) {
-  if (pageNum < 1 || pageNum > pdfTotalPages) return;
-  if (pdfFsRenderedPages.has(pageNum) || pdfFsRenderingPages.has(pageNum)) return;
-  if (!pdfDoc || !pdfFsOpen) return;
-
-  if (prioritize) {
-    pdfFsRenderQueue = pdfFsRenderQueue.filter(p => p !== pageNum);
-    pdfFsRenderQueue.unshift(pageNum);
-  } else if (!pdfFsRenderQueue.includes(pageNum)) {
-    pdfFsRenderQueue.push(pageNum);
-  }
-  processFsRenderQueue();
-}
-
-/**
- * Procesa cola de pantalla completa sin descartar páginas solicitadas.
- */
-function processFsRenderQueue() {
-  if (!pdfDoc || !pdfFsOpen) return;
-
-  pdfFsRenderQueue.sort((a, b) => Math.abs(a - pdfFsCurrentVisiblePage) - Math.abs(b - pdfFsCurrentVisiblePage));
-
-  while (pdfFsActiveRenders < MAX_CONCURRENT_PDF_RENDERS && pdfFsRenderQueue.length > 0) {
-    const next = pdfFsRenderQueue.shift();
-    if (!pdfFsRenderedPages.has(next) && !pdfFsRenderingPages.has(next)) {
-      executeFsPageRender(next);
-    }
-  }
-}
-
-/**
- * Renderiza página en pantalla completa sin abortos falsos.
- */
-async function executeFsPageRender(pageNum) {
-  const currentTarget = DOM.pdfFsPagesContainer?.querySelector(`[data-page="${pageNum}"]`);
-  if (!currentTarget || !pdfDoc || !pdfFsOpen) return;
-
-  pdfFsRenderingPages.add(pageNum);
-  pdfFsActiveRenders++;
-
-  try {
-    const page = await pdfDoc.getPage(pageNum);
-    if (!pdfFsOpen) {
-      pdfFsRenderingPages.delete(pageNum);
-      return;
-    }
-
-    const viewport = page.getViewport({ scale: pdfFsScale });
-    const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window);
-    const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2.0);
-
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = Math.floor(viewport.width * dpr);
-    canvas.height = Math.floor(viewport.height * dpr);
-    canvas.style.width = `${viewport.width}px`;
-    canvas.style.height = `${viewport.height}px`;
-    ctx.scale(dpr, dpr);
-
-    const renderTask = page.render({
-      canvasContext: ctx,
-      viewport: viewport,
-    });
-
-    pdfFsActiveRenderTasks[pageNum] = renderTask;
-    await renderTask.promise;
-    delete pdfFsActiveRenderTasks[pageNum];
-
-    const targetElement = DOM.pdfFsPagesContainer?.querySelector(`[data-page="${pageNum}"]`);
-    if (targetElement && pdfFsOpen) {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'pdf-page-wrapper';
-      wrapper.setAttribute('data-page', pageNum);
-      wrapper.style.width = `${viewport.width}px`;
-      wrapper.style.height = `${viewport.height}px`;
-
-      const badge = document.createElement('span');
-      badge.className = 'pdf-page-number';
-      badge.textContent = pageNum;
-
-      wrapper.appendChild(canvas);
-      wrapper.appendChild(badge);
-
-      targetElement.replaceWith(wrapper);
-      if (pdfFsObserver) pdfFsObserver.observe(wrapper);
-    }
-
-    pdfFsRenderedPages.add(pageNum);
-    pdfFsRenderingPages.delete(pageNum);
-
-    evictOffscreenFsPages(pdfFsCurrentVisiblePage);
-
-  } catch (error) {
-    delete pdfFsActiveRenderTasks[pageNum];
-    pdfFsRenderingPages.delete(pageNum);
-    if (error && error.name !== 'RenderingCancelledException') {
-      console.warn(`Error renderizando fullscreen ${pageNum}:`, error);
-    }
-  } finally {
-    pdfFsActiveRenders--;
-    processFsRenderQueue();
-  }
-}
-
-/**
- * Libera memoria GPU de páginas en pantalla completa.
- */
-function evictOffscreenFsPages(centerPage) {
-  if (!DOM.pdfFsPagesContainer) return;
-  const maxDistance = 5;
-
-  for (const renderedPage of Array.from(pdfFsRenderedPages)) {
-    if (Math.abs(renderedPage - centerPage) > maxDistance) {
-      const el = DOM.pdfFsPagesContainer.querySelector(`.pdf-page-wrapper[data-page="${renderedPage}"]`);
-      if (el) {
-        const canvas = el.querySelector('canvas');
-        if (canvas) {
-          canvas.width = 0;
-          canvas.height = 0;
-        }
-
-        const skeleton = document.createElement('div');
-        skeleton.className = 'pdf-page-skeleton';
-        skeleton.setAttribute('data-page', renderedPage);
-        skeleton.setAttribute('data-page-label', `Página ${renderedPage}`);
-        skeleton.style.width = el.style.width;
-        skeleton.style.height = el.style.height;
-
-        el.replaceWith(skeleton);
-        if (pdfFsObserver) pdfFsObserver.observe(skeleton);
-      }
-      pdfFsRenderedPages.delete(renderedPage);
-    }
-  }
-
-  for (const pageStr in pdfFsActiveRenderTasks) {
-    const p = parseInt(pageStr);
-    if (Math.abs(p - centerPage) > maxDistance + 3) {
-      try {
-        pdfFsActiveRenderTasks[p].cancel();
-      } catch (e) {}
-      delete pdfFsActiveRenderTasks[p];
-      pdfFsRenderingPages.delete(p);
-    }
-  }
-}
-
-/**
- * Cancela renders activos en pantalla completa.
- */
-function cancelAllFsRenders() {
-  for (const pageStr in pdfFsActiveRenderTasks) {
-    try {
-      pdfFsActiveRenderTasks[pageStr].cancel();
-    } catch (e) {}
-  }
-  pdfFsActiveRenderTasks = {};
-  pdfFsRenderQueue = [];
-  pdfFsRenderingPages.clear();
-  pdfFsActiveRenders = 0;
-}
-
-/**
- * Manejo de scroll continuo en pantalla completa con detección O(1).
- */
-function handleFsScroll() {
-  if (!pdfFsOpen || !DOM.pdfFsPagesContainer || !DOM.pdfFsViewport) return;
-
-  const viewportRect = DOM.pdfFsViewport.getBoundingClientRect();
-  const containerRect = DOM.pdfFsPagesContainer.getBoundingClientRect();
-  const baseDim = pdfPageDimensions[0];
-  const pageHeight = (baseDim ? baseDim.height * pdfFsScale : 800) + 24;
-  const relativeY = (viewportRect.height * 0.4) - (containerRect.top - viewportRect.top);
-
-  let approxPage = Math.max(1, Math.min(pdfTotalPages, Math.floor(relativeY / pageHeight) + 1));
-
-  for (let p = Math.max(1, approxPage - 1); p <= Math.min(pdfTotalPages, approxPage + 1); p++) {
-    const el = DOM.pdfFsPagesContainer.querySelector(`[data-page="${p}"]`);
-    if (el) {
-      const rect = el.getBoundingClientRect();
-      if (rect.top <= viewportRect.top + viewportRect.height * 0.5 && rect.bottom >= viewportRect.top + viewportRect.height * 0.1) {
-        approxPage = p;
-        break;
-      }
-    }
-  }
-
-  const currentPage = approxPage;
-  pdfFsCurrentVisiblePage = currentPage;
-
-  evictOffscreenFsPages(currentPage);
-
-  queueFsPageRender(currentPage);
-  if (currentPage > 1) queueFsPageRender(currentPage - 1);
-  if (currentPage < pdfTotalPages) queueFsPageRender(currentPage + 1);
-
-  if (DOM.pdfFsGotoInput && document.activeElement !== DOM.pdfFsGotoInput) {
-    DOM.pdfFsGotoInput.value = currentPage;
-  }
-
-  const hymn = getHymnForPdfPage(currentPage);
-  if (hymn && DOM.pdfFsGotoHymn && document.activeElement !== DOM.pdfFsGotoHymn) {
-    DOM.pdfFsGotoHymn.value = hymn.numero;
-  }
-
-  if (pdfFsFloatingIndicator) {
-    if (hymn) {
-      pdfFsFloatingIndicator.textContent = `Pág. ${currentPage} de ${pdfTotalPages} · Himno ${hymn.numero}: ${hymn.titulo}`;
-    } else {
-      pdfFsFloatingIndicator.textContent = `Página ${currentPage} de ${pdfTotalPages}`;
-    }
-    pdfFsFloatingIndicator.classList.add('is-visible');
-  }
-
-  clearTimeout(pdfFsScrollTimeout);
-  pdfFsScrollTimeout = setTimeout(() => {
-    if (pdfFsFloatingIndicator) {
-      pdfFsFloatingIndicator.classList.remove('is-visible');
-    }
-  }, 1800);
-}
-
-/**
- * Crea indicador flotante en pantalla completa.
- */
-function createFsFloatingIndicator() {
-  if (pdfFsFloatingIndicator) return;
-  pdfFsFloatingIndicator = document.createElement('div');
-  pdfFsFloatingIndicator.className = 'pdf-floating-indicator';
-  pdfFsFloatingIndicator.style.zIndex = '2100';
-  pdfFsFloatingIndicator.textContent = `Página 1 de ${pdfTotalPages}`;
-  document.body.appendChild(pdfFsFloatingIndicator);
-}
-
-/**
- * Zoom display en pantalla completa.
- */
-function updateFsZoomDisplay() {
-  if (DOM.pdfFsZoomDisplay) {
-    DOM.pdfFsZoomDisplay.textContent = `${Math.round(pdfFsScale * 100)}%`;
-  }
-}
-
-/**
- * Zoom in/out en pantalla completa.
- */
-function pdfFsZoom(direction) {
-  pdfFsFitToWidth = false;
-  if (DOM.pdfFsFitWidth) DOM.pdfFsFitWidth.classList.remove('is-active');
-
-  if (direction === 'in') {
-    pdfFsScale = Math.min(pdfFsScale * 1.25, 5.0);
-  } else {
-    pdfFsScale = Math.max(pdfFsScale * 0.8, 0.3);
-  }
-
-  updateFsZoomDisplay();
-  rebuildFsPages();
-}
-
-/**
- * Ajuste a ancho en pantalla completa.
- */
-function pdfFsFitToWidthMode() {
-  pdfFsFitToWidth = true;
-  if (DOM.pdfFsFitWidth) DOM.pdfFsFitWidth.classList.add('is-active');
-
-  const containerWidth = DOM.pdfFsPagesContainer.clientWidth - 4;
-  if (pdfPageDimensions.length > 0 && containerWidth > 0) {
-    pdfFsScale = containerWidth / pdfPageDimensions[0].width;
-  }
-  updateFsZoomDisplay();
-  rebuildFsPages();
-}
-
-/**
- * Reconstruye páginas al cambiar zoom en pantalla completa.
- */
-function rebuildFsPages() {
-  if (!DOM.pdfFsPagesContainer || pdfPageDimensions.length === 0) return;
-
-  const currentPage = parseInt(DOM.pdfFsGotoInput?.value) || pdfFsCurrentVisiblePage || 1;
-  const target = DOM.pdfFsPagesContainer.querySelector(`[data-page="${currentPage}"]`);
-  let relativeOffset = 0;
-
-  if (target && DOM.pdfFsViewport) {
-    const viewportRect = DOM.pdfFsViewport.getBoundingClientRect();
-    const targetRect = target.getBoundingClientRect();
-    const targetTop = targetRect.top - viewportRect.top + DOM.pdfFsViewport.scrollTop;
-    relativeOffset = (DOM.pdfFsViewport.scrollTop - targetTop) / target.offsetHeight;
-  }
-
-  cancelAllFsRenders();
-  pdfFsRenderedPages.clear();
-
-  if (pdfFsObserver) pdfFsObserver.disconnect();
-
-  createFsPagePlaceholders();
-  setupFsObserver();
-
-  if (target && DOM.pdfFsViewport) {
-    setTimeout(() => {
-      const newTarget = DOM.pdfFsPagesContainer.querySelector(`[data-page="${currentPage}"]`);
-      if (newTarget) {
-        const newViewportRect = DOM.pdfFsViewport.getBoundingClientRect();
-        const newTargetRect = newTarget.getBoundingClientRect();
-        const newTargetTop = newTargetRect.top - newViewportRect.top + DOM.pdfFsViewport.scrollTop;
-        DOM.pdfFsViewport.scrollTo({
-          top: newTargetTop + (relativeOffset * newTarget.offsetHeight),
-          behavior: 'instant'
-        });
-      }
-    }, 0);
-  }
-}
-
-/**
- * Salta instantáneamente a una página en el visor de pantalla completa.
- */
-function goToFsPage(pageNum) {
-  pageNum = Math.max(1, Math.min(pdfTotalPages, pageNum));
-  pdfFsCurrentVisiblePage = pageNum;
-
-  if (DOM.pdfFsGotoInput && document.activeElement !== DOM.pdfFsGotoInput) {
-    DOM.pdfFsGotoInput.value = pageNum;
-  }
-
-  const hymn = getHymnForPdfPage(pageNum);
-  if (hymn && DOM.pdfFsGotoHymn && document.activeElement !== DOM.pdfFsGotoHymn) {
-    DOM.pdfFsGotoHymn.value = hymn.numero;
-  }
-
-  queueFsPageRender(pageNum, true);
-  if (pageNum > 1) queueFsPageRender(pageNum - 1);
-  if (pageNum < pdfTotalPages) queueFsPageRender(pageNum + 1);
-
-  const target = DOM.pdfFsPagesContainer?.querySelector(`[data-page="${pageNum}"]`);
-  if (target) {
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-}
-
-/**
- * Event listeners para el visor de pantalla completa.
- */
-function registerFsEventListeners() {
-  if (DOM.pdfFsClose) {
-    DOM.pdfFsClose.onclick = closePdfFullscreen;
-  }
-  if (DOM.pdfFsZoomIn) {
-    DOM.pdfFsZoomIn.onclick = () => pdfFsZoom('in');
-  }
-  if (DOM.pdfFsZoomOut) {
-    DOM.pdfFsZoomOut.onclick = () => pdfFsZoom('out');
-  }
-  if (DOM.pdfFsFitWidth) {
-    DOM.pdfFsFitWidth.onclick = pdfFsFitToWidthMode;
-  }
-
-  if (DOM.pdfFsGotoInput) {
-    DOM.pdfFsGotoInput.onchange = () => {
-      const page = parseInt(DOM.pdfFsGotoInput.value);
-      if (!isNaN(page) && page >= 1 && page <= pdfTotalPages) {
-        goToFsPage(page);
-      }
-    };
-    DOM.pdfFsGotoInput.onkeydown = (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        const page = parseInt(DOM.pdfFsGotoInput.value);
-        if (!isNaN(page) && page >= 1 && page <= pdfTotalPages) {
-          goToFsPage(page);
-          DOM.pdfFsGotoInput.blur();
-        }
-      }
-    };
-  }
+function renderActiveHymnScore() {
+  return renderScoreTarget(false);
 }

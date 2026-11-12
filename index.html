@@ -97,23 +97,7 @@
       <nav class="filter-tabs" aria-label="Filtros de sección">
         <button class="tab-btn active" data-filter="all">Todos</button>
         <button class="tab-btn" data-filter="favoritos">Favoritos</button>
-        <button class="tab-btn" data-filter="pdf" id="pdf-tab-btn">
-          <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-            stroke-linecap="round" stroke-linejoin="round"
-            style="width:16px;height:16px;margin-right:4px;vertical-align:-2px;">
-            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
-          </svg>
-          Partituras PDF
-        </button>
       </nav>
-
-      <div class="info-alert" role="alert">
-        <svg class="info-alert-icon" viewBox="0 0 16 16" fill="currentColor">
-          <path
-            d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2" />
-        </svg>
-        <span>Nueva función de visualizador de partituras PDF.</span>
-      </div>
     </div>
   </section>
 
@@ -145,111 +129,6 @@
       <div class="skeleton-card"></div>
       <div class="skeleton-card"></div>
     </div>
-
-    <!-- PDF Viewer Section -->
-    <section id="pdf-viewer-section" class="pdf-viewer-section hidden" aria-label="Visor del Himnario en PDF">
-      <!-- PDF Toolbar -->
-      <div class="pdf-toolbar">
-        <div class="pdf-toolbar-group">
-          <!-- Zoom Out -->
-          <button id="pdf-zoom-out" class="pdf-tool-btn" aria-label="Alejar" title="Alejar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" style="width:18px;height:18px;">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              <line x1="8" y1="11" x2="14" y2="11" />
-            </svg>
-          </button>
-          <!-- Zoom Display -->
-          <span id="pdf-zoom-display" class="pdf-zoom-display">100%</span>
-          <!-- Zoom In -->
-          <button id="pdf-zoom-in" class="pdf-tool-btn" aria-label="Acercar" title="Acercar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" style="width:18px;height:18px;">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              <line x1="11" y1="8" x2="11" y2="14" />
-              <line x1="8" y1="11" x2="14" y2="11" />
-            </svg>
-          </button>
-          <!-- Fit to Width -->
-          <button id="pdf-fit-width" class="pdf-tool-btn is-active" aria-label="Ajustar al ancho"
-            title="Ajustar al ancho">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" style="width:18px;height:18px;">
-              <rect x="3" y="3" width="18" height="18" rx="2" />
-              <line x1="9" y1="3" x2="9" y2="21" />
-              <line x1="15" y1="3" x2="15" y2="21" />
-            </svg>
-          </button>
-        </div>
-
-        <div class="pdf-toolbar-group">
-          <!-- Salto directo a Himno # (1-350) -->
-          <div class="pdf-hymn-jump" title="Saltar directamente a cualquier himno (1-350)">
-            <label for="pdf-goto-hymn" class="pdf-hymn-label">Himno</label>
-            <input type="number" id="pdf-goto-hymn" class="pdf-hymn-input" min="1" max="350" placeholder="N°" aria-label="Ir a Himno número">
-            <button type="button" id="pdf-hymn-jump-btn" class="pdf-hymn-go-btn" aria-label="Ir al himno" title="Ir al himno">Ir</button>
-          </div>
-
-          <!-- Botón de Índice / Buscador de Partituras -->
-          <button type="button" id="pdf-index-btn" class="pdf-tool-btn pdf-btn-with-label" aria-label="Índice de himnos" title="Buscar y saltar a cualquier himno por nombre o número">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
-              <line x1="8" y1="6" x2="21" y2="6"></line>
-              <line x1="8" y1="12" x2="21" y2="12"></line>
-              <line x1="8" y1="18" x2="21" y2="18"></line>
-              <line x1="3" y1="6" x2="3.01" y2="6"></line>
-              <line x1="3" y1="12" x2="3.01" y2="12"></line>
-              <line x1="3" y1="18" x2="3.01" y2="18"></line>
-            </svg>
-            <span class="pdf-btn-text">Índice</span>
-          </button>
-
-          <!-- Indicador y salto de página tradicional -->
-          <div class="pdf-page-nav">
-            <label for="pdf-goto-input" class="pdf-page-label">Pág.</label>
-            <input type="number" id="pdf-goto-input" class="pdf-goto-input" min="1" value="1" aria-label="Ir a página">
-            <span id="pdf-page-total" class="pdf-page-total">/ —</span>
-          </div>
-
-          <!-- Fullscreen Toggle -->
-          <button id="pdf-fullscreen-btn" class="pdf-tool-btn" aria-label="Pantalla completa"
-            title="Abrir en pantalla completa">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" style="width:18px;height:18px;">
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <polyline points="9 21 3 21 3 15"></polyline>
-              <line x1="21" y1="3" x2="14" y2="10"></line>
-              <line x1="3" y1="21" x2="10" y2="14"></line>
-            </svg>
-          </button>
-
-          <!-- Abrir en Visor Nativo Externo (Edge / Chrome) -->
-          <a id="pdf-native-btn" class="pdf-tool-btn" href="himnario.pdf" target="_blank" rel="noopener noreferrer"
-            aria-label="Abrir en lector nativo del navegador" title="Abrir en lector nativo de tu navegador">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-          </a>
-        </div>
-      </div>
-
-      <!-- PDF Loading State -->
-      <div id="pdf-loading" class="pdf-loading">
-        <div class="pdf-spinner"></div>
-        <p class="pdf-loading-text">Cargando himnario…</p>
-        <div class="pdf-progress-bar">
-          <div id="pdf-progress-fill" class="pdf-progress-fill"></div>
-        </div>
-      </div>
-
-      <!-- PDF Pages Container (virtualized) -->
-      <div id="pdf-pages-container" class="pdf-pages-container">
-        <!-- Canvas pages rendered dynamically -->
-      </div>
-    </section>
   </main>
 
   <!-- Sidebar Drawer for Index/Contenido -->
@@ -349,7 +228,8 @@
                 <svg id="icon-play" class="player-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <polygon points="6,3 20,12 6,21"></polygon>
                 </svg>
-                <svg id="icon-pause" class="player-icon hidden" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <svg id="icon-pause" class="player-icon hidden" viewBox="0 0 24 24" fill="currentColor"
+                  aria-hidden="true">
                   <rect x="5" y="4" width="4" height="16" rx="1"></rect>
                   <rect x="15" y="4" width="4" height="16" rx="1"></rect>
                 </svg>
@@ -358,24 +238,24 @@
               <!-- Retroceder 10 segundos -->
               <button type="button" id="player-rewind-btn" class="player-btn player-seek-btn"
                 aria-label="Retroceder 10 segundos" title="Retroceder 10 segundos">
-                <svg class="player-icon seek-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <svg class="player-icon seek-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
                   <path d="M3 3v5h5" />
-                  <text x="12" y="15.5" text-anchor="middle" fill="currentColor" stroke="none"
-                    font-size="7.5" font-weight="800" font-family="Plus Jakarta Sans, sans-serif">10</text>
+                  <text x="12" y="15.5" text-anchor="middle" fill="currentColor" stroke="none" font-size="7.5"
+                    font-weight="800" font-family="Plus Jakarta Sans, sans-serif">10</text>
                 </svg>
               </button>
 
               <!-- Avanzar 10 segundos -->
               <button type="button" id="player-forward-btn" class="player-btn player-seek-btn"
                 aria-label="Avanzar 10 segundos" title="Avanzar 10 segundos">
-                <svg class="player-icon seek-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <svg class="player-icon seek-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <path d="M21 12a9 9 0 1 1-3-6.7L21 8" />
                   <path d="M21 3v5h-5" />
-                  <text x="12" y="15.5" text-anchor="middle" fill="currentColor" stroke="none"
-                    font-size="7.5" font-weight="800" font-family="Plus Jakarta Sans, sans-serif">10</text>
+                  <text x="12" y="15.5" text-anchor="middle" fill="currentColor" stroke="none" font-size="7.5"
+                    font-weight="800" font-family="Plus Jakarta Sans, sans-serif">10</text>
                 </svg>
               </button>
 
@@ -493,8 +373,127 @@
             </div>
           </div>
 
-          <div id="reader-lyrics" class="reader-lyrics">
+          <!-- Selector Letra / Partitura -->
+          <div id="reader-view-tabs" class="reader-view-tabs hidden" role="tablist" aria-label="Vista del himno">
+            <button type="button" id="reader-tab-lyrics" class="reader-view-tab is-active" role="tab"
+              aria-selected="true" aria-controls="reader-lyrics">
+              <svg class="reader-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="12" x2="15" y2="12"></line>
+                <line x1="3" y1="18" x2="18" y2="18"></line>
+              </svg>
+              <span>Letra</span>
+            </button>
+            <button type="button" id="reader-tab-score" class="reader-view-tab" role="tab" aria-selected="false"
+              aria-controls="reader-score-view">
+              <svg class="reader-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <path d="M9 17v-4l4-1v4"></path>
+                <circle cx="8" cy="17" r="1"></circle>
+                <circle cx="12" cy="16" r="1"></circle>
+              </svg>
+              <span>Partitura</span>
+              <span id="reader-score-pages-badge" class="reader-score-badge">Pág. 1</span>
+            </button>
+          </div>
+
+          <div id="reader-lyrics" class="reader-lyrics" role="tabpanel" aria-labelledby="reader-tab-lyrics">
             <!-- Lyrics inserted dynamically -->
+          </div>
+
+          <!-- Vista de Partitura del Himno (Carrusel 1 o 2 páginas + Ampliar) -->
+          <div id="reader-score-view" class="reader-score-view hidden" role="tabpanel"
+            aria-labelledby="reader-tab-score">
+            <div class="reader-score-card">
+              <div class="reader-score-toolbar">
+                <div class="reader-score-meta">
+                  <svg class="reader-score-title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <path d="M9 17v-4l4-1v4"></path>
+                    <circle cx="8" cy="17" r="1"></circle>
+                    <circle cx="12" cy="16" r="1"></circle>
+                  </svg>
+                  <span class="reader-score-title"></span>
+                  <span id="reader-score-page-pill" class="reader-score-page-pill">1/1</span>
+                  <span id="reader-score-caption" class="reader-score-caption">(de 360 en el himnario)</span>
+                </div>
+
+                <div class="reader-score-actions">
+                  <div class="reader-score-zoom-group">
+                    <button type="button" id="reader-score-zoom-out" class="reader-score-zoom-btn"
+                      aria-label="Alejar partitura" title="Alejar">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        <line x1="8" y1="11" x2="14" y2="11"></line>
+                      </svg>
+                    </button>
+                    <button type="button" id="reader-score-zoom-fit" class="reader-score-zoom-label-btn"
+                      aria-label="Restablecer zoom al 100%" title="Ajustar al ancho">
+                      <span id="reader-score-zoom-label" class="reader-score-zoom-label">100%</span>
+                    </button>
+                    <button type="button" id="reader-score-zoom-in" class="reader-score-zoom-btn"
+                      aria-label="Acercar partitura" title="Acercar">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        <line x1="11" y1="8" x2="11" y2="14"></line>
+                        <line x1="8" y1="11" x2="14" y2="11"></line>
+                      </svg>
+                    </button>
+                  </div>
+
+                  <button type="button" id="reader-score-expand-btn" class="reader-score-expand-btn"
+                    aria-label="Ampliar partitura" title="Ampliar en pantalla completa">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <polyline points="9 21 3 21 3 15"></polyline>
+                      <line x1="21" y1="3" x2="14" y2="10"></line>
+                      <line x1="3" y1="21" x2="10" y2="14"></line>
+                    </svg>
+                    <span>Ampliar</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="reader-score-stage">
+                <div id="reader-score-status" class="reader-score-status hidden">
+                  <div class="pdf-spinner" aria-hidden="true"></div>
+                  <span>Cargando partitura…</span>
+                </div>
+
+                <button type="button" id="reader-score-prev-btn"
+                  class="reader-score-nav-arrow reader-score-nav-prev hidden"
+                  aria-label="Página anterior de la partitura" title="Página anterior">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                  </svg>
+                </button>
+
+                <div id="reader-score-pages" class="reader-score-pages"></div>
+
+                <button type="button" id="reader-score-next-btn"
+                  class="reader-score-nav-arrow reader-score-nav-next hidden"
+                  aria-label="Página siguiente de la partitura" title="Página siguiente">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+              </div>
+
+              <div id="reader-score-dots" class="reader-score-dots hidden" role="tablist"
+                aria-label="Páginas de la partitura"></div>
+            </div>
           </div>
         </div>
       </article>
@@ -522,139 +521,6 @@
     </div>
   </div>
 
-  <!-- Fullscreen PDF Viewer Modal -->
-  <div id="pdf-fullscreen-modal" class="pdf-fullscreen-modal hidden" aria-hidden="true" role="dialog">
-    <div class="pdf-fs-backdrop"></div>
-    <div class="pdf-fs-container">
-      <!-- Fullscreen PDF Toolbar -->
-      <div class="pdf-fs-toolbar">
-        <div class="pdf-fs-toolbar-left">
-          <button id="pdf-fs-close" class="pdf-fs-close-btn" aria-label="Cerrar visor" title="Cerrar pantalla completa">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" style="width:20px;height:20px;">
-              <path d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-            <span>Cerrar</span>
-          </button>
-          <div class="pdf-fs-divider"></div>
-          <span class="pdf-fs-title">Himnario de la Vida Cristiana</span>
-        </div>
-        <div class="pdf-fs-toolbar-center">
-          <!-- Zoom Out -->
-          <button id="pdf-fs-zoom-out" class="pdf-tool-btn" aria-label="Alejar" title="Alejar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" style="width:18px;height:18px;">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              <line x1="8" y1="11" x2="14" y2="11" />
-            </svg>
-          </button>
-          <span id="pdf-fs-zoom-display" class="pdf-zoom-display">100%</span>
-          <button id="pdf-fs-zoom-in" class="pdf-tool-btn" aria-label="Acercar" title="Acercar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" style="width:18px;height:18px;">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-              <line x1="11" y1="8" x2="11" y2="14" />
-              <line x1="8" y1="11" x2="14" y2="11" />
-            </svg>
-          </button>
-          <button id="pdf-fs-fit-width" class="pdf-tool-btn is-active" aria-label="Ajustar al ancho"
-            title="Ajustar al ancho">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" style="width:18px;height:18px;">
-              <rect x="3" y="3" width="18" height="18" rx="2" />
-              <line x1="9" y1="3" x2="9" y2="21" />
-              <line x1="15" y1="3" x2="15" y2="21" />
-            </svg>
-          </button>
-        </div>
-        <div class="pdf-fs-toolbar-right">
-          <!-- Salto directo a Himno # en Pantalla Completa -->
-          <div class="pdf-hymn-jump" title="Saltar directamente a cualquier himno (1-350)">
-            <label for="pdf-fs-goto-hymn" class="pdf-hymn-label">Himno</label>
-            <input type="number" id="pdf-fs-goto-hymn" class="pdf-hymn-input" min="1" max="350" placeholder="N°" aria-label="Ir a Himno número">
-            <button type="button" id="pdf-fs-hymn-jump-btn" class="pdf-hymn-go-btn" aria-label="Ir al himno" title="Ir al himno">Ir</button>
-          </div>
-
-          <!-- Botón de Índice / Buscador de Partituras en Pantalla Completa -->
-          <button type="button" id="pdf-fs-index-btn" class="pdf-tool-btn pdf-btn-with-label" aria-label="Índice de himnos" title="Buscar y saltar a cualquier himno por nombre o número">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
-              <line x1="8" y1="6" x2="21" y2="6"></line>
-              <line x1="8" y1="12" x2="21" y2="12"></line>
-              <line x1="8" y1="18" x2="21" y2="18"></line>
-              <line x1="3" y1="6" x2="3.01" y2="6"></line>
-              <line x1="3" y1="12" x2="3.01" y2="12"></line>
-              <line x1="3" y1="18" x2="3.01" y2="18"></line>
-            </svg>
-            <span class="pdf-btn-text">Índice</span>
-          </button>
-
-          <!-- Indicador y salto de página tradicional -->
-          <div class="pdf-page-nav">
-            <label for="pdf-fs-goto-input" class="pdf-page-label">Pág.</label>
-            <input type="number" id="pdf-fs-goto-input" class="pdf-goto-input" min="1" value="1"
-              aria-label="Ir a página">
-            <span id="pdf-fs-page-total" class="pdf-page-total">/ —</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Fullscreen PDF Content Area -->
-      <div id="pdf-fs-viewport" class="pdf-fs-viewport">
-        <div id="pdf-fs-pages-container" class="pdf-pages-container">
-          <!-- Canvas pages rendered dynamically -->
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal: Índice Rápido de Partituras -->
-  <div id="pdf-index-modal" class="modal-backdrop hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pdf-index-title">
-    <div class="modal-container pdf-index-container">
-      <div class="pdf-index-header">
-        <div class="pdf-index-title-group">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;color:var(--accent-color);">
-            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
-          </svg>
-          <h2 id="pdf-index-title" class="pdf-index-title">Índice de Partituras</h2>
-        </div>
-        <button type="button" id="pdf-index-close" class="btn-icon" aria-label="Cerrar índice" title="Cerrar (Esc)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-      </div>
-
-      <div class="pdf-index-search-bar">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon" style="width:18px;height:18px;">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input type="text" id="pdf-index-search-input" placeholder="Buscar por número o título (ej: 200 o Firmes)..." autocomplete="off" aria-label="Buscar himno en partituras">
-        <button type="button" id="pdf-index-clear" class="clear-btn hidden" aria-label="Limpiar búsqueda">✕</button>
-      </div>
-
-      <!-- Quick Range Chips -->
-      <div class="pdf-index-chips" role="tablist" aria-label="Rangos de himnos">
-        <button type="button" class="pdf-chip active" data-range="all">Todos</button>
-        <button type="button" class="pdf-chip" data-range="1-50">1-50</button>
-        <button type="button" class="pdf-chip" data-range="51-100">51-100</button>
-        <button type="button" class="pdf-chip" data-range="101-150">101-150</button>
-        <button type="button" class="pdf-chip" data-range="151-200">151-200</button>
-        <button type="button" class="pdf-chip" data-range="201-250">201-250</button>
-        <button type="button" class="pdf-chip" data-range="251-300">251-300</button>
-        <button type="button" class="pdf-chip" data-range="301-350">301-350</button>
-      </div>
-
-      <!-- Lista de himnos con número, título y página del PDF -->
-      <div id="pdf-index-list" class="pdf-index-list" role="listbox">
-        <!-- Renderizado dinámicamente -->
-      </div>
-    </div>
-  </div>
-
   <!-- Share Panel (slide-up sheet, fallback for desktop) -->
   <div id="share-panel" class="share-panel hidden" role="dialog" aria-modal="true" aria-label="Compartir himno">
     <div class="share-panel-backdrop"></div>
@@ -662,8 +528,10 @@
       <div class="share-panel-handle" aria-hidden="true"></div>
       <div class="share-panel-preview">
         <div class="share-panel-preview-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
             <circle cx="18" cy="19" r="3"></circle>
             <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
             <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
@@ -676,39 +544,129 @@
       </div>
       <p class="share-panel-label">Compartir con…</p>
       <div class="share-panel-apps">
-        <a id="share-whatsapp" class="share-app-btn" target="_blank" rel="noopener noreferrer" aria-label="Compartir por WhatsApp">
+        <a id="share-whatsapp" class="share-app-btn" target="_blank" rel="noopener noreferrer"
+          aria-label="Compartir por WhatsApp">
           <span class="share-app-icon share-app-icon--whatsapp" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
           </span>
           <span>WhatsApp</span>
         </a>
-        <a id="share-telegram" class="share-app-btn" target="_blank" rel="noopener noreferrer" aria-label="Compartir por Telegram">
+        <a id="share-telegram" class="share-app-btn" target="_blank" rel="noopener noreferrer"
+          aria-label="Compartir por Telegram">
           <span class="share-app-icon share-app-icon--telegram" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+            </svg>
           </span>
           <span>Telegram</span>
         </a>
-        <a id="share-twitter" class="share-app-btn" target="_blank" rel="noopener noreferrer" aria-label="Compartir en X (Twitter)">
+        <a id="share-twitter" class="share-app-btn" target="_blank" rel="noopener noreferrer"
+          aria-label="Compartir en X (Twitter)">
           <span class="share-app-icon share-app-icon--twitter" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
           </span>
           <span>X (Twitter)</span>
         </a>
-        <a id="share-facebook" class="share-app-btn" target="_blank" rel="noopener noreferrer" aria-label="Compartir en Facebook">
+        <a id="share-facebook" class="share-app-btn" target="_blank" rel="noopener noreferrer"
+          aria-label="Compartir en Facebook">
           <span class="share-app-icon share-app-icon--facebook" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+            </svg>
           </span>
           <span>Facebook</span>
         </a>
         <button id="share-copy-btn" class="share-app-btn" aria-label="Copiar enlace al portapapeles">
           <span class="share-app-icon share-app-icon--copy" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
           </span>
           <span>Copiar enlace</span>
         </button>
       </div>
       <button class="share-panel-cancel" id="share-panel-close" aria-label="Cancelar">Cancelar</button>
     </div>
+  </div>
+
+  <!-- Expanded Hymn Score Modal (Ampliar) -->
+  <div id="reader-score-modal" class="reader-score-modal hidden" role="dialog" aria-modal="true"
+    aria-label="Partitura ampliada">
+    <div class="reader-score-modal-bar">
+      <button type="button" id="reader-score-modal-close" class="pdf-fs-close-btn"
+        aria-label="Cerrar partitura ampliada">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+          stroke-linejoin="round" aria-hidden="true">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span>Cerrar</span>
+      </button>
+
+      <div class="reader-score-modal-title-group">
+        <span id="reader-score-modal-title" class="reader-score-modal-title">Partitura Musical</span>
+        <span id="reader-score-modal-pill" class="reader-score-page-pill">1/1</span>
+      </div>
+
+      <div class="reader-score-zoom-group">
+        <button type="button" id="reader-score-modal-zoom-out" class="reader-score-zoom-btn"
+          aria-label="Alejar partitura" title="Alejar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </button>
+        <button type="button" id="reader-score-modal-zoom-fit" class="reader-score-zoom-label-btn"
+          aria-label="Restablecer zoom al 100%" title="Ajustar">
+          <span id="reader-score-modal-zoom-label" class="reader-score-zoom-label">100%</span>
+        </button>
+        <button type="button" id="reader-score-modal-zoom-in" class="reader-score-zoom-btn"
+          aria-label="Acercar partitura" title="Acercar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <line x1="11" y1="8" x2="11" y2="14"></line>
+            <line x1="8" y1="11" x2="14" y2="11"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="reader-score-modal-stage">
+      <button type="button" id="reader-score-modal-prev" class="reader-score-nav-arrow reader-score-nav-prev hidden"
+        aria-label="Página anterior de la partitura" title="Página anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+          stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+
+      <div id="reader-score-modal-pages" class="reader-score-modal-pages"></div>
+
+      <button type="button" id="reader-score-modal-next" class="reader-score-nav-arrow reader-score-nav-next hidden"
+        aria-label="Página siguiente de la partitura" title="Página siguiente">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+          stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+
+    <div id="reader-score-modal-dots" class="reader-score-dots reader-score-modal-dots hidden" role="tablist"
+      aria-label="Páginas de la partitura ampliada"></div>
   </div>
 
   <!-- Global Accessible Toast Notification -->

@@ -343,38 +343,6 @@ svg {
   box-shadow: 0 4px 10px rgba(192, 161, 92, 0.2);
 }
 
-/* Info Alert */
-.info-alert {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background-color: #cfe2ff;
-  border: 1px solid #b6d4fe;
-  border-radius: 6px;
-  padding: 14px 16px;
-  color: #084298;
-  font-family: var(--font-ui);
-  font-size: 0.95rem;
-  font-weight: 400;
-}
-
-.info-alert-icon {
-  width: 18px;
-  height: 18px;
-  flex-shrink: 0;
-  color: #084298;
-}
-
-[data-theme="dark"] .info-alert {
-  background-color: #031633;
-  border-color: #062c65;
-  color: #6ea8fe;
-}
-
-[data-theme="dark"] .info-alert-icon {
-  color: #6ea8fe;
-}
-
 /* Status Bar & badges */
 .status-bar {
   max-width: var(--max-width);
@@ -826,6 +794,495 @@ body.modal-open {
   font-size: 1.85rem;
   font-weight: 700;
   line-height: 1.25;
+}
+
+/* Segmented Control: Letra / Partitura */
+.reader-view-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  max-width: 520px;
+  width: 100%;
+  margin: -1.25rem auto var(--spacing-xl);
+  padding: 5px;
+  background-color: var(--accent-light);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+}
+
+.reader-view-tabs.hidden {
+  display: none;
+}
+
+.reader-view-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--secondary-text);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.reader-view-tab:hover:not(.is-active) {
+  color: var(--primary-text);
+  background-color: rgba(192, 161, 92, 0.12);
+}
+
+.reader-view-tab.is-active {
+  background-color: var(--accent-color);
+  color: var(--surface-color);
+  box-shadow: 0 2px 8px rgba(192, 161, 92, 0.28);
+}
+
+.reader-tab-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.reader-score-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background-color: var(--surface-color);
+  color: var(--secondary-text);
+  border: 1px solid var(--border-color);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.reader-view-tab.is-active .reader-score-badge {
+  background-color: rgba(255, 253, 251, 0.22);
+  color: var(--surface-color);
+  border-color: transparent;
+}
+
+/* Embedded Hymn Score View (Carousel Card + Ampliar Modal) */
+.reader-score-view {
+  width: 100%;
+}
+
+.reader-score-view.hidden {
+  display: none;
+}
+
+.reader-score-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 18px var(--shadow-color);
+}
+
+.reader-score-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 10px 14px;
+  background-color: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.reader-score-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.reader-score-title-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--accent-color);
+  flex-shrink: 0;
+}
+
+.reader-score-title {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--primary-text);
+}
+
+.reader-score-page-pill {
+  font-family: var(--font-ui);
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background-color: var(--accent-light);
+  color: var(--accent-color);
+  border: 1px solid var(--border-color);
+  font-variant-numeric: tabular-nums;
+}
+
+.reader-score-caption {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--secondary-text);
+}
+
+.reader-score-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.reader-score-zoom-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 4px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background-color: var(--bg-color);
+}
+
+.reader-score-zoom-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--primary-text);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.reader-score-zoom-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.reader-score-zoom-btn:hover {
+  background-color: var(--accent-light);
+  color: var(--accent-color);
+}
+
+.reader-score-zoom-label-btn {
+  border: none;
+  background: transparent;
+  padding: 4px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  min-height: 32px;
+}
+
+.reader-score-zoom-label-btn:hover {
+  background-color: var(--accent-light);
+}
+
+.reader-score-zoom-label {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--secondary-text);
+  min-width: 38px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.reader-score-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-color);
+  color: var(--primary-text);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.reader-score-expand-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+.reader-score-expand-btn:hover {
+  border-color: var(--accent-color);
+  background-color: var(--accent-light);
+  color: var(--accent-color);
+}
+
+/* Stage & Floating Carousel Arrows */
+.reader-score-stage {
+  position: relative;
+  padding: 12px 10px 8px;
+  background-color: var(--bg-color);
+}
+
+.reader-score-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: var(--spacing-xl) var(--spacing-md);
+  color: var(--secondary-text);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.reader-score-status.hidden {
+  display: none;
+}
+
+.reader-score-status.is-error {
+  color: #B91C1C;
+}
+
+.reader-score-pages {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.reader-score-page-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.reader-score-canvas {
+  display: block;
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 6px 22px var(--shadow-color);
+}
+
+/* Floating Left/Right Arrows */
+.reader-score-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background-color: var(--surface-color);
+  color: var(--primary-text);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform var(--transition-fast), background-color var(--transition-fast), opacity var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.reader-score-nav-arrow.hidden {
+  display: none;
+}
+
+.reader-score-nav-arrow:hover:not(:disabled) {
+  background-color: var(--accent-color);
+  color: var(--surface-color);
+  border-color: var(--accent-color);
+}
+
+.reader-score-nav-arrow:active:not(:disabled) {
+  transform: translateY(-50%) scale(0.93);
+}
+
+.reader-score-nav-arrow:disabled {
+  opacity: 0.25;
+  cursor: default;
+  pointer-events: none;
+}
+
+.reader-score-nav-prev {
+  left: 14px;
+}
+
+.reader-score-nav-next {
+  right: 14px;
+}
+
+.reader-score-nav-arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Bottom Pagination Dots */
+.reader-score-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 12px 12px;
+  background-color: var(--bg-color);
+}
+
+.reader-score-dots.hidden {
+  display: none;
+}
+
+.reader-score-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background-color: var(--border-color);
+  cursor: pointer;
+  transition: width var(--transition-fast), background-color var(--transition-fast);
+}
+
+.reader-score-dot::after {
+  content: '';
+  position: absolute;
+  inset: -12px -10px;
+}
+
+.reader-score-dot.is-active {
+  width: 24px;
+  background-color: var(--accent-color);
+}
+
+/* Expanded Score Modal (Ampliar) */
+.reader-score-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2400;
+  background-color: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.reader-score-modal.hidden {
+  display: none;
+}
+
+.reader-score-modal-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 16px;
+  background-color: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.reader-score-modal-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+  justify-content: center;
+}
+
+.reader-score-modal-title {
+  font-family: var(--font-title);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--primary-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.reader-score-modal-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.reader-score-modal-pages {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  -webkit-overflow-scrolling: touch;
+}
+
+.reader-score-modal-pages .reader-score-page-card {
+  margin: auto;
+}
+
+.reader-score-modal-dots {
+  background-color: var(--surface-color);
+  border-top: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+@media (max-width: 520px) {
+  .reader-view-tabs {
+    margin: -0.75rem auto var(--spacing-lg);
+  }
+  .reader-view-tab {
+    font-size: 0.85rem;
+    padding: 8px 10px;
+    gap: 6px;
+  }
+  .reader-score-badge {
+    font-size: 0.68rem;
+    padding: 2px 6px;
+  }
+  .reader-score-toolbar {
+    padding: 8px 10px;
+  }
+  .reader-score-caption {
+    display: none;
+  }
+  .reader-score-zoom-btn {
+    width: 38px;
+    height: 38px;
+  }
+  .reader-score-expand-btn {
+    min-height: 40px;
+    padding: 6px 10px;
+  }
+  .reader-score-nav-prev {
+    left: 6px;
+  }
+  .reader-score-nav-next {
+    right: 6px;
+  }
+  .reader-score-modal-title {
+    display: none;
+  }
 }
 
 /* Lyrics Rendering styles */
@@ -2131,447 +2588,14 @@ body.modal-open {
   pointer-events: none;
 }
 
+.reader-container.is-presentation .reader-view-tabs,
+.reader-container.is-presentation .reader-score-view {
+  display: none !important;
+}
+
 /* ----------------------------------------------------
-   11. PDF Viewer Section
+   11. Shared Score Utilities (Spinner & Modal Close Button)
    ---------------------------------------------------- */
-
-/* Section Container */
-.pdf-viewer-section {
-  animation: pdfFadeIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
-}
-
-@keyframes pdfFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Sticky Toolbar */
-.pdf-toolbar {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-md);
-  padding: var(--spacing-sm) var(--spacing-md);
-  background: var(--surface-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  box-shadow: 0 4px 20px -4px var(--shadow-color);
-  margin-bottom: var(--spacing-lg);
-  flex-wrap: wrap;
-  transition: background-color var(--transition-normal), border-color var(--transition-normal);
-}
-
-.pdf-toolbar-group {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-}
-
-/* Tool Buttons */
-.pdf-tool-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  background: none;
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
-  color: var(--secondary-text);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.pdf-tool-btn:hover {
-  background-color: var(--accent-light);
-  color: var(--accent-color);
-  border-color: var(--border-color);
-}
-
-.pdf-tool-btn.is-active {
-  background-color: var(--accent-light);
-  color: var(--accent-color);
-  border-color: var(--accent-color);
-}
-
-/* Zoom Display */
-.pdf-zoom-display {
-  min-width: 48px;
-  text-align: center;
-  font-family: var(--font-ui);
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--primary-text);
-  letter-spacing: -0.02em;
-  user-select: none;
-}
-
-/* Page Navigation */
-.pdf-page-nav {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-family: var(--font-ui);
-  font-size: 0.85rem;
-  color: var(--secondary-text);
-}
-
-/* Direct Hymn Navigation Jump (1-350) */
-.pdf-hymn-jump {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  background-color: var(--bg-color);
-  border: 1.5px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  padding: 2px 4px 2px 8px;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-}
-
-.pdf-hymn-jump:focus-within {
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 2px var(--accent-light);
-}
-
-.pdf-hymn-label {
-  font-family: var(--font-ui);
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--accent-color);
-  user-select: none;
-}
-
-.pdf-hymn-input {
-  width: 48px;
-  height: 28px;
-  padding: 0 4px;
-  text-align: center;
-  font-family: var(--font-ui);
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--primary-text);
-  background: transparent;
-  border: none;
-  outline: none;
-  -moz-appearance: textfield;
-}
-
-.pdf-hymn-input::-webkit-outer-spin-button,
-.pdf-hymn-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.pdf-hymn-go-btn {
-  background-color: var(--accent-color);
-  color: var(--surface-color);
-  border: none;
-  border-radius: var(--radius-xs);
-  padding: 2px 8px;
-  font-family: var(--font-ui);
-  font-size: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform var(--transition-fast), opacity var(--transition-fast);
-  height: 24px;
-}
-
-.pdf-hymn-go-btn:hover {
-  opacity: 0.9;
-}
-
-.pdf-hymn-go-btn:active {
-  transform: scale(0.92);
-}
-
-/* Button with Label (Índice) */
-.pdf-btn-with-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0 10px !important;
-  width: auto !important;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--primary-text);
-}
-
-.pdf-btn-with-label:hover {
-  color: var(--accent-color);
-}
-
-.pdf-btn-text {
-  font-family: var(--font-ui);
-}
-
-@media (max-width: 480px) {
-  .pdf-btn-text {
-    display: none;
-  }
-  .pdf-btn-with-label {
-    padding: 0 !important;
-    width: 32px !important;
-  }
-}
-
-/* Sheet Music Hymn Index Modal */
-.pdf-index-container {
-  max-width: 560px;
-  width: 90%;
-  max-height: 80vh;
-  display: flex;
-  flex-direction: column;
-  padding: var(--spacing-lg);
-  border-radius: var(--radius-lg);
-  background-color: var(--surface-color);
-  box-shadow: 0 20px 40px var(--shadow-color);
-}
-
-.pdf-index-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--spacing-md);
-  padding-bottom: var(--spacing-sm);
-  border-bottom: 1px solid var(--border-color);
-}
-
-.pdf-index-title-group {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-}
-
-.pdf-index-title {
-  font-family: var(--font-ui);
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: var(--primary-text);
-  margin: 0;
-}
-
-.pdf-index-search-bar {
-  position: relative;
-  display: flex;
-  align-items: center;
-  margin-bottom: var(--spacing-sm);
-}
-
-.pdf-index-search-bar input {
-  width: 100%;
-  height: 40px;
-  padding: 0 36px 0 38px;
-  font-family: var(--font-ui);
-  font-size: 0.9rem;
-  color: var(--primary-text);
-  background-color: var(--bg-color);
-  border: 1.5px solid var(--border-color);
-  border-radius: var(--radius-md);
-  outline: none;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-}
-
-.pdf-index-search-bar input:focus {
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px var(--accent-light);
-}
-
-.pdf-index-search-bar .search-icon {
-  position: absolute;
-  left: 12px;
-  color: var(--secondary-text);
-  pointer-events: none;
-}
-
-.pdf-index-search-bar .clear-btn {
-  position: absolute;
-  right: 8px;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--divider-color);
-  color: var(--primary-text);
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 0.75rem;
-}
-
-.pdf-index-chips {
-  display: flex;
-  gap: 6px;
-  overflow-x: auto;
-  padding-bottom: var(--spacing-xs);
-  margin-bottom: var(--spacing-sm);
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-
-.pdf-index-chips::-webkit-scrollbar {
-  display: none;
-}
-
-.pdf-chip {
-  background: var(--bg-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-full);
-  padding: 4px 10px;
-  font-family: var(--font-ui);
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--secondary-text);
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all var(--transition-fast);
-}
-
-.pdf-chip:hover {
-  border-color: var(--accent-color);
-  color: var(--accent-color);
-}
-
-.pdf-chip.active {
-  background-color: var(--accent-color);
-  color: var(--surface-color);
-  border-color: var(--accent-color);
-}
-
-.pdf-index-list {
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding-right: 4px;
-  max-height: 48vh;
-}
-
-.pdf-index-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  background-color: var(--bg-color);
-  border: 1px solid transparent;
-  cursor: pointer;
-  transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
-  text-align: left;
-  width: 100%;
-}
-
-.pdf-index-item:hover {
-  background-color: var(--accent-light);
-  border-color: var(--border-color);
-  transform: translateX(2px);
-}
-
-.pdf-index-item-main {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  min-width: 0;
-}
-
-.pdf-index-num {
-  font-family: var(--font-ui);
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--accent-color);
-  background: var(--surface-color);
-  border: 1px solid var(--border-color);
-  padding: 2px 8px;
-  border-radius: var(--radius-xs);
-  flex-shrink: 0;
-}
-
-.pdf-index-item-title {
-  font-family: var(--font-serif);
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--primary-text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.pdf-index-badge {
-  font-family: var(--font-ui);
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--secondary-text);
-  background: var(--divider-color);
-  padding: 2px 8px;
-  border-radius: var(--radius-full);
-  flex-shrink: 0;
-}
-
-.pdf-page-label {
-  font-weight: 600;
-  font-size: 0.8rem;
-  color: var(--secondary-text);
-  user-select: none;
-}
-
-.pdf-goto-input {
-  width: 52px;
-  height: 32px;
-  padding: 0 var(--spacing-xs);
-  text-align: center;
-  font-family: var(--font-ui);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--primary-text);
-  background-color: var(--bg-color);
-  border: 1.5px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  outline: none;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-  -moz-appearance: textfield;
-}
-
-.pdf-goto-input::-webkit-inner-spin-button,
-.pdf-goto-input::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.pdf-goto-input:focus {
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px var(--focus-ring);
-}
-
-.pdf-page-total {
-  font-weight: 600;
-  color: var(--secondary-text);
-  user-select: none;
-  font-size: 0.85rem;
-}
-
-/* Loading Overlay */
-.pdf-loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: var(--spacing-xxl) var(--spacing-lg);
-  gap: var(--spacing-md);
-  min-height: 240px;
-}
-
 .pdf-spinner {
   width: 44px;
   height: 44px;
@@ -2585,280 +2609,6 @@ body.modal-open {
   to { transform: rotate(360deg); }
 }
 
-.pdf-loading-text {
-  font-family: var(--font-ui);
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--secondary-text);
-}
-
-.pdf-progress-bar {
-  width: 200px;
-  max-width: 80%;
-  height: 4px;
-  background: var(--border-color);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.pdf-progress-fill {
-  height: 100%;
-  width: 0%;
-  background: var(--accent-color);
-  border-radius: 2px;
-  transition: width 0.3s ease;
-}
-
-/* Pages Container */
-.pdf-pages-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-lg);
-  padding-bottom: var(--spacing-xxl);
-}
-
-/* Individual Page Wrapper */
-.pdf-page-wrapper {
-  position: relative;
-  background-color: var(--surface-color);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
-  box-shadow:
-    0 2px 8px var(--shadow-color),
-    0 8px 32px -8px var(--shadow-color);
-  overflow: hidden;
-  transition: box-shadow var(--transition-normal), border-color var(--transition-normal), background-color var(--transition-normal);
-  max-width: 100%;
-  box-sizing: border-box;
-  contain: size layout;
-}
-
-.pdf-page-wrapper:hover {
-  box-shadow:
-    0 4px 16px var(--shadow-color),
-    0 12px 40px -8px var(--shadow-color);
-}
-
-/* Canvas inside page */
-.pdf-page-wrapper canvas {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-/* Page Number Badge */
-.pdf-page-number {
-  position: absolute;
-  bottom: var(--spacing-sm);
-  right: var(--spacing-sm);
-  background: var(--scrim-color);
-  color: #fff;
-  font-family: var(--font-ui);
-  font-size: 0.7rem;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: var(--radius-sm);
-  opacity: 0;
-  transition: opacity var(--transition-fast);
-  pointer-events: none;
-}
-
-.pdf-page-wrapper:hover .pdf-page-number {
-  opacity: 1;
-}
-
-/* Skeleton Placeholder for unrendered pages */
-.pdf-page-skeleton {
-  background: var(--bg-color);
-  border: 1px dashed var(--border-color);
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--secondary-text);
-  font-family: var(--font-ui);
-  font-size: 0.85rem;
-  font-weight: 500;
-  max-width: 100%;
-  box-sizing: border-box;
-  contain: size layout;
-  transition: background-color var(--transition-normal), border-color var(--transition-normal);
-}
-
-.pdf-page-skeleton::after {
-  content: attr(data-page-label);
-  opacity: 0.5;
-}
-
-/* Floating page indicator (shown on scroll) */
-.pdf-floating-indicator {
-  position: fixed;
-  bottom: var(--spacing-lg);
-  left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  background: var(--surface-color);
-  color: var(--primary-text);
-  border: 1px solid var(--border-color);
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--radius-md);
-  font-family: var(--font-ui);
-  font-size: 0.85rem;
-  font-weight: 600;
-  box-shadow: 0 8px 32px var(--shadow-color);
-  z-index: 200;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease, transform 0.25s ease, background-color var(--transition-normal);
-}
-
-.pdf-floating-indicator.is-visible {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-/* Responsive Adjustments */
-@media (max-width: 600px) {
-  .pdf-toolbar {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    gap: var(--spacing-xs);
-    border-radius: var(--radius-sm);
-    margin-bottom: var(--spacing-md);
-  }
-
-  .pdf-tool-btn {
-    width: 34px;
-    height: 34px;
-  }
-
-  .pdf-zoom-display {
-    min-width: 40px;
-    font-size: 0.75rem;
-  }
-
-  .pdf-goto-input {
-    width: 44px;
-    height: 28px;
-    font-size: 0.8rem;
-  }
-
-  .pdf-page-label {
-    display: none;
-  }
-
-  .pdf-pages-container {
-    gap: var(--spacing-md);
-  }
-
-  .pdf-page-wrapper {
-    border-radius: 2px;
-  }
-}
-
-@media (min-width: 768px) {
-  .pdf-pages-container {
-    gap: var(--spacing-xl);
-  }
-}
-
-/* ----------------------------------------------------
-   12. Fullscreen PDF Viewer Modal
-   ---------------------------------------------------- */
-
-/* Modal Overlay */
-.pdf-fullscreen-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 2000;
-  display: flex;
-  flex-direction: column;
-  transition: opacity var(--transition-slow);
-}
-
-.pdf-fullscreen-modal.hidden {
-  display: none !important;
-}
-
-/* Dark backdrop */
-.pdf-fs-backdrop {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  z-index: -1;
-}
-
-/* Main container */
-.pdf-fs-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  animation: pdfFsSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes pdfFsSlideIn {
-  from {
-    opacity: 0;
-    transform: scale(0.97) translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-/* Fullscreen Toolbar */
-.pdf-fs-toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 56px;
-  min-height: 56px;
-  padding: 0 var(--spacing-lg);
-  background: rgba(18, 21, 23, 0.95);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  flex-shrink: 0;
-  gap: var(--spacing-md);
-  z-index: 10;
-}
-
-[data-theme="light"] .pdf-fs-toolbar {
-  background: rgba(255, 253, 251, 0.97);
-  border-bottom-color: var(--border-color);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-}
-
-.pdf-fs-toolbar-left {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-  flex-shrink: 0;
-}
-
-.pdf-fs-toolbar-center {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-}
-
-.pdf-fs-toolbar-right {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  flex-shrink: 0;
-}
-
-/* Close Button */
 .pdf-fs-close-btn {
   background: none;
   border: 1px solid transparent;
@@ -2890,224 +2640,7 @@ body.modal-open {
   border-color: var(--border-color);
 }
 
-/* Vertical divider */
-.pdf-fs-divider {
-  width: 1px;
-  height: 24px;
-  background: rgba(255, 255, 255, 0.15);
-}
-
-[data-theme="light"] .pdf-fs-divider {
-  background: var(--border-color);
-}
-
-/* Title in toolbar */
-.pdf-fs-title {
-  font-family: var(--font-title);
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: rgba(236, 239, 242, 0.8);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-[data-theme="light"] .pdf-fs-title {
-  color: var(--secondary-text);
-}
-
-/* Override tool buttons in fullscreen toolbar for dark/light */
-.pdf-fs-toolbar .pdf-tool-btn {
-  color: rgba(236, 239, 242, 0.7);
-}
-
-.pdf-fs-toolbar .pdf-tool-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.15);
-}
-
-.pdf-fs-toolbar .pdf-tool-btn.is-active {
-  background: rgba(223, 185, 103, 0.2);
-  color: #DFB967;
-  border-color: rgba(223, 185, 103, 0.4);
-}
-
-[data-theme="light"] .pdf-fs-toolbar .pdf-tool-btn {
-  color: var(--secondary-text);
-}
-
-[data-theme="light"] .pdf-fs-toolbar .pdf-tool-btn:hover {
-  background: var(--accent-light);
-  color: var(--accent-color);
-  border-color: var(--border-color);
-}
-
-[data-theme="light"] .pdf-fs-toolbar .pdf-tool-btn.is-active {
-  background: var(--accent-light);
-  color: var(--accent-color);
-  border-color: var(--accent-color);
-}
-
-/* Zoom display in fullscreen */
-.pdf-fs-toolbar .pdf-zoom-display {
-  color: rgba(236, 239, 242, 0.9);
-}
-
-[data-theme="light"] .pdf-fs-toolbar .pdf-zoom-display {
-  color: var(--primary-text);
-}
-
-/* Page nav inputs in fullscreen */
-.pdf-fs-toolbar .pdf-goto-input {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.15);
-  color: #ECEFF2;
-}
-
-.pdf-fs-toolbar .pdf-goto-input:focus {
-  border-color: #DFB967;
-  box-shadow: 0 0 0 3px rgba(223, 185, 103, 0.3);
-}
-
-[data-theme="light"] .pdf-fs-toolbar .pdf-goto-input {
-  background: var(--bg-color);
-  border-color: var(--border-color);
-  color: var(--primary-text);
-}
-
-[data-theme="light"] .pdf-fs-toolbar .pdf-goto-input:focus {
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 3px var(--focus-ring);
-}
-
-.pdf-fs-toolbar .pdf-page-total {
-  color: rgba(142, 155, 165, 0.8);
-}
-
-[data-theme="light"] .pdf-fs-toolbar .pdf-page-total {
-  color: var(--secondary-text);
-}
-
-.pdf-fs-toolbar .pdf-page-label {
-  color: rgba(142, 155, 165, 0.8);
-}
-
-[data-theme="light"] .pdf-fs-toolbar .pdf-page-label {
-  color: var(--secondary-text);
-}
-
-/* Viewport — the scrollable area */
-.pdf-fs-viewport {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: auto;
-  background: #1a1d20;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-y: contain;
-}
-
-[data-theme="light"] .pdf-fs-viewport {
-  background: #e8e4de;
-}
-
-/* Scrollbar for fullscreen viewport */
-.pdf-fs-viewport::-webkit-scrollbar {
-  width: 10px;
-}
-
-.pdf-fs-viewport::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.pdf-fs-viewport::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 5px;
-}
-
-.pdf-fs-viewport::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-[data-theme="light"] .pdf-fs-viewport::-webkit-scrollbar-track {
-  background: #ddd8d0;
-}
-
-[data-theme="light"] .pdf-fs-viewport::-webkit-scrollbar-thumb {
-  background: #bbb5ab;
-}
-
-[data-theme="light"] .pdf-fs-viewport::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-color);
-}
-
-/* Pages container inside fullscreen viewport */
-.pdf-fs-viewport .pdf-pages-container {
-  padding: var(--spacing-xl) var(--spacing-md) var(--spacing-xxl);
-  min-height: 100%;
-  flex-shrink: 0;
-}
-
-/* Pages have subtle shadow in dark fullscreen context */
-.pdf-fs-viewport .pdf-page-wrapper {
-  box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.4),
-    0 12px 40px -8px rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.05);
-}
-
-.pdf-fs-viewport .pdf-page-wrapper:hover {
-  box-shadow:
-    0 8px 30px rgba(0, 0, 0, 0.5),
-    0 16px 50px -8px rgba(0, 0, 0, 0.4);
-}
-
-[data-theme="light"] .pdf-fs-viewport .pdf-page-wrapper {
-  box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.1),
-    0 12px 40px -8px rgba(0, 0, 0, 0.08);
-  border-color: var(--border-color);
-}
-
-/* Skeleton in fullscreen */
-.pdf-fs-viewport .pdf-page-skeleton {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(255, 255, 255, 0.08);
-  color: rgba(142, 155, 165, 0.5);
-}
-
-[data-theme="light"] .pdf-fs-viewport .pdf-page-skeleton {
-  background: var(--bg-color);
-  border-color: var(--border-color);
-  color: var(--secondary-text);
-}
-
-/* Responsive: Hide title on small screens */
 @media (max-width: 700px) {
-  .pdf-fs-title {
-    display: none;
-  }
-
-  .pdf-fs-divider {
-    display: none;
-  }
-
-  .pdf-fs-toolbar {
-    padding: 0 var(--spacing-sm);
-    height: 48px;
-    min-height: 48px;
-    gap: var(--spacing-xs);
-  }
-
-  .pdf-fs-close-btn span {
-    display: none;
-  }
-
-  .pdf-fs-close-btn {
-    padding: 6px;
-  }
-
-  .pdf-fs-toolbar .pdf-page-label {
-    display: none;
-  }
+  .pdf-fs-close-btn span { display: none; }
+  .pdf-fs-close-btn { padding: 6px; }
 }
